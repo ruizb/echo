@@ -12,26 +12,171 @@
 <body>
 <div class="ui middle aligned aligned padded grid">
   <div class="ui column raised very text container">
-    <h2 class="ui header">Expérience en ligne sur l'audition</h2>
-    <p>Bonjour,</p>
-    <p>Vous vous apprêtez à commencer une expérience en ligne sur l'audition organisée par Arnaud Norena, directeur de recherche au CNRS, laboratoire de Neurosciences Sensorielles et Cognitives, Marseille.</p>
-    <p><strong>Avant toute chose, nous souhaitons vous remercier de votre participation à cette recherche !</strong></p>
-    <p>Aucune information identifiante ne vous sera demandée. Assurez-vous de réaliser l'expérience dans de bonnes conditions, c'est-à-dire d'avoir le temps nécessaire pour aller jusqu'au bout (20 minutes environ), être motivé et en bonne forme, et vous trouver dans un endroit calme.</p>
-    <p>Le test consiste à évaluer des sons selon une échelle visuelle allant de très plaisant à très déplaisant :</p>
-    <ul>
-      <li>Si le son présenté est celui d'un aboiement de chien et que vous trouvez ce son très désagréable, alors vous devez cliquer à l'extrémité droite de l'échelle.</li>
-      <li>Si le son présenté est celui du vent dans la forêt et que vous trouvez ce son très agréable, alors vous devez cliquer à l'extrême gauche de l'échelle.</li>
-      <li>Si le son présenté est neutre, vous devez cliquer au milieu de l'échelle.</li>
-    </ul>
-    <p>En général, les sons sont plus ou moins agréables ou désagréables, donc vous devez utiliser toute la longueur de l'échelle pour donner votre réponse.</p>
-    <div class="ui basic segment right aligned">
-      <button id="start-experiment" class="ui right labeled large icon primary button">
-        <i class="right arrow icon"></i>
-        Démarrer l'expérience
-      </button>
+    <div id="part-1">
+      <h2 class="ui header">Expérience en ligne sur l'audition</h2>
+      <p>Bonjour,</p>
+      <p>Vous vous apprêtez à commencer une expérience en ligne sur l'audition organisée par Arnaud Norena, directeur de recherche au CNRS, laboratoire de Neurosciences Sensorielles et Cognitives, Marseille.</p>
+      <p><strong>Avant toute chose, nous souhaitons vous remercier de votre participation à cette recherche !</strong></p>
+      <p>Aucune information identifiante ne vous sera demandée. Assurez-vous de réaliser l'expérience dans de bonnes conditions, c'est-à-dire d'avoir le temps nécessaire pour aller jusqu'au bout (20 minutes environ), être motivé et en bonne forme, et vous trouver dans un endroit calme.</p>
+      <p>Le test consiste à évaluer des sons selon une échelle visuelle allant de très plaisant à très déplaisant :</p>
+      <ul>
+        <li>Si le son présenté est celui d'un aboiement de chien et que vous trouvez ce son très désagréable, alors vous devez cliquer à l'extrémité droite de l'échelle.</li>
+        <li>Si le son présenté est celui du vent dans la forêt et que vous trouvez ce son très agréable, alors vous devez cliquer à l'extrême gauche de l'échelle.</li>
+        <li>Si le son présenté est neutre, vous devez cliquer au milieu de l'échelle.</li>
+      </ul>
+      <p>En général, les sons sont plus ou moins agréables ou désagréables, donc vous devez utiliser toute la longueur de l'échelle pour donner votre réponse. Tous les sons seront présentés à un niveau sonore confortable.</p>
+      <div class="ui basic segment right aligned">
+        <button id="start-experiment" class="ui right labeled large icon primary button">
+          <i class="right arrow icon"></i>
+          Démarrer l'expérience
+        </button>
+      </div>
+    </div>
+
+    <div id="part-2" class="hide">
+      <p>Cette page consiste à vous demander des informations sur vous et votre audition.</p>
+
+      <form class="ui form">
+        <div class="field">
+          <label for="user-info_age">Quel âge avez-vous ?</label>
+          <input type="number" id="user-info_age" name="age" min="18" max="100">
+        </div>
+
+        <div class="grouped fields">
+          <label>Qu'utilisez-vous pour écouter les sons de cette expérience ?</label>
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" id="user-info_device-headset" value="headset" name="device" checked="" tabindex="0" class="hidden">
+              <label for="user-info_device-headset">Casque</label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" id="user-info_device-earphones" value="earphones" name="device" tabindex="0" class="hidden">
+              <label for="user-info_device-earphones">Écouteurs</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="grouped fields">
+          <label>Selon vous, avez-vous des problèmes d'audition ? <i data-content="Faites-vous répéter souvent, avez-vous des problèmes pour comprendre la parole dans le bruit, etc." class="info circle icon"></i></label>
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" id="user-info_hearing-issues-yes" value="yes" name="hearing-issues" tabindex="0" class="hidden">
+              <label for="user-info_hearing-issues-yes">Oui</label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" id="user-info_hearing-issues-no" value="no" name="hearing-issues" checked="" tabindex="0" class="hidden">
+              <label for="user-info_hearing-issues-no">Non</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="grouped fields">
+          <label>Avez-vous des acouphènes ? <i data-content="Sifflement d'oreille." class="info circle icon"></i></label>
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" id="user-info_tinnitus-yes" value="yes" name="tinnitus" tabindex="0" class="hidden">
+              <label for="user-info_tinnitus-yes">Oui</label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" id="user-info_tinnitus-no" value="no" name="tinnitus" checked="" tabindex="0" class="hidden">
+              <label for="user-info_tinnitus-no">Non</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="grouped fields">
+          <label>Avez-vous une hypersensibilité auditive ? <i data-content="Les sons vous semblent-ils plus forts ou plus gênants que la normale ?" class="info circle icon"></i></label>
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" id="user-info_hypersensibility-yes" value="yes" name="hypersensibility" tabindex="0" class="hidden">
+              <label for="user-info_hypersensibility-yes">Oui</label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" id="user-info_hypersensibility-no" value="no" name="hypersensibility" checked="" tabindex="0" class="hidden">
+              <label for="user-info_hypersensibility-no">Non</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="grouped fields">
+          <label>Y a-t-il des sons en particulier qui déclenchent chez vous des réactions très intenses telles que la colère, le dégoût... ?</label>
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" id="user-info_sounds-reactions-yes" value="yes" name="sounds-reactions" tabindex="0" class="hidden">
+              <label for="user-info_sounds-reactions-yes">Oui</label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" id="user-info_sounds-reactions-no" value="no" name="sounds-reactions" checked="" tabindex="0" class="hidden">
+              <label for="user-info_sounds-reactions-no">Non</label>
+            </div>
+          </div>
+        </div>
+
+        <div id="sounds-reactions-list-field" class="field hide">
+          <label for="user-info_sounds-reactions-list">Quels sont les sons qui déclenchent ces réactions ? (séparés par des virgules)</label>
+          <textarea id="user-info_sounds-reactions-list" name="sounds-reactions-list" placeholder="Bruits de klaxon, grincements de dents" rows="2" ></textarea>
+        </div>
+
+        <div class="ui basic segment right aligned">
+          <button id="configure-sound" class="ui right labeled large icon primary button">
+            <i class="right arrow icon"></i>
+            Configurer le son pour l'expérience
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div id="part-3" class="hide">
+      <p>Nous allons maintenant ajuster le niveau du son pour qu'il soit présenté à un niveau confortable, ni trop faible, ni trop fort. Vous pouvez régler le volume en déplaçant le curseur ci-après.</p>
+
+      <div class="ui two column centered grid center aligned">
+        <div class="column">
+          <div class="ui basic segment center aligned">
+            <button id="play-ref-sound" class="ui labeled icon large button">
+              <i class="play icon"></i>
+              Jouer le son
+            </button>
+          </div>
+        </div>
+        <div class="ui column centered row">
+          <div class="one wide column">
+            <i class="volume down icon grey"></i>
+          </div>
+          <div class="twelve wide column">
+            <input class="full-width" id="ref-sound-slider" name="ref-sound-slider" type="range" min="1" max="100" step="1" value="10">
+          </div>
+          <div class="one wide column">
+            <i class="volume up icon grey"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui basic segment right aligned">
+        <button id="start-tests" class="ui right labeled large icon primary button">
+          <i class="right arrow icon"></i>
+          Commencer les tests
+        </button>
+      </div>
+    </div>
+
+    <div id="part-4" class="hide">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur deserunt, enim esse est ex facilis fugit hic incidunt ipsam itaque molestiae natus omnis, reiciendis sequi sit suscipit voluptas. Hic, saepe.</p>
     </div>
   </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script src="https://rawgit.com/gdaunton/Semantic-UI/range-slider-build/dist/semantic.js"></script>
 <script type="text/javascript" src="./index.ts"></script>
 </body>
 </html>

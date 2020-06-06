@@ -21,6 +21,8 @@
     }
   },
   "devDependencies": {
+    "@types/jquery": "^3.3.38",
+    "@types/semantic-ui": "^2.2.7",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.9",
     "parcel-bundler": "^1.12.4",
