@@ -4,6 +4,7 @@
   "description": "Online hearing experiment.",
   "main": "index.js",
   "scripts": {
+    "build": "parcel src/client/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Benoit Ruiz",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "husky": "^4.2.5",
     "lint-staged": "^10.2.9",
+    "parcel-bundler": "^1.12.4",
     "prettier": "^2.0.5"
   }
 }
