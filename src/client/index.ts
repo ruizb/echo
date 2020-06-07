@@ -5,11 +5,13 @@ document.getElementById('start-experiment')?.addEventListener('click', () => {
   document.getElementById('part-2')?.classList.remove('hide')
 })
 
-document.getElementById('configure-sound')?.addEventListener('click', (evt) => {
-  evt.preventDefault()
-  document.getElementById('part-2')?.classList.add('hide')
-  document.getElementById('part-3')?.classList.remove('hide')
-})
+document
+  .getElementById('configure-sound')
+  ?.addEventListener('submit', (evt) => {
+    evt.preventDefault()
+    document.getElementById('part-2')?.classList.add('hide')
+    document.getElementById('part-3')?.classList.remove('hide')
+  })
 
 document.getElementById('start-tests')?.addEventListener('click', () => {
   document.getElementById('part-3')?.classList.add('hide')
