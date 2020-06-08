@@ -1,8 +1,10 @@
-import { Handler } from 'aws-lambda'
+import { Context } from 'aws-lambda'
 
-const handler: Handler = async (event, context) => ({
-  statusCode: 200,
-  body: 'Hello, World'
-})
-
-exports.handler = handler
+export async function handler(event: any, context: Context) {
+  return {
+    statusCode: 200,
+    body: JSON.stringify({
+      message: `Hello world ${Math.floor(Math.random() * 10)}`
+    })
+  }
+}
