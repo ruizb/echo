@@ -110,6 +110,7 @@ export const loadStore = (): Store => {
     }
   } catch (err) {
     console.error('Invalid store object', err, store)
+    localStorage.removeItem('store')
     return initialStore
   }
 }
