@@ -36,7 +36,7 @@
     <div id="part-2" class="hide">
       <p>Cette page consiste à vous demander des informations sur vous et votre audition.</p>
 
-      <form id="configure-sound" class="ui form">
+      <form id="user-info-form" class="ui form">
         <div class="field">
           <label for="user-info_age">Quel âge avez-vous ?</label>
           <input type="number" id="user-info_age" name="age" min="18" max="100" required>
@@ -139,14 +139,16 @@
     <div id="part-3" class="hide">
       <p>Nous allons maintenant ajuster le niveau du son pour qu'il soit présenté à un niveau confortable, ni trop faible, ni trop fort. Vous pouvez régler le volume en déplaçant le curseur ci-après.</p>
 
-      <div class="ui one column centered grid center aligned">
-        <div class="column">
-          <div class="ui basic segment center aligned">
+      <div class="ui padded grid center aligned">
+        <div class="ui row">
+          <div class="two wide column"></div>
+          <div class="twelve wide column">
             <button id="play-ref-sound" class="ui labeled icon large button">
               <i class="play icon"></i>
-              Jouer le son
+              <span>Jouer le son</span>
             </button>
           </div>
+          <div class="two wide column"></div>
         </div>
         <div class="ui column centered row">
           <div class="one wide column">
@@ -170,7 +172,61 @@
     </div>
 
     <div id="part-4" class="hide">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur deserunt, enim esse est ex facilis fugit hic incidunt ipsam itaque molestiae natus omnis, reiciendis sequi sit suscipit voluptas. Hic, saepe.</p>
+      <p>Le test peut maintenant démarrer. Vous devez juger les sons présentés selon une échelle agréable - désagréable. Si le son est très agréable, vous devez cliquer à l’extrême gauche de l'échelle. Si le son est très désagréable, vous devez cliquer à l'extrême droite de l'échelle. Si le son est neutre, vous devez cliquer au milieu de l'échelle. <strong>La plupart des sons sont plus ou moins agréables ou désagréables, vous devez donc utiliser toute la longueur de l'échelle pour répondre.</strong></p>
+
+      <p>Les sons tests sont présentés trois fois dans un ordre aléatoire.</p>
+
+      <p>Bon courage et merci de votre participation !</p>
+
+      <div class="ui padded grid center aligned">
+        <div class="ui row">
+          <div class="fourteen wide column">
+            <div id="experiment-progress-bar" class="ui progress small">
+              <div class="bar">
+                <div class="progress"></div>
+              </div>
+              <div class="label">Expérience en cours...</div>
+            </div>
+          </div>
+        </div>
+        <div class="ui row" id="play-test-sound-button-container">
+          <div class="two wide column"></div>
+          <div class="twelve wide column">
+            <button id="play-test-sound" class="ui labeled icon large button">
+              <i class="play icon"></i>
+              <span>Jouer le son</span>
+            </button>
+          </div>
+          <div class="two wide column"></div>
+        </div>
+        <div class="ui row" id="play-test-sound-labels-container" style="padding-bottom: 0;">
+          <div class="five wide mobile three wide computer left aligned column">
+            <span class="sound-test-slider-label">Agréable</span>
+          </div>
+          <div class="six wide mobile ten wide computer center aligned column">
+            <span class="sound-test-slider-label">Neutre</span>
+          </div>
+          <div class="five wide mobile three wide computer right aligned column">
+            <span class="sound-test-slider-label">Désagréable</span>
+          </div>
+        </div>
+        <div class="ui row" id="play-test-sound-slider-container" style="padding-top: 0;">
+          <div class="fourteen wide column">
+            <input class="full-width" id="test-sound-slider" name="ref-sound-slider" type="range" min="0" max="100" step="1" value="50">
+          </div>
+        </div>
+      </div>
+
+      <div class="ui basic segment center aligned">
+        <button id="next-test" class="ui right labeled large icon disabled primary button">
+          <i class="right arrow icon"></i>
+          Passer au son suivant
+        </button>
+      </div>
+
+      <div id="data-auto-sent-message" class="ui blue message small hide">
+        <p><i class="info circle blue icon"></i>Les données ont été automatiquement recueillies, merci !</p>
+      </div>
     </div>
   </div>
 </div>

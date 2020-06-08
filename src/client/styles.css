@@ -7,14 +7,16 @@ body > .grid {
   font-size: 1rem;
 }
 
-.show {
-  display: block;
-}
-
 .hide {
-  display: none;
+  display: none !important;
 }
 
 .full-width {
   width: 100%;
+}
+
+@media only screen and (max-width: 767px) {
+  .sound-test-slider-label {
+    font-size: 1rem;
+  }
 }

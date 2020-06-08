@@ -22,11 +22,15 @@
   },
   "devDependencies": {
     "@types/jquery": "^3.3.38",
+    "@types/parse-filepath": "^1.0.0",
     "@types/semantic-ui": "^2.2.7",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.9",
     "parcel-bundler": "^1.12.4",
     "prettier": "^2.0.5",
     "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "parse-filepath": "^1.0.2"
   }
 }
