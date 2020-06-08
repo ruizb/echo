@@ -133,6 +133,22 @@ document.getElementById('start-tests')?.addEventListener('click', () => {
       'test-sound-slider'
     ) as HTMLInputElement).value = String(score))
 
+  document
+    .getElementById('sound-test-slider-pleasant')
+    ?.addEventListener('click', () => {
+      setTestSoundSlider(0)
+    })
+  document
+    .getElementById('sound-test-slider-neutral')
+    ?.addEventListener('click', () => {
+      setTestSoundSlider(50)
+    })
+  document
+    .getElementById('sound-test-slider-unpleasant')
+    ?.addEventListener('click', () => {
+      setTestSoundSlider(100)
+    })
+
   const nextSound = (
     soundTests: SoundTest[],
     firstSoundTest: boolean = false
