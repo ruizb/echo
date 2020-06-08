@@ -69,7 +69,12 @@ const createAudio = (
   }
 
   const listener = () => {
-    if (audio.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA) {
+    if (
+      [
+        HTMLMediaElement.HAVE_ENOUGH_DATA,
+        HTMLMediaElement.HAVE_CURRENT_DATA
+      ].indexOf(audio.readyState) >= 0
+    ) {
       play()
     } else {
       audio.addEventListener('canplaythrough', play)

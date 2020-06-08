@@ -4,7 +4,7 @@
   "description": "Online hearing experiment.",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development parcel src/client/index.html",
+    "start": "NODE_ENV=development parcel src/client/index.html",
     "build": "NODE_ENV=production parcel build src/client/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
