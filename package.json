@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run clean && NODE_ENV=development parcel src/client/index.html",
     "build": "npm run clean && NODE_ENV=production parcel build src/client/index.html && npm run build-functions",
-    "build-functions": "rm -rf ./functions && tsc --project src/functions",
+    "build-functions": "tsc --project src/functions",
     "clean": "rm -rf ./dist",
     "test": "jest"
   },
