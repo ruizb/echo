@@ -3,6 +3,9 @@ export const excludeElementFromList = <A>(element: A, list: A[]): A[] =>
     .slice(0, list.indexOf(element))
     .concat(list.slice(list.indexOf(element) + 1, list.length))
 
+export const pickRandomElement = <A>(items: A[]): A =>
+  items[Math.floor(Math.random() * items.length)]
+
 export const head = <A>(list: A[]): A | undefined => list[0]
 
 export const tail = <A>(list: A[]): A[] => list.slice(1)

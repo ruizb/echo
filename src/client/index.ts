@@ -22,7 +22,7 @@ document.getElementById('start-experiment')?.addEventListener('click', () => {
     .querySelectorAll<HTMLInputElement>(
       'input[type="radio"][name="sounds-reactions"]'
     )
-    .forEach((radioBtn) =>
+    .forEach(radioBtn =>
       radioBtn.addEventListener('change', () => {
         const radioBtnIsYes = radioBtn.value === 'yes'
         soundsReactionsListField?.classList.remove(
@@ -89,7 +89,7 @@ const createAudio = (
   }
 }
 
-document.getElementById('user-info-form')?.addEventListener('submit', (evt) => {
+document.getElementById('user-info-form')?.addEventListener('submit', evt => {
   evt.preventDefault()
   part2?.classList.add('hide')
   part3?.classList.remove('hide')

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=development parcel src/client/index.html",
     "build": "NODE_ENV=production parcel build src/client/index.html",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Benoit Ruiz",
   "license": "ISC",
@@ -22,13 +22,16 @@
     }
   },
   "devDependencies": {
+    "@types/jest": "^25.2.3",
     "@types/jquery": "^3.3.38",
     "@types/parse-filepath": "^1.0.0",
     "@types/semantic-ui": "^2.2.7",
     "husky": "^4.2.5",
+    "jest": "^26.0.1",
     "lint-staged": "^10.2.9",
     "parcel-bundler": "^1.12.4",
     "prettier": "^2.0.5",
+    "ts-jest": "^26.1.0",
     "typescript": "^3.9.5"
   },
   "dependencies": {
