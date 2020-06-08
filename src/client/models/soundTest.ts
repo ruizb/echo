@@ -1,5 +1,5 @@
 import parsePath from 'parse-filepath'
-import { excludeElementFromList, last } from '../utils'
+import { excludeElementFromList, isDefined, last } from '../utils'
 import audioFilePaths from './audioFilePath'
 
 export interface SoundTest {
@@ -48,31 +48,39 @@ const initialBucket = audioFilePaths.reduce(
   emptyBucket
 )
 
-const electAudioFilePath = (
-  prevSoundTest: SoundTest | undefined,
-  audioFilePaths: string[]
-): string => {
+const electAudioFilePath = (bucket: Bucket): string => {
   const pickRandom = (filePaths: string[]): string =>
     filePaths[Math.floor(Math.random() * filePaths.length)]
-  return prevSoundTest === undefined
-    ? pickRandom(audioFilePaths)
-    : pickRandom(excludeElementFromList(prevSoundTest.filePath, audioFilePaths))
+
+  const availableAudioFilePaths = Object.getOwnPropertyNames(
+    bucket.remainingSounds
+  ).filter((filePath) => bucket.remainingSounds[filePath] > 0)
+  const prevSoundTest = last(bucket.soundTests)
+
+  return isDefined(prevSoundTest)
+    ? pickRandom(
+        excludeElementFromList(prevSoundTest.filePath, availableAudioFilePaths)
+      )
+    : pickRandom(availableAudioFilePaths)
 }
 
 const electSoundTest = (
   bucket: Bucket,
-  electAudioFilePath: (
-    prevSoundTest: SoundTest | undefined,
-    audioFilePaths: string[]
-  ) => string
+  electAudioFilePath: (bucket: Bucket) => string
 ): Bucket => {
   if (bucket.size === 0) {
     return bucket
   }
-  const electedFilePath = electAudioFilePath(
-    last(bucket.soundTests),
-    audioFilePaths
-  )
+  const electedFilePath = electAudioFilePath(bucket)
+  console.log({
+    ...bucket,
+    size: bucket.size - 1,
+    remainingSounds: {
+      ...bucket.remainingSounds,
+      [electedFilePath]: bucket.remainingSounds[electedFilePath] - 1
+    },
+    soundTests: bucket.soundTests.concat([createSoundTest(electedFilePath)])
+  })
   return electSoundTest(
     {
       ...bucket,
