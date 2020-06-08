@@ -16,6 +16,7 @@ import swallowing from '../sounds/Swallowing.wav'
 import throatClear from '../sounds/Throat_Clear.mp3'
 import vomit from '../sounds/Vomit.wav'
 import wheezing from '../sounds/Wheezing.wav'
+import { head } from '../utils'
 
 export const refSoundFilePath = refSoundSch250Hz
 
@@ -37,5 +38,17 @@ const audioFilePaths = [
   vomit,
   wheezing
 ]
+
+export const getFilePathFromName = (
+  filePaths: string[],
+  fileName: string
+): string | undefined => {
+  const [name, extension] = fileName.split('.')
+  return head(
+    filePaths.filter(_ =>
+      new RegExp(`${name}\\.[^.]+\\.${extension}`, 'i').test(_)
+    )
+  )
+}
 
 export default audioFilePaths

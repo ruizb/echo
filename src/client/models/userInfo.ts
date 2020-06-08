@@ -1,21 +1,34 @@
-const enum ListeningDevice {
+import { isString } from '../utils'
+
+export const enum ListeningDevice {
   HeadSet = 'headset',
   EarPhones = 'earphones'
 }
 
-interface UserInfoBase<A extends boolean> {
+export interface UserInfoBase {
   age: number
   device: ListeningDevice
   hearingIssues: boolean
   tinnitus: boolean
   hearingHypersensibility: boolean
-  soundsReactions: A
 }
 
-interface UserInfoNoSoundsReactions extends UserInfoBase<false> {}
+export interface WithNoSoundsReactions {
+  soundsReactions: false
+}
 
-interface UserInfoWithSoundsReactions extends UserInfoBase<true> {
+export interface WithSoundsReactions {
+  soundsReactions: true
   soundsList: string[]
 }
 
+type UserInfoNoSoundsReactions = UserInfoBase & WithNoSoundsReactions
+type UserInfoWithSoundsReactions = UserInfoBase & WithSoundsReactions
+
 export type UserInfo = UserInfoNoSoundsReactions | UserInfoWithSoundsReactions
+
+export const isValidDevice = (device: unknown): device is ListeningDevice =>
+  isString(device) &&
+  ([ListeningDevice.HeadSet, ListeningDevice.EarPhones] as string[]).indexOf(
+    device
+  ) >= 0

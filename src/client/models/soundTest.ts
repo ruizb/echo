@@ -9,11 +9,16 @@ import {
 } from '../utils'
 import audioFilePaths from './audioFilePath'
 
-export interface SoundTest {
+export interface WithNameAndScore {
   name: string
-  filePath: string
   score: number // [0,100]
 }
+
+export interface WithFilePath {
+  filePath: string
+}
+
+export type SoundTest = WithNameAndScore & WithFilePath
 
 interface Bucket {
   size: number

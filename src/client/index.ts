@@ -1,100 +1,126 @@
+import audioFilePaths, {
+  getFilePathFromName,
+  refSoundFilePath
+} from './models/audioFilePath'
+import { Part } from './models/part'
 import { createSoundTests, SoundTest } from './models/soundTest'
-import { refSoundFilePath } from './models/audioFilePath'
-import { head, isDefined, noop, tail } from './utils'
+import { getStore, initialStore, updateStore } from './models/store'
+import {
+  ListeningDevice,
+  UserInfoBase,
+  WithNoSoundsReactions,
+  WithSoundsReactions
+} from './models/userInfo'
+import { createAudio, head, isDefined, isUndefined, noop, tail } from './utils'
 
-const part1 = document.getElementById('part-1')
-const part2 = document.getElementById('part-2')
-const part3 = document.getElementById('part-3')
-const part4 = document.getElementById('part-4')
+const resetExperiment = (): void => {
+  updateStore(initialStore)
+  location.reload()
+}
 
-document.getElementById('start-experiment')?.addEventListener('click', () => {
-  part1?.classList.add('hide')
-  part2?.classList.remove('hide')
+const parts = {
+  [Part.Introduction]: {
+    section: document.getElementById('part-1'),
+    init: noop
+  },
+  [Part.UserInfoForm]: {
+    section: document.getElementById('part-2'),
+    init: loadPart2
+  },
+  [Part.SoundConfig]: {
+    section: document.getElementById('part-3'),
+    init: loadPart3
+  },
+  [Part.SoundTests]: {
+    section: document.getElementById('part-4'),
+    init: loadPart4
+  }
+}
+
+const { partInProgress } = getStore()
+parts[partInProgress].section?.classList.remove('hide')
+parts[partInProgress].init()
+
+function loadPart2(): void {
+  parts[Part.Introduction].section?.classList.add('hide')
+  parts[Part.UserInfoForm].section?.classList.remove('hide')
+
+  updateStore({ partInProgress: Part.UserInfoForm })
 
   window.scroll(0, 0)
 
   $('i.icon.info').popup()
 
   const soundsReactionsListField = document.getElementById(
-    'sounds-reactions-list-field'
+    'user-info_sounds-reactions-list-field'
   )
+
   document
-    .querySelectorAll<HTMLInputElement>(
-      'input[type="radio"][name="sounds-reactions"]'
+    .getElementById('user-info_sounds-reactions-yes')
+    ?.addEventListener('click', () =>
+      soundsReactionsListField?.classList.remove('hide')
     )
-    .forEach(radioBtn =>
-      radioBtn.addEventListener('change', () => {
-        const radioBtnIsYes = radioBtn.value === 'yes'
-        soundsReactionsListField?.classList.remove(
-          radioBtnIsYes ? 'hide' : 'show'
-        )
-        soundsReactionsListField?.classList.add(radioBtnIsYes ? 'show' : 'hide')
-      })
+
+  document
+    .getElementById('user-info_sounds-reactions-no')
+    ?.addEventListener('click', () =>
+      soundsReactionsListField?.classList.add('hide')
     )
-})
-
-const createAudio = (
-  playButton: HTMLButtonElement | undefined,
-  filePath: string,
-  volume: number,
-  onEnded: () => void = noop
-): {
-  audioElement: HTMLAudioElement
-  play: () => void
-  removeListener: () => void
-} => {
-  const playLabel = playButton?.querySelector('span')
-
-  const audio = new Audio(filePath)
-  audio.volume = volume
-
-  if (isDefined(playLabel)) {
-    playLabel.innerText = 'Jouer le son'
-  }
-
-  audio.addEventListener('ended', () => {
-    playButton?.classList.remove('disabled')
-    if (isDefined(playLabel)) {
-      playLabel.innerText = 'Rejouer le son'
-    }
-    onEnded()
-  })
-
-  const play = () => {
-    playButton?.classList.add('disabled')
-    if (isDefined(playLabel)) {
-      playLabel.innerText = 'Lecture du son en cours...'
-    }
-    audio.play()
-  }
-
-  const listener = () => {
-    if (
-      [
-        HTMLMediaElement.HAVE_ENOUGH_DATA,
-        HTMLMediaElement.HAVE_CURRENT_DATA
-      ].indexOf(audio.readyState) >= 0
-    ) {
-      play()
-    } else {
-      audio.addEventListener('canplaythrough', play)
-    }
-  }
-  playButton?.addEventListener('click', listener)
-
-  return {
-    audioElement: audio,
-    play,
-    removeListener: () => playButton?.removeEventListener('click', listener)
-  }
 }
 
-document.getElementById('user-info-form')?.addEventListener('submit', evt => {
-  evt.preventDefault()
-  part2?.classList.add('hide')
-  part3?.classList.remove('hide')
+function loadPart3(): void {
+  parts[Part.UserInfoForm].section?.classList.add('hide')
+  parts[Part.SoundConfig].section?.classList.remove('hide')
 
-  // TODO store values in a UserInfo object
+  const formInputs = {
+    age: document.querySelector(
+      'input[name="user-info_age"]'
+    ) as HTMLInputElement,
+    device: document.querySelector(
+      'input[name="user-info_device"]'
+    ) as HTMLInputElement,
+    hearingIssues: document.querySelector(
+      'input[name="user-info_hearing-issues"]:checked'
+    ) as HTMLInputElement,
+    tinnitus: document.querySelector(
+      'input[name="user-info_tinnitus"]:checked'
+    ) as HTMLInputElement,
+    hypersensibility: document.querySelector(
+      'input[name="user-info_hypersensibility"]:checked'
+    ) as HTMLInputElement,
+    soundsReactions: document.querySelector(
+      'input[name="user-info_sounds-reactions"]:checked'
+    ) as HTMLInputElement,
+    soundsReactionsList: document.querySelector(
+      'textarea[name="user-info_sounds-reactions-list"]'
+    ) as HTMLTextAreaElement
+  }
+
+  const baseUserInfo: UserInfoBase = {
+    age: parseInt(formInputs.age.value, 10),
+    device: formInputs.device.value as ListeningDevice,
+    hearingIssues: formInputs.hearingIssues.value === 'yes',
+    tinnitus: formInputs.tinnitus.value === 'yes',
+    hearingHypersensibility: formInputs.hypersensibility.value === 'yes'
+  }
+
+  const restUserInfo: WithSoundsReactions | WithNoSoundsReactions =
+    formInputs.soundsReactions.value === 'yes'
+      ? {
+          soundsReactions: true,
+          soundsList: formInputs.soundsReactionsList.value
+            .split(',')
+            .map(_ => _.trim())
+        }
+      : { soundsReactions: false }
+
+  updateStore({
+    partInProgress: Part.SoundConfig,
+    userInfo: {
+      ...baseUserInfo,
+      ...restUserInfo
+    }
+  })
 
   const { audioElement: refSoundAudioElement } = createAudio(
     document.getElementById('play-ref-sound') as HTMLButtonElement,
@@ -111,16 +137,33 @@ document.getElementById('user-info-form')?.addEventListener('submit', evt => {
     () =>
       (refSoundAudioElement.volume = parseInt(refSoundSlider.value, 10) / 100)
   )
-})
+}
 
-document.getElementById('start-tests')?.addEventListener('click', () => {
-  part3?.classList.add('hide')
-  part4?.classList.remove('hide')
+function loadPart4(): void {
+  parts[Part.SoundConfig].section?.classList.add('hide')
+  parts[Part.SoundTests].section?.classList.remove('hide')
 
-  const soundTests = createSoundTests()
+  const soundTestsWithNoFilePath = getStore()
+    .remainingSoundTests.map(({ name }) =>
+      getFilePathFromName(audioFilePaths, name)
+    )
+    .filter(isUndefined)
+
+  if (soundTestsWithNoFilePath.length > 0) {
+    // if we find a file name that does not match any file path, reset the experiment
+    resetExperiment()
+  }
+
+  const soundTests: SoundTest[] = getStore().remainingSoundTests.map(
+    ({ name, score }) => ({
+      name,
+      score,
+      filePath: getFilePathFromName(audioFilePaths, name) as string
+    })
+  )
 
   $('#experiment-progress-bar').progress({
-    value: 0,
+    value: getStore().soundTests.length,
     total: soundTests.length,
     text: {
       active: 'Expérience en cours...',
@@ -129,9 +172,6 @@ document.getElementById('start-tests')?.addEventListener('click', () => {
   })
 
   const nextTestButton = document.getElementById('next-test')
-
-  // TODO use volume set by user in part3
-  const volumeFromPart3 = 0.1
 
   const setTestSoundSlider = (score: number) =>
     ((document.getElementById(
@@ -165,7 +205,7 @@ document.getElementById('start-tests')?.addEventListener('click', () => {
       const { audioElement, play, removeListener } = createAudio(
         document.getElementById('play-test-sound') as HTMLButtonElement,
         soundTest.filePath,
-        volumeFromPart3,
+        getStore().soundVolume,
         () => {
           if (nextTestButton?.classList.contains('disabled')) {
             nextTestButton?.classList.remove('disabled')
@@ -182,7 +222,23 @@ document.getElementById('start-tests')?.addEventListener('click', () => {
         removeListener()
         audioElement.pause()
         $('#experiment-progress-bar').progress('increment', 1)
-        // TODO save to localStorage
+        updateStore({
+          soundTests: [
+            ...getStore().soundTests,
+            {
+              name: soundTest.name,
+              score: parseInt(
+                (document.getElementById(
+                  'test-sound-slider'
+                ) as HTMLInputElement).value,
+                10
+              )
+            } as SoundTest
+          ],
+          remainingSoundTests: tail(
+            soundTests.map(({ name, score }) => ({ name, score }))
+          )
+        })
         nextSound(tail(soundTests))
       }
       nextTestButton?.addEventListener('click', onClick)
@@ -204,4 +260,32 @@ document.getElementById('start-tests')?.addEventListener('click', () => {
   }
 
   nextSound(soundTests, true)
+}
+
+document
+  .getElementById('start-experiment')
+  ?.addEventListener('click', loadPart2)
+
+document.getElementById('user-info-form')?.addEventListener('submit', evt => {
+  evt.preventDefault()
+  loadPart3()
+})
+
+document.getElementById('start-tests')?.addEventListener('click', () => {
+  const refSoundSlider = document.getElementById(
+    'ref-sound-slider'
+  ) as HTMLInputElement | null
+
+  updateStore({
+    partInProgress: Part.SoundTests,
+    soundVolume: isDefined(refSoundSlider)
+      ? parseInt(refSoundSlider.value, 10) / 100
+      : 0.1,
+    remainingSoundTests: createSoundTests().map(({ name, score }) => ({
+      name,
+      score
+    }))
+  })
+
+  loadPart4()
 })

@@ -12,7 +12,7 @@
 <body>
 <div class="ui middle aligned aligned padded grid">
   <div class="ui column raised very text container">
-    <div id="part-1">
+    <div id="part-1" class="hide">
       <h2 class="ui header">Expérience en ligne sur l'audition</h2>
       <p>Bonjour,</p>
       <p>Vous vous apprêtez à commencer une expérience en ligne sur l'audition organisée par Arnaud Norena, directeur de recherche au CNRS, laboratoire de Neurosciences Sensorielles et Cognitives, Marseille. Pour toutes informations complémentaires, vous pouvez contacter Arnaud par <a class="ui label" href="mailto:arnaud.norena@univ-amu.fr"><i class="mail icon"></i> email</a>.</p>
@@ -39,20 +39,20 @@
       <form id="user-info-form" class="ui form">
         <div class="field">
           <label for="user-info_age">Quel âge avez-vous ?</label>
-          <input type="number" id="user-info_age" name="age" min="18" max="100" required>
+          <input type="number" id="user-info_age" name="user-info_age" min="18" max="100" required>
         </div>
 
         <div class="grouped fields">
           <label>Qu'utilisez-vous pour écouter les sons de cette expérience ?</label>
           <div class="field">
             <div class="ui radio checkbox">
-              <input type="radio" id="user-info_device-headset" value="headset" name="device" checked="" tabindex="0" class="hidden">
+              <input type="radio" id="user-info_device-headset" value="headset" name="user-info_device" checked="" tabindex="0" class="hidden">
               <label for="user-info_device-headset">Casque</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
-              <input type="radio" id="user-info_device-earphones" value="earphones" name="device" tabindex="0" class="hidden">
+              <input type="radio" id="user-info_device-earphones" value="earphones" name="user-info_device" tabindex="0" class="hidden">
               <label for="user-info_device-earphones">Écouteurs</label>
             </div>
           </div>
@@ -62,13 +62,13 @@
           <label>Selon vous, avez-vous des problèmes d'audition ? <i data-content="Faites-vous répéter souvent, avez-vous des problèmes pour comprendre la parole dans le bruit, etc." class="info circle icon"></i></label>
           <div class="field">
             <div class="ui radio checkbox">
-              <input type="radio" id="user-info_hearing-issues-yes" value="yes" name="hearing-issues" tabindex="0" class="hidden">
+              <input type="radio" id="user-info_hearing-issues-yes" value="yes" name="user-info_hearing-issues" tabindex="0" class="hidden">
               <label for="user-info_hearing-issues-yes">Oui</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
-              <input type="radio" id="user-info_hearing-issues-no" value="no" name="hearing-issues" checked="" tabindex="0" class="hidden">
+              <input type="radio" id="user-info_hearing-issues-no" value="no" name="user-info_hearing-issues" checked="" tabindex="0" class="hidden">
               <label for="user-info_hearing-issues-no">Non</label>
             </div>
           </div>
@@ -78,13 +78,13 @@
           <label>Avez-vous des acouphènes ? <i data-content="Sifflement d'oreille." class="info circle icon"></i></label>
           <div class="field">
             <div class="ui radio checkbox">
-              <input type="radio" id="user-info_tinnitus-yes" value="yes" name="tinnitus" tabindex="0" class="hidden">
+              <input type="radio" id="user-info_tinnitus-yes" value="yes" name="user-info_tinnitus" tabindex="0" class="hidden">
               <label for="user-info_tinnitus-yes">Oui</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
-              <input type="radio" id="user-info_tinnitus-no" value="no" name="tinnitus" checked="" tabindex="0" class="hidden">
+              <input type="radio" id="user-info_tinnitus-no" value="no" name="user-info_tinnitus" checked="" tabindex="0" class="hidden">
               <label for="user-info_tinnitus-no">Non</label>
             </div>
           </div>
@@ -94,13 +94,13 @@
           <label>Avez-vous une hypersensibilité auditive ? <i data-content="Les sons vous semblent-ils plus forts ou plus gênants que la normale ?" class="info circle icon"></i></label>
           <div class="field">
             <div class="ui radio checkbox">
-              <input type="radio" id="user-info_hypersensibility-yes" value="yes" name="hypersensibility" tabindex="0" class="hidden">
+              <input type="radio" id="user-info_hypersensibility-yes" value="yes" name="user-info_hypersensibility" tabindex="0" class="hidden">
               <label for="user-info_hypersensibility-yes">Oui</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
-              <input type="radio" id="user-info_hypersensibility-no" value="no" name="hypersensibility" checked="" tabindex="0" class="hidden">
+              <input type="radio" id="user-info_hypersensibility-no" value="no" name="user-info_hypersensibility" checked="" tabindex="0" class="hidden">
               <label for="user-info_hypersensibility-no">Non</label>
             </div>
           </div>
@@ -110,21 +110,21 @@
           <label>Y a-t-il des sons en particulier qui déclenchent chez vous des réactions très intenses telles que la colère, le dégoût... ?</label>
           <div class="field">
             <div class="ui radio checkbox">
-              <input type="radio" id="user-info_sounds-reactions-yes" value="yes" name="sounds-reactions" tabindex="0" class="hidden">
+              <input type="radio" id="user-info_sounds-reactions-yes" value="yes" name="user-info_sounds-reactions" tabindex="0" class="hidden">
               <label for="user-info_sounds-reactions-yes">Oui</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
-              <input type="radio" id="user-info_sounds-reactions-no" value="no" name="sounds-reactions" checked="" tabindex="0" class="hidden">
+              <input type="radio" id="user-info_sounds-reactions-no" value="no" name="user-info_sounds-reactions" checked="" tabindex="0" class="hidden">
               <label for="user-info_sounds-reactions-no">Non</label>
             </div>
           </div>
         </div>
 
-        <div id="sounds-reactions-list-field" class="field hide">
+        <div id="user-info_sounds-reactions-list-field" class="field hide">
           <label for="user-info_sounds-reactions-list">Quels sont les sons qui déclenchent ces réactions ? (séparés par des virgules)</label>
-          <textarea id="user-info_sounds-reactions-list" name="sounds-reactions-list" placeholder="Bruits de klaxon, grincements de dents" rows="2" ></textarea>
+          <textarea id="user-info_sounds-reactions-list" name="user-info_sounds-reactions-list" placeholder="Bruits de klaxon, grincements de dents" rows="2" ></textarea>
         </div>
 
         <div class="ui basic segment center aligned">
