@@ -120,3 +120,5 @@ dist
 
 # Webstorm specifics
 .idea
+
+sendgrid.env

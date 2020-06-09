@@ -1,4 +1,5 @@
 import audioFilePaths, { getFilePathFromName } from '../models/audioFilePath'
+import { sendData } from '../models/results'
 import { SoundTest } from '../models/soundTest'
 import { getStore, updateStore } from '../models/store'
 import { createAudio, head, isDefined, isUndefined, noop, tail } from '../utils'
@@ -125,7 +126,7 @@ const setTestSoundSlider = (score: number) =>
 const terminateExperiment = () => {
   if (!getStore().dataSent) {
     updateStore({ dataSent: true })
-    // TODO send data to lambda function
+    sendData()
   }
   document.querySelectorAll(`#${id} > p`).forEach(_ => _.classList.add('hide'))
   elements.reconfigureSoundButton?.parentElement?.classList.add('hide')

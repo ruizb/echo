@@ -4,9 +4,10 @@
   "description": "Online hearing experiment.",
   "main": "index.js",
   "scripts": {
-    "start": "npm run clean && NODE_ENV=development parcel src/client/*.html",
-    "build": "npm run clean && NODE_ENV=production parcel build src/client/*.html && npm run build-functions",
-    "build-functions": "netlify-lambda build src/functions",
+    "start": "npm run clean && NODE_ENV=development node src/server.js",
+    "build": "npm run clean && NODE_ENV=production parcel build src/client/*.html --public-url ./ && npm run build-functions",
+    "lambda:start": "netlify-lambda serve src/functions",
+    "lambda:build": "netlify-lambda build src/functions",
     "clean": "rm -rf ./dist",
     "test": "jest"
   },
@@ -40,6 +41,9 @@
     "typescript": "^3.9.5"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.1.1",
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^1.0.4",
     "parse-filepath": "^1.0.2"
   }
 }
