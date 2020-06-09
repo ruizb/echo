@@ -4,8 +4,8 @@
   "description": "Online hearing experiment.",
   "main": "index.js",
   "scripts": {
-    "start": "npm run clean && NODE_ENV=development parcel src/client/index.html",
-    "build": "npm run clean && NODE_ENV=production parcel build src/client/index.html && npm run build-functions",
+    "start": "npm run clean && NODE_ENV=development parcel src/client/*.html",
+    "build": "npm run clean && NODE_ENV=production parcel build src/client/*.html && npm run build-functions",
     "build-functions": "netlify-lambda build src/functions",
     "clean": "rm -rf ./dist",
     "test": "jest"
