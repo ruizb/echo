@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run clean && NODE_ENV=development node src/server.js",
-    "build": "npm run clean && NODE_ENV=production parcel build src/client/*.html --public-url ./ && npm run build-functions",
+    "build": "npm run clean && NODE_ENV=production parcel build src/client/*.html --public-url ./ && npm run lambda:build",
     "lambda:start": "netlify-lambda serve src/functions",
     "lambda:build": "netlify-lambda build src/functions",
     "clean": "rm -rf ./dist",
