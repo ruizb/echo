@@ -17,6 +17,7 @@ export interface Store {
   soundVolume: number
   soundTests: WithNameAndScore[]
   remainingSoundTests: WithNameAndScore[]
+  dataSent: boolean
 }
 
 export const initialStore: Store = {
@@ -24,7 +25,8 @@ export const initialStore: Store = {
   userInfo: null,
   soundVolume: 0.1,
   soundTests: [],
-  remainingSoundTests: []
+  remainingSoundTests: [],
+  dataSent: false
 }
 
 const isValidPartInProgress = (
@@ -86,12 +88,20 @@ export const loadStore = (): Store => {
               hasOwnProperty(parsedStore, 'remainingSoundTests') &&
               isArray<SoundTest>(parsedStore.remainingSoundTests)
             ) {
-              return {
-                partInProgress: parsedStore.partInProgress,
-                userInfo: parsedStore.userInfo,
-                soundVolume: parsedStore.soundVolume,
-                soundTests: parsedStore.soundTests,
-                remainingSoundTests: parsedStore.remainingSoundTests
+              if (
+                hasOwnProperty(parsedStore, 'dataSent') &&
+                isBoolean(parsedStore.dataSent)
+              ) {
+                return {
+                  partInProgress: parsedStore.partInProgress,
+                  userInfo: parsedStore.userInfo,
+                  soundVolume: parsedStore.soundVolume,
+                  soundTests: parsedStore.soundTests,
+                  remainingSoundTests: parsedStore.remainingSoundTests,
+                  dataSent: parsedStore.dataSent
+                }
+              } else {
+                throw new Error(`Invalid parsedStore.dataSent`)
               }
             } else {
               throw new Error(`Invalid parsedStore.experiment`)

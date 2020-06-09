@@ -29,7 +29,8 @@ const elements = {
   playTestSoundSliderContainer: document.getElementById(
     'play-test-sound-slider-container'
   ),
-  dataAutoSentMessage: document.getElementById('data-auto-sent-message')
+  dataAutoSentMessage: document.getElementById('data-auto-sent-message'),
+  reconfigureSoundButton: document.getElementById('reconfigure-sound')
 }
 
 let audioCache: ReturnType<typeof createAudio> | undefined = undefined
@@ -122,6 +123,12 @@ const setTestSoundSlider = (score: number) =>
   ) as HTMLInputElement).value = String(score))
 
 const terminateExperiment = () => {
+  if (!getStore().dataSent) {
+    updateStore({ dataSent: true })
+    // TODO send data to lambda function
+  }
+  document.querySelectorAll(`#${id} > p`).forEach(_ => _.classList.add('hide'))
+  elements.reconfigureSoundButton?.parentElement?.classList.add('hide')
   elements.nextTestButton?.parentElement?.classList.add('hide')
   elements.playTestSoundButtonContainer?.classList.add('hide')
   elements.playTestSoundLabelsContainer?.classList.add('hide')
