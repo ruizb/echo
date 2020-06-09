@@ -10,7 +10,7 @@
 <body>
 <script type="text/javascript">
   localStorage.removeItem('store')
-  location.href = '/index.html'
+  location.href = process.env.NODE_ENV === 'development' ? '/index.html' : '/'
 </script>
 </body>
 </html>
