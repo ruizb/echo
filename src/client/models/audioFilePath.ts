@@ -22,21 +22,21 @@ export const refSoundFilePath = refSoundSch250Hz
 
 const audioFilePaths = [
   blowingNose,
-  boire
-  // breathRunning,
-  // clavier,
-  // cough,
-  // eat,
-  // eat3,
-  // garglingWater,
-  // hardBreathing,
-  // penClick,
-  // sniffing,
-  // snoringSleepApnea,
-  // swallowing,
-  // throatClear,
-  // vomit,
-  // wheezing
+  boire,
+  breathRunning,
+  clavier,
+  cough,
+  eat,
+  eat3,
+  garglingWater,
+  hardBreathing,
+  penClick,
+  sniffing,
+  snoringSleepApnea,
+  swallowing,
+  throatClear,
+  vomit,
+  wheezing
 ]
 
 export const getFilePathFromName = (
