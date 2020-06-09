@@ -1,3 +1,8 @@
+interface Section {
+  id: string
+  section: HTMLElement | null
+}
+
 export const excludeElementFromList = <A>(element: A, list: A[]): A[] =>
   list
     .slice(0, list.indexOf(element))
@@ -50,7 +55,7 @@ export const createAudio = (
 ): {
   audioElement: HTMLAudioElement
   play: () => void
-  removeListener: () => void
+  removePlayButtonClickListener: () => void
 } => {
   const playLabel = playButton?.querySelector('span')
 
@@ -94,6 +99,30 @@ export const createAudio = (
   return {
     audioElement: audio,
     play,
-    removeListener: () => playButton?.removeEventListener('click', listener)
+    removePlayButtonClickListener: () =>
+      playButton?.removeEventListener('click', listener)
   }
+}
+
+export const sectionTransition = (options: {
+  from: Section
+  to: Section
+  direction?: 'forward' | 'backward'
+  onComplete?: () => void
+}): void => {
+  const { from, to, direction = 'forward', onComplete = noop } = options
+
+  $(`#${from.id}`).transition({
+    animation: direction === 'forward' ? 'fade right' : 'fade left',
+    duration: 250,
+    onComplete: () => {
+      from.section?.classList.add('hide')
+      to.section?.classList.remove('hide')
+      $(`#${to.id}`).transition({
+        animation: direction === 'forward' ? 'fade left in' : 'fade right in',
+        duration: 250
+      })
+      onComplete()
+    }
+  })
 }

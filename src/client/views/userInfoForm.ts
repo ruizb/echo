@@ -1,31 +1,52 @@
 import { Part } from '../models/part'
 import { updateStore } from '../models/store'
 
-export const section = document.getElementById('part-2')
+export const id = 'part-2'
 
-export const load = (prevSection: HTMLElement | null) => () => {
-  prevSection?.classList.add('hide')
-  section?.classList.remove('hide')
+export const section = document.getElementById(id)
 
+const elements = {
+  soundsReactionsListField: document.getElementById(
+    'user-info_sounds-reactions-list-field'
+  ),
+  soundsReactionsYesField: document.getElementById(
+    'user-info_sounds-reactions-yes'
+  ),
+  soundsReactionsNoField: document.getElementById(
+    'user-info_sounds-reactions-yes'
+  )
+}
+
+const onSoundsReactionsYes = () =>
+  elements.soundsReactionsListField?.classList.remove('hide')
+
+const onSoundsReactionsNo = () =>
+  elements.soundsReactionsListField?.classList.add('hide')
+
+export const load = () => {
   updateStore({ partInProgress: Part.UserInfoForm })
 
   window.scroll(0, 0)
 
   $('i.icon.info').popup()
 
-  const soundsReactionsListField = document.getElementById(
-    'user-info_sounds-reactions-list-field'
+  elements.soundsReactionsYesField?.addEventListener(
+    'click',
+    onSoundsReactionsYes
   )
+  elements.soundsReactionsNoField?.addEventListener(
+    'click',
+    onSoundsReactionsNo
+  )
+}
 
-  document
-    .getElementById('user-info_sounds-reactions-yes')
-    ?.addEventListener('click', () =>
-      soundsReactionsListField?.classList.remove('hide')
-    )
-
-  document
-    .getElementById('user-info_sounds-reactions-no')
-    ?.addEventListener('click', () =>
-      soundsReactionsListField?.classList.add('hide')
-    )
+export const unload = () => {
+  elements.soundsReactionsYesField?.removeEventListener(
+    'click',
+    onSoundsReactionsYes
+  )
+  elements.soundsReactionsNoField?.removeEventListener(
+    'click',
+    onSoundsReactionsNo
+  )
 }

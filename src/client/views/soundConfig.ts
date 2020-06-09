@@ -1,57 +1,64 @@
 import { refSoundFilePath } from '../models/audioFilePath'
 import { Part } from '../models/part'
-import { updateStore } from '../models/store'
+import { getStore, updateStore } from '../models/store'
 import {
   ListeningDevice,
   UserInfoBase,
   WithNoSoundsReactions,
   WithSoundsReactions
 } from '../models/userInfo'
-import { createAudio } from '../utils'
+import { createAudio, isDefined } from '../utils'
 
-export const section = document.getElementById('part-3')
+export const id = 'part-3'
 
-export const load = (prevSection: HTMLElement | null) => () => {
-  prevSection?.classList.add('hide')
-  section?.classList.remove('hide')
+export const section = document.getElementById(id)
 
-  const formInputs = {
-    age: document.querySelector(
-      'input[name="user-info_age"]'
-    ) as HTMLInputElement,
-    device: document.querySelector(
-      'input[name="user-info_device"]'
-    ) as HTMLInputElement,
-    hearingIssues: document.querySelector(
-      'input[name="user-info_hearing-issues"]:checked'
-    ) as HTMLInputElement,
-    tinnitus: document.querySelector(
-      'input[name="user-info_tinnitus"]:checked'
-    ) as HTMLInputElement,
-    hypersensibility: document.querySelector(
-      'input[name="user-info_hypersensibility"]:checked'
-    ) as HTMLInputElement,
-    soundsReactions: document.querySelector(
-      'input[name="user-info_sounds-reactions"]:checked'
-    ) as HTMLInputElement,
-    soundsReactionsList: document.querySelector(
-      'textarea[name="user-info_sounds-reactions-list"]'
-    ) as HTMLTextAreaElement
-  }
+const elements = {
+  playRefSoundButton: document.getElementById(
+    'play-ref-sound'
+  ) as HTMLButtonElement,
+  refSoundSlider: document.getElementById(
+    'ref-sound-slider'
+  ) as HTMLInputElement | null,
+  ageField: document.querySelector(
+    'input[name="user-info_age"]'
+  ) as HTMLInputElement,
+  deviceField: document.querySelector(
+    'input[name="user-info_device"]'
+  ) as HTMLInputElement,
+  hearingIssuesField: document.querySelector(
+    'input[name="user-info_hearing-issues"]:checked'
+  ) as HTMLInputElement,
+  tinnitusField: document.querySelector(
+    'input[name="user-info_tinnitus"]:checked'
+  ) as HTMLInputElement,
+  hypersensibilityField: document.querySelector(
+    'input[name="user-info_hypersensibility"]:checked'
+  ) as HTMLInputElement,
+  soundsReactionsField: document.querySelector(
+    'input[name="user-info_sounds-reactions"]:checked'
+  ) as HTMLInputElement,
+  soundsReactionsListField: document.querySelector(
+    'textarea[name="user-info_sounds-reactions-list"]'
+  ) as HTMLTextAreaElement
+}
 
+let audioCache: ReturnType<typeof createAudio> | undefined = undefined
+
+export const handleUserInfoForm = () => {
   const baseUserInfo: UserInfoBase = {
-    age: parseInt(formInputs.age.value, 10),
-    device: formInputs.device.value as ListeningDevice,
-    hearingIssues: formInputs.hearingIssues.value === 'yes',
-    tinnitus: formInputs.tinnitus.value === 'yes',
-    hearingHypersensibility: formInputs.hypersensibility.value === 'yes'
+    age: parseInt(elements.ageField.value, 10),
+    device: elements.deviceField.value as ListeningDevice,
+    hearingIssues: elements.hearingIssuesField.value === 'yes',
+    tinnitus: elements.tinnitusField.value === 'yes',
+    hearingHypersensibility: elements.hypersensibilityField.value === 'yes'
   }
 
   const restUserInfo: WithSoundsReactions | WithNoSoundsReactions =
-    formInputs.soundsReactions.value === 'yes'
+    elements.soundsReactionsField.value === 'yes'
       ? {
           soundsReactions: true,
-          soundsList: formInputs.soundsReactionsList.value
+          soundsList: elements.soundsReactionsListField.value
             .split(',')
             .map(_ => _.trim())
         }
@@ -64,20 +71,35 @@ export const load = (prevSection: HTMLElement | null) => () => {
       ...restUserInfo
     }
   })
+}
 
-  const { audioElement: refSoundAudioElement } = createAudio(
-    document.getElementById('play-ref-sound') as HTMLButtonElement,
+const onRefSoundSliderChange = () => {
+  if (isDefined(elements.refSoundSlider) && isDefined(audioCache)) {
+    audioCache.audioElement.volume =
+      parseInt(elements.refSoundSlider.value, 10) / 100
+  }
+}
+
+export const load = () => {
+  if (isDefined(audioCache)) {
+    audioCache.removePlayButtonClickListener()
+  }
+  audioCache = createAudio(
+    elements.playRefSoundButton,
     refSoundFilePath,
-    0.1
+    getStore().soundVolume
   )
 
-  const refSoundSlider = document.getElementById(
-    'ref-sound-slider'
-  ) as HTMLInputElement | null
+  if (isDefined(elements.refSoundSlider)) {
+    elements.refSoundSlider.value = String(getStore().soundVolume * 100)
+  }
 
-  refSoundSlider?.addEventListener(
-    'change',
-    () =>
-      (refSoundAudioElement.volume = parseInt(refSoundSlider.value, 10) / 100)
-  )
+  elements.refSoundSlider?.addEventListener('change', onRefSoundSliderChange)
+}
+
+export const unload = () => {
+  if (isDefined(audioCache)) {
+    audioCache.removePlayButtonClickListener()
+  }
+  elements.refSoundSlider?.removeEventListener('change', onRefSoundSliderChange)
 }

@@ -1,8 +1,9 @@
 import { Part } from './models/part'
 import { createSoundTests } from './models/soundTest'
 import { getStore, initialStore, updateStore } from './models/store'
-import { isDefined, noop } from './utils'
+import { isDefined, noop, sectionTransition } from './utils'
 import * as introduction from './views/introduction'
+import { handleUserInfoForm } from './views/soundConfig'
 import * as soundConfig from './views/soundConfig'
 import * as userInfoForm from './views/userInfoForm'
 import * as soundTests from './views/soundTests'
@@ -12,36 +13,55 @@ const resetExperiment = (): void => {
   location.reload()
 }
 
-const getSectionAndLoad = (part: Part): [HTMLElement | null, () => void] => {
+const getSectionAndLoad = (
+  part: Part
+): [HTMLElement | null, () => void, () => void] => {
   switch (part) {
     case Part.Introduction:
-      return [introduction.section, noop]
+      return [introduction.section, introduction.load, introduction.unload]
     case Part.UserInfoForm:
-      return [userInfoForm.section, userInfoForm.load(introduction.section)]
+      return [userInfoForm.section, userInfoForm.load, userInfoForm.unload]
     case Part.SoundConfig:
-      return [soundConfig.section, soundConfig.load(userInfoForm.section)]
+      return [soundConfig.section, soundConfig.load, soundConfig.unload]
     case Part.SoundTests:
       return [
         soundTests.section,
-        soundTests.load(soundConfig.section, resetExperiment)
+        soundTests.load(resetExperiment),
+        soundTests.unload
       ]
     default:
-      return [null, noop]
+      return [null, noop, noop]
   }
 }
 
-const [section, load] = getSectionAndLoad(getStore().partInProgress)
+const [section, load, unload] = getSectionAndLoad(getStore().partInProgress)
 
 section?.classList.remove('hide')
 load()
 
-document
-  .getElementById('start-experiment')
-  ?.addEventListener('click', userInfoForm.load(introduction.section))
+document.getElementById('start-experiment')?.addEventListener('click', () =>
+  sectionTransition({
+    from: introduction,
+    to: userInfoForm,
+    onComplete: () => {
+      introduction.unload()
+      userInfoForm.load()
+    }
+  })
+)
 
 document.getElementById('user-info-form')?.addEventListener('submit', evt => {
   evt.preventDefault()
-  soundConfig.load(userInfoForm.section)()
+
+  sectionTransition({
+    from: userInfoForm,
+    to: soundConfig,
+    onComplete: () => {
+      handleUserInfoForm()
+      userInfoForm.unload()
+      soundConfig.load()
+    }
+  })
 })
 
 document.getElementById('start-tests')?.addEventListener('click', () => {
@@ -53,12 +73,36 @@ document.getElementById('start-tests')?.addEventListener('click', () => {
     partInProgress: Part.SoundTests,
     soundVolume: isDefined(refSoundSlider)
       ? parseInt(refSoundSlider.value, 10) / 100
-      : 0.1,
-    remainingSoundTests: createSoundTests().map(({ name, score }) => ({
-      name,
-      score
-    }))
+      : 0.1
   })
 
-  soundTests.load(soundConfig.section, resetExperiment)()
+  if (getStore().remainingSoundTests.length === 0) {
+    updateStore({
+      remainingSoundTests: createSoundTests().map(({ name, score }) => ({
+        name,
+        score
+      }))
+    })
+  }
+
+  sectionTransition({
+    from: soundConfig,
+    to: soundTests,
+    onComplete: () => {
+      soundTests.load(resetExperiment)()
+      soundConfig.unload()
+    }
+  })
+})
+
+document.getElementById('reconfigure-sound')?.addEventListener('click', () => {
+  sectionTransition({
+    from: soundTests,
+    to: soundConfig,
+    direction: 'backward',
+    onComplete: () => {
+      unload()
+      soundConfig.load()
+    }
+  })
 })
