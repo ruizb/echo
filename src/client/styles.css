@@ -20,3 +20,10 @@ body > .grid {
     font-size: 1rem;
   }
 }
+
+.wrap-text-overflow {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}

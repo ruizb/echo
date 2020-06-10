@@ -12,4 +12,16 @@ export const sendData = () =>
       method: 'POST',
       body: JSON.stringify(createResults(getStore()))
     })
-    .then(console.log, console.error)
+    .then(
+      res => {
+        console.log(res)
+        if (res.status >= 400) {
+          throw res
+        }
+        return res
+      },
+      err => {
+        console.error(err)
+        throw err
+      }
+    )

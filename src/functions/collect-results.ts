@@ -79,7 +79,7 @@ export async function handler(event: any, context: Context) {
         statusCode: 400,
         body: JSON.stringify({
           message: `Results could not be collected.`,
-          err: JSON.stringify(err)
+          err: err.message
         })
       }
     }

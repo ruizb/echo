@@ -126,13 +126,6 @@ const setTestSoundSlider = (score: number) =>
     'test-sound-slider'
   ) as HTMLInputElement).value = String(score))
 
-const terminateExperiment = () => {
-  if (!getStore().dataSent) {
-    updateStore({ dataSent: true })
-    sendData()
-  }
-}
-
 const nextSound = (
   soundTests: SoundTest[],
   firstSoundTest: boolean = false
@@ -197,7 +190,5 @@ const nextSound = (
       nextSound(remainingSoundTests)
     }
     nextButton?.addEventListener('click', onNextSoundTest)
-  } else {
-    terminateExperiment()
   }
 }
