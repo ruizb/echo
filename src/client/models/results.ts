@@ -8,7 +8,7 @@ export const createResults = ({
 
 export const sendData = () =>
   window
-    .fetch('/.netlify/functions/hello', {
+    .fetch('/.netlify/functions/collect-results', {
       method: 'POST',
       body: JSON.stringify(createResults(getStore()))
     })

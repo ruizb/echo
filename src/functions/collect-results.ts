@@ -1,5 +1,6 @@
 import { Context } from 'aws-lambda'
 import * as sgMail from '@sendgrid/mail'
+import { ClientResponse } from '@sendgrid/client/src/response'
 
 const {
   SENDGRID_API_KEY,
@@ -25,7 +26,7 @@ const sendEmail = (
     senderName: string
     htmlMessage: string
   }
-) =>
+): Promise<ClientResponse> =>
   new Promise((resolve, reject) => {
     console.log('Sending the email...')
 
@@ -66,15 +67,28 @@ export async function handler(event: any, context: Context) {
         htmlMessage: `<strong>${event.body}</strong>`
       })
       console.log(res)
+      return {
+        statusCode: 200,
+        body: JSON.stringify({
+          message: `Results successfully collected!`
+        })
+      }
     } catch (err) {
       console.error(err)
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          message: `Results could not be collected.`,
+          err: JSON.stringify(err)
+        })
+      }
     }
   }
 
   return {
     statusCode: 200,
     body: JSON.stringify({
-      message: `Hello world ${Math.floor(Math.random() * 10)}`
+      message: `Nothing special happened.`
     })
   }
 }
