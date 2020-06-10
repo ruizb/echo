@@ -40,9 +40,13 @@ const sendEmail = (
     client
       .send(data)
       .then(([response, body]) => {
+        console.log('Successfully sent email', response)
         resolve(response)
       })
-      .catch(reject)
+      .catch(err => {
+        console.error('Could not send email', err)
+        reject(err)
+      })
   })
 
 export async function handler(event: any, context: Context) {
