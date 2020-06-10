@@ -56,14 +56,19 @@ export async function handler(event: any, context: Context) {
   sgMail.setApiKey(SENDGRID_API_KEY!)
 
   if (event.httpMethod === 'POST' && !!event.body) {
-    sendEmail(sgMail, {
-      senderName: SENDGRID_FROM_NAME!,
-      senderEmail: SENDGRID_FROM_EMAIL!,
-      receiverEmail: SENDGRID_TO_EMAIL!,
-      subject: `Résultats de l'expérience sur l'audition en ligne`,
-      message: event.body,
-      htmlMessage: `<strong>${event.body}</strong>`
-    }).then(console.log, console.error)
+    try {
+      const res = await sendEmail(sgMail, {
+        senderName: SENDGRID_FROM_NAME!,
+        senderEmail: SENDGRID_FROM_EMAIL!,
+        receiverEmail: SENDGRID_TO_EMAIL!,
+        subject: `Résultats de l'expérience sur l'audition en ligne`,
+        message: event.body,
+        htmlMessage: `<strong>${event.body}</strong>`
+      })
+      console.log(res)
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   return {
