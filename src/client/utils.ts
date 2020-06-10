@@ -66,6 +66,10 @@ export const createAudio = (
     playLabel.innerText = 'Jouer le son'
   }
 
+  audio.addEventListener('pause', () =>
+    playButton?.classList.remove('disabled')
+  )
+
   audio.addEventListener('ended', () => {
     playButton?.classList.remove('disabled')
     if (isDefined(playLabel)) {

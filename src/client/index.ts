@@ -7,6 +7,7 @@ import { handleUserInfoForm } from './views/soundConfig'
 import * as soundConfig from './views/soundConfig'
 import * as userInfoForm from './views/userInfoForm'
 import * as soundTests from './views/soundTests'
+import * as end from './views/end'
 
 const resetExperiment = (): void => {
   updateStore(initialStore)
@@ -29,6 +30,8 @@ const getSectionAndLoad = (
         soundTests.load(resetExperiment),
         soundTests.unload
       ]
+    case Part.End:
+      return [end.section, end.load, end.unload]
     default:
       return [null, noop, noop]
   }
@@ -103,6 +106,21 @@ document.getElementById('reconfigure-sound')?.addEventListener('click', () => {
     onComplete: () => {
       unload()
       soundConfig.load()
+    }
+  })
+})
+
+document.getElementById('end-experiment')?.addEventListener('click', () => {
+  updateStore({
+    partInProgress: Part.End
+  })
+
+  sectionTransition({
+    from: soundTests,
+    to: end,
+    onComplete: () => {
+      soundTests.unload()
+      end.load()
     }
   })
 })

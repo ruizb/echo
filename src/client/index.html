@@ -218,6 +218,10 @@
           <i class="right arrow icon"></i>
           Passer au son suivant
         </button>
+        <button id="end-experiment" class="ui right labeled large icon disabled primary button">
+          <i class="right arrow icon"></i>
+          Terminer l'expérience
+        </button>
       </div>
 
       <div class="ui basic segment center aligned" style="padding-top: 0;">
@@ -226,8 +230,23 @@
           Reconfigurer le son
         </button>
       </div>
+    </div>
 
-      <div id="data-auto-sent-message" class="ui blue message small hide">
+    <div id="part-5" class="hide">
+      <div class="ui padded grid center aligned">
+        <div class="ui row">
+          <div class="fourteen wide column">
+            <div id="end-experiment-progress-bar" class="ui success progress small">
+              <div class="bar" style="transition-duration: 0s">
+                <div class="progress"></div>
+              </div>
+              <div class="label">Expérience terminée !</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="data-auto-sent-message" class="ui blue message small">
         <p><i class="info circle blue icon"></i>Les données ont été automatiquement recueillies, merci !</p>
       </div>
     </div>

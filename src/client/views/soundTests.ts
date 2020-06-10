@@ -21,6 +21,9 @@ const elements = {
   playTestSoundButton: document.getElementById(
     'play-test-sound'
   ) as HTMLButtonElement,
+  endExperimentButton: document.getElementById(
+    'end-experiment'
+  ) as HTMLButtonElement,
   playTestSoundButtonContainer: document.getElementById(
     'play-test-sound-button-container'
   ),
@@ -30,7 +33,6 @@ const elements = {
   playTestSoundSliderContainer: document.getElementById(
     'play-test-sound-slider-container'
   ),
-  dataAutoSentMessage: document.getElementById('data-auto-sent-message'),
   reconfigureSoundButton: document.getElementById('reconfigure-sound')
 }
 
@@ -79,6 +81,7 @@ export const load = (resetExperiment: () => void) => () => {
 
 export const unload = () => {
   if (isDefined(audioCache)) {
+    audioCache.audioElement.pause()
     audioCache.removePlayButtonClickListener()
   }
   elements.sliderPleasantLabel?.removeEventListener(
@@ -128,21 +131,12 @@ const terminateExperiment = () => {
     updateStore({ dataSent: true })
     sendData()
   }
-  document.querySelectorAll(`#${id} > p`).forEach(_ => _.classList.add('hide'))
-  elements.reconfigureSoundButton?.parentElement?.classList.add('hide')
-  elements.nextTestButton?.parentElement?.classList.add('hide')
-  elements.playTestSoundButtonContainer?.classList.add('hide')
-  elements.playTestSoundLabelsContainer?.classList.add('hide')
-  elements.playTestSoundSliderContainer?.classList.add('hide')
-  elements.dataAutoSentMessage?.classList.remove('hide')
 }
 
 const nextSound = (
   soundTests: SoundTest[],
   firstSoundTest: boolean = false
 ) => {
-  elements.nextTestButton?.classList.add('disabled')
-
   if (isDefined(audioCache)) {
     audioCache.audioElement.pause()
     audioCache.removePlayButtonClickListener()
@@ -151,7 +145,19 @@ const nextSound = (
   const soundTest = head(soundTests)
   const remainingSoundTests = tail(soundTests)
 
+  const nextButton =
+    remainingSoundTests.length === 0
+      ? elements.endExperimentButton
+      : elements.nextTestButton
+
+  nextButton?.classList.add('disabled')
+
   if (isDefined(soundTest)) {
+    if (nextButton === elements.endExperimentButton) {
+      elements.nextTestButton?.classList.add('hide')
+      elements.endExperimentButton?.classList.remove('hide')
+    }
+
     setTestSoundSlider(soundTest.score)
 
     audioCache = createAudio(
@@ -159,8 +165,8 @@ const nextSound = (
       soundTest.filePath,
       getStore().soundVolume,
       () => {
-        if (elements.nextTestButton?.classList.contains('disabled')) {
-          elements.nextTestButton?.classList.remove('disabled')
+        if (nextButton?.classList.contains('disabled')) {
+          nextButton?.classList.remove('disabled')
         }
       }
     )
@@ -170,7 +176,7 @@ const nextSound = (
     }
 
     const onNextSoundTest = () => {
-      elements.nextTestButton?.removeEventListener('click', onNextSoundTest)
+      nextButton?.removeEventListener('click', onNextSoundTest)
 
       $('#experiment-progress-bar').progress('increment', 1)
 
@@ -190,7 +196,7 @@ const nextSound = (
 
       nextSound(remainingSoundTests)
     }
-    elements.nextTestButton?.addEventListener('click', onNextSoundTest)
+    nextButton?.addEventListener('click', onNextSoundTest)
   } else {
     terminateExperiment()
   }

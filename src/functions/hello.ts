@@ -6,12 +6,6 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY!)
 export async function handler(event: any, context: Context) {
   console.log('context', context)
   console.log('event', event)
-  console.log(
-    'env vars availability',
-    !!process.env.SENDGRID_API_KEY,
-    !!process.env.SENDGRID_FROM_EMAIL,
-    !!process.env.SENDGRID_TO_EMAIL
-  )
 
   if (event.httpMethod === 'POST' && !!event.body) {
     if (process.env.SENDGRID_FROM_EMAIL && process.env.SENDGRID_TO_EMAIL) {
