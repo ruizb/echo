@@ -1,5 +1,4 @@
 import audioFilePaths, { getFilePathFromName } from '../models/audioFilePath'
-import { sendData } from '../models/results'
 import { SoundTest } from '../models/soundTest'
 import { getStore, updateStore } from '../models/store'
 import { createAudio, head, isDefined, isUndefined, noop, tail } from '../utils'
