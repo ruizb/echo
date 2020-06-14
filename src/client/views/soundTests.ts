@@ -31,8 +31,7 @@ const elements = {
   ),
   playTestSoundSliderContainer: document.getElementById(
     'play-test-sound-slider-container'
-  ),
-  reconfigureSoundButton: document.getElementById('reconfigure-sound')
+  )
 }
 
 let audioCache: ReturnType<typeof createAudio> | undefined = undefined

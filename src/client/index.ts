@@ -98,18 +98,6 @@ document.getElementById('start-tests')?.addEventListener('click', () => {
   })
 })
 
-document.getElementById('reconfigure-sound')?.addEventListener('click', () => {
-  sectionTransition({
-    from: soundTests,
-    to: soundConfig,
-    direction: 'backward',
-    onComplete: () => {
-      unload()
-      soundConfig.load()
-    }
-  })
-})
-
 document.getElementById('end-experiment')?.addEventListener('click', () => {
   updateStore({
     partInProgress: Part.End
