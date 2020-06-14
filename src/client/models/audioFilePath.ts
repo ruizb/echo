@@ -1,5 +1,3 @@
-import refSoundSch250Hz from '../sounds/ref-sound-sch-250Hz.wav'
-
 import birds from '../sounds/Birds_1.wav'
 import blowingNose from '../sounds/Blowing_nose1.wav'
 import boire from '../sounds/Boire.wav'
@@ -30,7 +28,7 @@ import whiteNoise from '../sounds/White Noise_1.wav'
 
 import { head } from '../utils'
 
-export const refSoundFilePath = refSoundSch250Hz
+export const refSoundFilePath = whiteNoise
 
 const audioFilePaths = [
   birds,
@@ -58,8 +56,7 @@ const audioFilePaths = [
   swallowing,
   throatClear,
   vomit,
-  wheezing,
-  whiteNoise
+  wheezing
 ]
 
 export const getFilePathFromName = (
