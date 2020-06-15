@@ -1,12 +1,7 @@
 import { refSoundFilePath } from '../models/audioFilePath'
 import { Part } from '../models/part'
 import { getStore, updateStore } from '../models/store'
-import {
-  ListeningDevice,
-  UserInfoBase,
-  WithNoSoundsReactions,
-  WithSoundsReactions
-} from '../models/userInfo'
+import { ListeningDevice, UserInfo } from '../models/userInfo'
 import { createAudio, isDefined } from '../utils'
 
 export const id = 'part-3'
@@ -46,30 +41,22 @@ const elements = {
 let audioCache: ReturnType<typeof createAudio> | undefined = undefined
 
 export const handleUserInfoForm = () => {
-  const baseUserInfo: UserInfoBase = {
+  const soundsReactions = elements.soundsReactionsField.value === 'yes'
+  const userInfo: UserInfo = {
     age: parseInt(elements.ageField.value, 10),
     device: elements.deviceField.value as ListeningDevice,
     hearingIssues: elements.hearingIssuesField.value === 'yes',
     tinnitus: elements.tinnitusField.value === 'yes',
-    hearingHypersensibility: elements.hypersensibilityField.value === 'yes'
+    hearingHypersensibility: elements.hypersensibilityField.value === 'yes',
+    soundsReactions,
+    soundsList: soundsReactions
+      ? elements.soundsReactionsListField.value.split(',').map(_ => _.trim())
+      : []
   }
-
-  const restUserInfo: WithSoundsReactions | WithNoSoundsReactions =
-    elements.soundsReactionsField.value === 'yes'
-      ? {
-          soundsReactions: true,
-          soundsList: elements.soundsReactionsListField.value
-            .split(',')
-            .map(_ => _.trim())
-        }
-      : { soundsReactions: false }
 
   updateStore({
     partInProgress: Part.SoundConfig,
-    userInfo: {
-      ...baseUserInfo,
-      ...restUserInfo
-    }
+    userInfo
   })
 }
 

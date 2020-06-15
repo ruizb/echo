@@ -5,27 +5,15 @@ export const enum ListeningDevice {
   EarPhones = 'earphones'
 }
 
-export interface UserInfoBase {
+export interface UserInfo {
   age: number
   device: ListeningDevice
   hearingIssues: boolean
   tinnitus: boolean
   hearingHypersensibility: boolean
-}
-
-export interface WithNoSoundsReactions {
-  soundsReactions: false
-}
-
-export interface WithSoundsReactions {
-  soundsReactions: true
+  soundsReactions: boolean
   soundsList: string[]
 }
-
-type UserInfoNoSoundsReactions = UserInfoBase & WithNoSoundsReactions
-type UserInfoWithSoundsReactions = UserInfoBase & WithSoundsReactions
-
-export type UserInfo = UserInfoNoSoundsReactions | UserInfoWithSoundsReactions
 
 export const isValidDevice = (device: unknown): device is ListeningDevice =>
   isString(device) &&

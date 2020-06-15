@@ -1,6 +1,8 @@
 import { Context } from 'aws-lambda'
 import * as sgMail from '@sendgrid/mail'
 import { ClientResponse } from '@sendgrid/client/src/response'
+import transformResultsToCsv from './helpers/transformResultsToCsv'
+import { generateRandomString } from './helpers/utils'
 
 const {
   SENDGRID_API_KEY,
@@ -11,33 +13,10 @@ const {
 
 const sendEmail = (
   client: typeof sgMail,
-  {
-    senderEmail,
-    senderName,
-    receiverEmail,
-    subject,
-    message,
-    htmlMessage
-  }: {
-    senderEmail: string
-    receiverEmail: string
-    subject: string
-    message: string
-    senderName: string
-    htmlMessage: string
-  }
+  data: Parameters<typeof sgMail.send>[0]
 ): Promise<ClientResponse> =>
   new Promise((resolve, reject) => {
     console.log('Sending the email...')
-
-    const data = {
-      from: { email: senderEmail, name: senderName },
-      subject,
-      to: receiverEmail,
-      text: message,
-      html: htmlMessage
-    }
-
     client
       .send(data)
       .then(([response, body]) => {
@@ -58,14 +37,28 @@ export async function handler(event: any, context: Context) {
 
   if (event.httpMethod === 'POST' && !!event.body) {
     try {
-      const res = await sendEmail(sgMail, {
-        senderName: SENDGRID_FROM_NAME!,
-        senderEmail: SENDGRID_FROM_EMAIL!,
-        receiverEmail: SENDGRID_TO_EMAIL!,
-        subject: `Résultats de l'expérience sur l'audition en ligne`,
-        message: event.body,
-        htmlMessage: `<strong>${event.body}</strong>`
-      })
+      const results = JSON.parse(event.body)
+      const res = await sendEmail(sgMail, [
+        {
+          from: { name: SENDGRID_FROM_NAME!, email: SENDGRID_FROM_EMAIL! },
+          to: SENDGRID_TO_EMAIL!,
+          subject: `Résultats de l'expérience sur l'audition en ligne`,
+          text: 'Résultats en pièce-jointe au format CSV.',
+          html: `Résultats en pièce-jointe au format <strong>CSV</strong>.`,
+          attachments: [
+            {
+              content: new Buffer(transformResultsToCsv(results)).toString(
+                'base64'
+              ),
+              filename: `online-hearing-exp-results_${Date.now()}_${generateRandomString(
+                5
+              )}.csv`,
+              type: 'text/csv',
+              disposition: 'attachment'
+            }
+          ]
+        }
+      ])
       console.log(res)
       return {
         statusCode: 200,
@@ -74,7 +67,7 @@ export async function handler(event: any, context: Context) {
         })
       }
     } catch (err) {
-      console.error(err)
+      console.error(JSON.stringify(err, null, 2))
       return {
         statusCode: 400,
         body: JSON.stringify({
