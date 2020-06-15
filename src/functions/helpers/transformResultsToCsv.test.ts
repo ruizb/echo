@@ -39,7 +39,7 @@ describe('transformResultsToCsv', () => {
         soundTests
       })
     )
-      .toEqual(`user-info-label,user-info-value,noise-tolerance-label,noise-tolerance-score,filename,score1,score2,score3
+      .toEqual(`user-info-label,user-info-value,noise-tolerance-label,noise-tolerance-value,filename,score1,score2,score3
 age,28,,,,,,
 device,headset,,,,,,
 hearing-issues,no,,,,,,
@@ -71,7 +71,7 @@ sound-volume,0.31,,,,,,
         soundTests
       })
     )
-      .toEqual(`user-info-label,user-info-value,noise-tolerance-label,noise-tolerance-score,filename,score1,score2,score3
+      .toEqual(`user-info-label,user-info-value,noise-tolerance-label,noise-tolerance-value,filename,score1,score2,score3
 age,28,,,,,,
 device,headset,,,,,,
 hearing-issues,no,,,,,,
@@ -104,7 +104,7 @@ sound-volume,0.31,,,,,,
         soundTests
       })
     )
-      .toEqual(`user-info-label,user-info-value,noise-tolerance-label,noise-tolerance-score,filename,score1,score2
+      .toEqual(`user-info-label,user-info-value,noise-tolerance-label,noise-tolerance-value,filename,score1,score2
 age,28,,,,,
 device,headset,,,,,
 hearing-issues,no,,,,,
