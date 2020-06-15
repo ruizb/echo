@@ -2,9 +2,10 @@ import { getStore, Store } from './store'
 
 export const createResults = ({
   userInfo,
+  noiseTolerance,
   soundVolume,
   soundTests
-}: Store) => ({ userInfo, soundVolume, soundTests })
+}: Store) => ({ userInfo, noiseTolerance, soundVolume, soundTests })
 
 export const sendData = () =>
   window

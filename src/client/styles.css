@@ -27,3 +27,21 @@ body > .grid {
   white-space: -o-pre-wrap;
   word-wrap: break-word;
 }
+
+.noise-tolerance-row {
+  align-items: center !important;
+  display: flex;
+  padding-top: 0 !important;
+}
+
+.small-text {
+  font-size: 0.8rem;
+}
+
+.no-left-padding {
+  padding-left: 0 !important;
+}
+
+.no-right-padding {
+  padding-right: 0 !important;
+}

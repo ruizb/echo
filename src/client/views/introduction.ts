@@ -1,6 +1,7 @@
+import { Part } from '../models/part'
 import { noop } from '../utils'
 
-export const id = 'part-1'
+export const id = `${Part.Introduction}-section`
 
 export const section = document.getElementById(id)
 

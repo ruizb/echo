@@ -3,9 +3,11 @@ import { createSoundTests } from './models/soundTest'
 import { getStore, initialStore, updateStore } from './models/store'
 import { isDefined, noop, sectionTransition } from './utils'
 import * as introduction from './views/introduction'
-import { handleUserInfoForm } from './views/soundConfig'
+import { handleNoiseToleranceForm } from './views/noiseToleranceForm'
 import * as soundConfig from './views/soundConfig'
+import { handleUserInfoForm } from './views/userInfoForm'
 import * as userInfoForm from './views/userInfoForm'
+import * as noiseToleranceForm from './views/noiseToleranceForm'
 import * as soundTests from './views/soundTests'
 import * as end from './views/end'
 
@@ -22,6 +24,12 @@ const getSectionAndLoad = (
       return [introduction.section, introduction.load, introduction.unload]
     case Part.UserInfoForm:
       return [userInfoForm.section, userInfoForm.load, userInfoForm.unload]
+    case Part.NoiseToleranceForm:
+      return [
+        noiseToleranceForm.section,
+        noiseToleranceForm.load,
+        noiseToleranceForm.unload
+      ]
     case Part.SoundConfig:
       return [soundConfig.section, soundConfig.load, soundConfig.unload]
     case Part.SoundTests:
@@ -37,12 +45,14 @@ const getSectionAndLoad = (
   }
 }
 
-const [section, load, unload] = getSectionAndLoad(getStore().partInProgress)
+const [section, load] = getSectionAndLoad(getStore().partInProgress)
 
 section?.classList.remove('hide')
 load()
 
-document.getElementById('start-experiment')?.addEventListener('click', () =>
+document.getElementById('start-experiment')?.addEventListener('click', () => {
+  updateStore({ partInProgress: Part.UserInfoForm })
+
   sectionTransition({
     from: introduction,
     to: userInfoForm,
@@ -51,21 +61,41 @@ document.getElementById('start-experiment')?.addEventListener('click', () =>
       userInfoForm.load()
     }
   })
-)
+})
 
 document.getElementById('user-info-form')?.addEventListener('submit', evt => {
   evt.preventDefault()
 
+  updateStore({ partInProgress: Part.NoiseToleranceForm })
+
   sectionTransition({
     from: userInfoForm,
-    to: soundConfig,
+    to: noiseToleranceForm,
     onComplete: () => {
       handleUserInfoForm()
       userInfoForm.unload()
-      soundConfig.load()
+      noiseToleranceForm.load()
     }
   })
 })
+
+document
+  .getElementById('noise-tolerance-form')
+  ?.addEventListener('submit', evt => {
+    evt.preventDefault()
+
+    updateStore({ partInProgress: Part.SoundConfig })
+
+    sectionTransition({
+      from: noiseToleranceForm,
+      to: soundConfig,
+      onComplete: () => {
+        handleNoiseToleranceForm()
+        noiseToleranceForm.unload()
+        soundConfig.load()
+      }
+    })
+  })
 
 document.getElementById('start-tests')?.addEventListener('click', () => {
   const refSoundSlider = document.getElementById(

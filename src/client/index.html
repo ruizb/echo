@@ -12,7 +12,7 @@
 <body>
 <div class="ui middle aligned aligned padded grid">
   <div class="ui column raised very text container">
-    <div id="part-1" class="hide">
+    <div id="introduction-section" class="hide">
       <h2 class="ui header">Expérience en ligne sur l'audition</h2>
       <p>Bonjour,</p>
       <p>Vous vous apprêtez à commencer une expérience en ligne sur l'audition organisée par Arnaud Norena, directeur de recherche au CNRS, laboratoire de Neurosciences Sensorielles et Cognitives, Marseille. Pour toutes informations complémentaires, vous pouvez contacter Arnaud par <a class="ui label" href="mailto:arnaud.norena@univ-amu.fr"><i class="mail icon"></i> email</a>.</p>
@@ -33,7 +33,7 @@
       </div>
     </div>
 
-    <div id="part-2" class="hide">
+    <div id="user-info-form-section" class="hide">
       <p>Cette page consiste à vous demander des informations sur vous et votre audition.</p>
 
       <form id="user-info-form" class="ui form">
@@ -130,13 +130,72 @@
         <div class="ui basic segment center aligned">
           <button class="ui right labeled large icon primary button">
             <i class="right arrow icon"></i>
+            Passer au second formulaire
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div id="noise-tolerance-form-section" class="hide">
+      <p>Pour certains sons, certaines personnes sont moins sensibles, alors que d’autres sont plus sensibles.</p>
+
+      <p>Y a-t-il des sons que vous trouvez particulièrement pénibles ?</p>
+
+      <p>Veuillez indiquer dans quelle mesure vous êtes en accord ou en désaccord avec les déclarations
+        suivantes.</p>
+
+      <div class="ui divider"></div>
+
+      <form id="noise-tolerance-form" class="ui form">
+        <div class="ui padded centered grid">
+          <!-- This part is filled by the views/noiseToleranceForm module -->
+          <div class="ui row">
+            <div class="grouped fields left aligned column">
+              <label>Je considère mon aversion à certains sons comme...</label>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" id="noise-tolerance_sounds-dislike-1" value="1" name="noise-tolerance_sounds-dislike" tabindex="0" class="hidden">
+                  <label for="noise-tolerance_sounds-dislike-1">Un problème extrême, qui affecte toute ma vie.</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" id="noise-tolerance_sounds-dislike-2" value="2" name="noise-tolerance_sounds-dislike" tabindex="0" class="hidden">
+                  <label for="noise-tolerance_sounds-dislike-2">Un problème sévère, qui affecte plusieurs aspects de ma qualité de vie.</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" id="noise-tolerance_sounds-dislike-3" value="3" name="noise-tolerance_sounds-dislike" tabindex="0" class="hidden">
+                  <label for="noise-tolerance_sounds-dislike-3">Un problème modéré, qui affecte quelques aspects de ma qualité de vie.</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" id="noise-tolerance_sounds-dislike-4" value="4" name="noise-tolerance_sounds-dislike" tabindex="0" class="hidden">
+                  <label for="noise-tolerance_sounds-dislike-4">Un problème léger, qui affecte légèrement ma qualité de vie.</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" id="noise-tolerance_sounds-dislike-5" value="5" name="noise-tolerance_sounds-dislike" checked="checked" tabindex="0" class="hidden">
+                  <label for="noise-tolerance_sounds-dislike-5">N’est pas un problème, n’affecte pas ma qualité de vie.</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ui basic segment center aligned">
+          <button class="ui right labeled large icon primary button">
+            <i class="right arrow icon"></i>
             Configurer le son pour l'expérience
           </button>
         </div>
       </form>
     </div>
 
-    <div id="part-3" class="hide">
+    <div id="sound-config-section" class="hide">
       <p>Nous allons maintenant ajuster le niveau du son pour qu'il soit présenté à un niveau confortable, ni trop faible, ni trop fort. Vous pouvez régler le volume en déplaçant le curseur ci-après.</p>
 
       <div class="ui padded grid center aligned">
@@ -169,7 +228,7 @@
       </div>
     </div>
 
-    <div id="part-4" class="hide">
+    <div id="sound-tests-section" class="hide">
       <p>Le test peut maintenant démarrer. Vous devez juger les sons présentés selon une échelle agréable - désagréable. Si le son est très agréable, vous devez cliquer à l’extrême gauche de l'échelle. Si le son est très désagréable, vous devez cliquer à l'extrême droite de l'échelle. Si le son est neutre, vous devez cliquer au milieu de l'échelle. <strong>La plupart des sons sont plus ou moins agréables ou désagréables, vous devez donc utiliser toute la longueur de l'échelle pour répondre.</strong></p>
 
       <p>Les sons tests sont présentés trois fois dans un ordre aléatoire.</p>

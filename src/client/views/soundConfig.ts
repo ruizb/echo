@@ -1,10 +1,9 @@
 import { refSoundFilePath } from '../models/audioFilePath'
 import { Part } from '../models/part'
-import { getStore, updateStore } from '../models/store'
-import { ListeningDevice, UserInfo } from '../models/userInfo'
+import { getStore } from '../models/store'
 import { createAudio, isDefined } from '../utils'
 
-export const id = 'part-3'
+export const id = `${Part.SoundConfig}-section`
 
 export const section = document.getElementById(id)
 
@@ -14,51 +13,10 @@ const elements = {
   ) as HTMLButtonElement,
   refSoundSlider: document.getElementById(
     'ref-sound-slider'
-  ) as HTMLInputElement | null,
-  ageField: document.querySelector(
-    'input[name="user-info_age"]'
-  ) as HTMLInputElement,
-  deviceField: document.querySelector(
-    'input[name="user-info_device"]'
-  ) as HTMLInputElement,
-  hearingIssuesField: document.querySelector(
-    'input[name="user-info_hearing-issues"]:checked'
-  ) as HTMLInputElement,
-  tinnitusField: document.querySelector(
-    'input[name="user-info_tinnitus"]:checked'
-  ) as HTMLInputElement,
-  hypersensibilityField: document.querySelector(
-    'input[name="user-info_hypersensibility"]:checked'
-  ) as HTMLInputElement,
-  soundsReactionsField: document.querySelector(
-    'input[name="user-info_sounds-reactions"]:checked'
-  ) as HTMLInputElement,
-  soundsReactionsListField: document.querySelector(
-    'textarea[name="user-info_sounds-reactions-list"]'
-  ) as HTMLTextAreaElement
+  ) as HTMLInputElement | null
 }
 
 let audioCache: ReturnType<typeof createAudio> | undefined = undefined
-
-export const handleUserInfoForm = () => {
-  const soundsReactions = elements.soundsReactionsField.value === 'yes'
-  const userInfo: UserInfo = {
-    age: parseInt(elements.ageField.value, 10),
-    device: elements.deviceField.value as ListeningDevice,
-    hearingIssues: elements.hearingIssuesField.value === 'yes',
-    tinnitus: elements.tinnitusField.value === 'yes',
-    hearingHypersensibility: elements.hypersensibilityField.value === 'yes',
-    soundsReactions,
-    soundsList: soundsReactions
-      ? elements.soundsReactionsListField.value.split(',').map(_ => _.trim())
-      : []
-  }
-
-  updateStore({
-    partInProgress: Part.SoundConfig,
-    userInfo
-  })
-}
 
 const onRefSoundSliderChange = () => {
   if (isDefined(elements.refSoundSlider) && isDefined(audioCache)) {

@@ -1,3 +1,4 @@
+import { NoiseTolerance } from '../models/noiseTolerance'
 import { Results } from '../models/results'
 import { UserInfo } from '../models/userInfo'
 import { groupBy } from './utils'
@@ -20,26 +21,24 @@ const generateUserInfoCsv = (
   }: UserInfo,
   soundVolume: number
 ): DestructuredCsv => [
-  [
-    'age',
-    'device',
-    'hearingIssues',
-    'tinnitus',
-    'hearingHypersensibility',
-    'soundsReactions',
-    'soundsList',
-    'soundVolume'
-  ],
-  [
-    age.toString(),
-    device,
-    booleanToCsvValue(hearingIssues),
-    booleanToCsvValue(tinnitus),
-    booleanToCsvValue(hearingHypersensibility),
-    booleanToCsvValue(soundsReactions),
-    (soundsList ?? []).join('/'),
-    soundVolume.toString()
-  ]
+  ['user-info-label', 'user-info-value'],
+  ['age', age.toString()],
+  ['device', device],
+  ['hearing-issues', booleanToCsvValue(hearingIssues)],
+  ['tinnitus', booleanToCsvValue(tinnitus)],
+  ['hearing-hypersens', booleanToCsvValue(hearingHypersensibility)],
+  ['sounds-reactions', booleanToCsvValue(soundsReactions)],
+  ['sounds-list', (soundsList ?? []).join('/')],
+  ['sound-volume', soundVolume.toString()]
+]
+
+const generateNoiseToleranceCsv = ({
+  statementsScores,
+  soundsDislike
+}: NoiseTolerance): DestructuredCsv => [
+  ['noise-tolerance-label', 'noise-tolerance-value'],
+  ...statementsScores.map((score, i) => [`statement-${i + 1}`, score]),
+  ['sounds-dislike', soundsDislike]
 ]
 
 const generateSoundTestsCsv = (
@@ -69,12 +68,14 @@ const generateSoundTestsCsv = (
  */
 const transformResultsToCsv = ({
   userInfo,
+  noiseTolerance,
   soundVolume,
   soundTests
-}: Results & { userInfo: UserInfo }): string =>
+}: Results): string =>
   generateCsv(
     mergeDestructuredCsvs([
       generateUserInfoCsv(userInfo, soundVolume),
+      generateNoiseToleranceCsv(noiseTolerance),
       generateSoundTestsCsv(soundTests)
     ])
   )

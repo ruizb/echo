@@ -1,9 +1,10 @@
 import audioFilePaths, { getFilePathFromName } from '../models/audioFilePath'
+import { Part } from '../models/part'
 import { SoundTest } from '../models/soundTest'
 import { getStore, updateStore } from '../models/store'
-import { createAudio, head, isDefined, isUndefined, noop, tail } from '../utils'
+import { createAudio, head, isDefined, isUndefined, tail } from '../utils'
 
-export const id = 'part-4'
+export const id = `${Part.SoundTests}-section`
 
 export const section = document.getElementById(id)
 
