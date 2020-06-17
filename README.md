@@ -70,6 +70,14 @@ You need an access to the project on [Netlify](https://www.netlify.com/) in orde
 
 ## Use cases
 
+### Change the text
+
+The majority of the text is available in the [`index.html`](https://github.com/ruizb/echo/blob/master/src/client/index.html) file. You can change the existing text or add new paragraphs as you wish.
+
+Here's an example that adds a new paragraph to the first screen:
+
+![Example adding new text to the first screen GIF](docs/change-text.gif)
+
 ### Change the sounds
 
 If you wish to change the sounds used during the experiment, let it be update an existing one, adding a new one or deleting one, you can follow these steps to do so:
