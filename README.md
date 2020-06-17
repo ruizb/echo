@@ -92,6 +92,9 @@ If you wish to change the sounds used during the experiment, let it be update an
      +   myNewSound
      ]
      ```
+     <details>
+       ![Adding a new sound GIF](docs/add-new-sound.gif)
+     </details>
 
    - If you deleted a sound, you have to remove both the _import_ line of this sound, and the imported "variable" from the `audioFilePaths` list. For example, if I choose to delete the "birds" sound, then I have to:
       1. Remove this line from the `audioFilePath.ts` module:
