@@ -135,12 +135,12 @@ First, you can add a new option to the listening device section in the [`index.h
       <label for="user-info_device-earphones">Écouteurs</label>
     </div>
   </div>
-  + <div class="field">
-  +     <div class="ui radio checkbox">
-  +       <input type="radio" id="user-info_device-speakers" value="speakers" name="user-info_device" tabindex="0" class="hidden">
-  +       <label for="user-info_device-speakers">Hauts-parleurs</label>
-  +     </div>
-  +   </div>
++   <div class="field">
++       <div class="ui radio checkbox">
++         <input type="radio" id="user-info_device-speakers" value="speakers" name="user-info_device" tabindex="0" class="hidden">
++         <label for="user-info_device-speakers">Hauts-parleurs</label>
++       </div>
++     </div>
 </div>
 ```
 
