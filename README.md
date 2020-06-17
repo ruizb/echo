@@ -93,6 +93,8 @@ If you wish to change the sounds used during the experiment, let it be update an
      ]
      ```
      <details>
+       <summary>Example demonstration</summary>
+       
        ![Adding a new sound GIF](docs/add-new-sound.gif)
      </details>
 
