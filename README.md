@@ -102,7 +102,7 @@ If you wish to change the sounds used during the experiment, let it be update an
      ```
      <details>
        <summary>Example demonstration</summary>
-       
+
        ![Adding a new sound GIF](docs/add-new-sound.gif)
      </details>
 
@@ -121,6 +121,16 @@ If you wish to change the sounds used during the experiment, let it be update an
          ```
 
 ### Change the user information form
+
+#### Adding a new listening device
+
+> :movie_camera: Demonstration example available [here](docs/change-user-info-form.gif) and [here](docs/change-listening-device.gif).
+
+#### Adding more options to "Yes/No" fields
+
+TODO
+
+#### Adding a new field
 
 TODO
 
