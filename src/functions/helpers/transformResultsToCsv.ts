@@ -2,12 +2,7 @@ import { NoiseTolerance } from '../models/noiseTolerance'
 import { Results } from '../models/results'
 import { UserInfo } from '../models/userInfo'
 import { groupBy } from './utils'
-import {
-  booleanToCsvValue,
-  DestructuredCsv,
-  generateCsv,
-  mergeDestructuredCsvs
-} from './csv'
+import { DestructuredCsv, generateCsv, mergeDestructuredCsvs } from './csv'
 
 const generateUserInfoCsv = (
   {
@@ -24,10 +19,10 @@ const generateUserInfoCsv = (
   ['user-info-label', 'user-info-value'],
   ['age', age.toString()],
   ['device', device],
-  ['hearing-issues', booleanToCsvValue(hearingIssues)],
-  ['tinnitus', booleanToCsvValue(tinnitus)],
-  ['hearing-hypersens', booleanToCsvValue(hearingHypersensibility)],
-  ['sounds-reactions', booleanToCsvValue(soundsReactions)],
+  ['hearing-issues', hearingIssues],
+  ['tinnitus', tinnitus],
+  ['hearing-hypersens', hearingHypersensibility],
+  ['sounds-reactions', soundsReactions],
   ['sounds-list', (soundsList ?? []).join('/')],
   ['sound-volume', soundVolume.toString()]
 ]

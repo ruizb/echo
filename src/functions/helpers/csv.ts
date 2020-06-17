@@ -7,9 +7,6 @@ export const generateCsv = (csv: DestructuredCsv): string =>
   // sounds list are joined on ',' character, so we chose a different one for the CSV separator
   csv.map(columns => columns.join(',')).join('\n')
 
-export const booleanToCsvValue = (value: boolean): string =>
-  value ? 'yes' : 'no'
-
 export const mergeDestructuredCsvs = (
   destructuredCsvs: DestructuredCsv[]
 ): DestructuredCsv => {

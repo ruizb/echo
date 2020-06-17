@@ -7,10 +7,10 @@ describe('transformResultsToCsv', () => {
   const userInfo: UserInfo = {
     age: 28,
     device: ListeningDevice.HeadSet,
-    hearingIssues: false,
-    tinnitus: false,
-    hearingHypersensibility: false,
-    soundsReactions: false,
+    hearingIssues: 'no',
+    tinnitus: 'no',
+    hearingHypersensibility: 'no',
+    soundsReactions: 'no',
     soundsList: []
   }
   const noiseTolerance: NoiseTolerance = {
@@ -58,9 +58,9 @@ sound-volume,0.31,,,,,,
   })
 
   it('should handle the sounds list if user info contain "sounds reactions"', () => {
-    const altUserInfo = {
+    const altUserInfo: UserInfo = {
       ...userInfo,
-      soundsReactions: true,
+      soundsReactions: 'yes',
       soundsList: ['a', 'b c d', 'e']
     }
     expect(

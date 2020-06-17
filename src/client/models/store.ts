@@ -3,14 +3,12 @@ import {
   isArray,
   isBoolean,
   isNumber,
-  isObject,
-  isString,
-  isNull
+  isString
 } from '../utils'
-import { NoiseTolerance } from './noiseTolerance'
+import { isValidNoiseTolerance, NoiseTolerance } from './noiseTolerance'
 import { Part } from './part'
 import { SoundTest, WithNameAndScore } from './soundTest'
-import { isValidDevice, UserInfo } from './userInfo'
+import { isValidUserInfo, UserInfo } from './userInfo'
 
 export interface Store {
   partInProgress: Part
@@ -41,35 +39,6 @@ const isValidSoundVolume = (soundVolume: unknown): soundVolume is number =>
 
 const isValidSoundTests = (soundTests: unknown): soundTests is SoundTest[] =>
   isArray(soundTests)
-
-const isValidUserInfo = (userInfo: unknown): userInfo is UserInfo =>
-  isNull(userInfo) ||
-  (isObject(userInfo) &&
-    hasOwnProperty(userInfo, 'age') &&
-    isNumber(userInfo.age) &&
-    hasOwnProperty(userInfo, 'device') &&
-    isValidDevice(userInfo.device) &&
-    hasOwnProperty(userInfo, 'hearingIssues') &&
-    isBoolean(userInfo.hearingIssues) &&
-    hasOwnProperty(userInfo, 'tinnitus') &&
-    isBoolean(userInfo.tinnitus) &&
-    hasOwnProperty(userInfo, 'hearingHypersensibility') &&
-    isBoolean(userInfo.hearingHypersensibility) &&
-    hasOwnProperty(userInfo, 'soundsReactions') &&
-    isBoolean(userInfo.soundsReactions) &&
-    (userInfo.soundsReactions
-      ? hasOwnProperty(userInfo, 'soundsList') && isArray(userInfo.soundsList)
-      : true))
-
-const isValidNoiseTolerance = (
-  noiseTolerance: unknown
-): noiseTolerance is NoiseTolerance =>
-  isNull(noiseTolerance) ||
-  (isObject(noiseTolerance) &&
-    hasOwnProperty(noiseTolerance, 'statementsScores') &&
-    isArray(noiseTolerance.statementsScores) &&
-    hasOwnProperty(noiseTolerance, 'soundsDislike') &&
-    isString(noiseTolerance.soundsDislike))
 
 /**
  * Load store from local storage
