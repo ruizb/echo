@@ -70,9 +70,41 @@ You need an access to the project on [Netlify](https://www.netlify.com/) in orde
 
 ## Use cases
 
-### Change a sound
+### Change the sounds
 
-TODO
+If you wish to change the sounds used during the experiment, let it be update an existing one, adding a new one or deleting one, you can follow these steps to do so:
+
+1. Make your changes regarding the sounds in the [`src/client/sounds`](https://github.com/ruizb/echo/tree/master/src/client/sounds) directory.
+2. Open the [`audioFilePath`](https://github.com/ruizb/echo/blob/a7ce225d95238b622e2422cfb25035d9b298fad6/src/client/models/audioFilePath.ts) file, then:
+   - If you changed an existing sound, as long as the name is **exactly** the same (text case matters), you don't have to do anything special here.
+   - If you added a new sound, you must first import this sound by [adding a new _import_](https://github.com/ruizb/echo/blob/a7ce225d95238b622e2422cfb25035d9b298fad6/src/client/models/audioFilePath.ts#L28) at the top of the file, e.g.:
+   ```difference
+   import whiteNoise from '../sounds/White Noise_1.wav'
+   + import myNewSound from '../sounds/My New Sound.wav'
+   ```
+   Then, you need to add the imported sound to the [`audioFilePaths` list](https://github.com/ruizb/echo/blob/a7ce225d95238b622e2422cfb25035d9b298fad6/src/client/models/audioFilePath.ts#L33-L60), e.g. at the end of it:
+   ```difference
+   const audioFilePaths = [
+     birds,
+     blowingNose,
+     ...,
+     wheezing,
+     + myNewSound
+   ]
+   ```
+   - If you deleted a sound, you have to remove both the _import_ line of this sound, and the imported "variable" from the `audioFilePaths` list. For example, if I choose to delete the "birds" sound, then I have to:
+      1. Remove this line from the `audioFilePath.ts` module:
+      ```difference
+     - import birds from '../sounds/Birds_1.wav'
+     import blowingNose from '../sounds/Blowing_nose1.wav'
+      ```
+     2. Remove this line from the `audioFilePaths` list of this module:
+     ```difference
+     const audioFilePaths = [
+     -    birds,
+         blowingNose,
+         ...
+     ```
 
 ### Change the user information form
 
