@@ -236,7 +236,7 @@ The first thing to do is to add the HTML elements into `src/client/index.html` t
 
 ##### TypeScript
 
-Now that the view/template is available, we need to gather the user's answer: in order words, get the value provided by the user via the input element he filled in. This is where we need to make a few changes in the TypeScript files:
+Now that the view/template is available, we need to gather the user's answer: in other words, get the value provided by the user via the input element he filled in. This is where we need to make a few changes in the TypeScript files:
 
 - [`src/models/userInfo.ts`](https://github.com/ruizb/echo/blob/master/src/client/models/userInfo.ts)
    - Add a new property to the `UserInfo` interface:
@@ -319,7 +319,7 @@ Now that the view/template is available, we need to gather the user's answer: in
      > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-2.gif).
 
 - [`src/functions/models/userInfo.ts`](https://github.com/ruizb/echo/blob/master/src/functions/models/userInfo.ts)
-   - Add a new property to the `UserInfo` interface:
+   - Add a new property to the `UserInfo` interface from the `src/functions/models` directory:
      ```diff
      export interface UserInfo {
        age: number
@@ -334,6 +334,79 @@ Now that the view/template is available, we need to gather the user's answer: in
      ```
 
      > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-3.gif).
+
+- [`src/functions/helpers/transformResultsToCsv.ts`](https://github.com/ruizb/echo/blob/master/src/functions/helpers/transformResultsToCsv.ts)
+   - Extract the new property from the `UserInfo` parameter, and add a new row in the generated CSV:
+     ```diff
+     const generateUserInfoCsv = (
+       {
+         age,
+         device,
+         hearingIssues,
+         tinnitus,
+     +     iceCream,
+         hearingHypersensibility,
+         soundsReactions,
+         soundsList
+       }: UserInfo,
+       soundVolume: number
+     ): DestructuredCsv => [
+       ['user-info-label', 'user-info-value'],
+       ['age', age.toString()],
+       ['device', device],
+       ['hearing-issues', hearingIssues],
+       ['tinnitus', tinnitus],
+     +   ['icecream', iceCream],
+       ['hearing-hypersens', hearingHypersensibility],
+       ['sounds-reactions', soundsReactions],
+       ['sounds-list', (soundsList ?? []).join('/')],
+       ['sound-volume', soundVolume.toString()]
+     ]
+     ```
+
+     > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-4.gif).
+
+- [`src/functions/helpers/transformResultsToCsv.test.ts`](https://github.com/ruizb/echo/blob/master/src/functions/helpers/transformResultsToCsv.test.ts)
+   - Update the `userInfo` object with the new property, as well as the CSV string expectations from the unit tests:
+     ```diff
+     const userInfo: UserInfo = {
+       age: 28,
+       device: ListeningDevice.HeadSet,
+       hearingIssues: 'no',
+       tinnitus: 'no',
+     +   iceCream: 'no',
+       hearingHypersensibility: 'no',
+       soundsReactions: 'no',
+       soundsList: []
+     }
+     ```
+
+     ```diff
+           .toEqual(`user-info-label,user-info-value,noise-tolerance-label,noise-tolerance-value,filename,score1,score2,score3
+     age,28,,,,,,
+     device,headset,,,,,,
+     hearing-issues,no,,,,,,
+     tinnitus,no,,,,,,
+     + icecream,no,,,,,,
+     hearing-hypersens,no,,,,,,
+     sounds-reactions,no,,,,,,
+     sounds-list,,,,,,,
+     sound-volume,0.31,,,,,,
+     ,,statement-1,1,,,,
+     ,,statement-2,2,,,,
+     ,,statement-3,1,,,,
+     ,,sounds-dislike,5,,,,
+     ,,,,Birds_1.wav,33,35,31
+     ,,,,Blowing_nose1.wav,76,68,73
+     ,,,,Boire.wav,66,55,59`)
+       })
+     ```
+
+     > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-5.gif).
+
+- Finally, make sure that your changes didn't break anything by running `npm test`.
+
+  > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-6.gif).
 
 ### Change the noise tolerance form
 
