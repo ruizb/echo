@@ -54,6 +54,18 @@ npm run lambda:build && npm run lambda:serve
 > ```
 > If you are a maintainer of the project, please contact [ruizb](https://github.com/ruizb) to get the production values for these environment variables.
 
+:warning: A note regarding files from the `src/functions` directory: you **can't** import files from outside `src/functions`. For example, importing a file from `src/client` inside `src/functions/collect-results.ts` won't work:
+
+```ts
+// src/functions/collect-results.ts
+
+import { UserInfo } from '../client/models/userInfo'
+
+const foo = (userInfo: UserInfo): void => {}
+```
+
+This is why we have (re)declared a more permissive [`UserInfo`](https://github.com/ruizb/echo/blob/master/src/functions/models/userInfo.ts) interface in the `src/functions/models` directory.
+
 ### Run the tests
 
 You can use the following command to run all the unit tests:
@@ -98,7 +110,7 @@ If you wish to change the sounds used during the experiment, let it be update an
      +   myNewSound
      ]
      ```
-     > :movie_camera: Demonstration available [Here](docs/add-new-sound.gif).
+     > :movie_camera: Demonstration available [here](docs/add-new-sound.gif).
 
    - If you deleted a sound, you have to remove both the _import_ line of this sound, and the imported "variable" from the `audioFilePaths` list. For example, if I choose to delete the "birds" sound, then I have to:
       1. Remove this line from the `audioFilePath.ts` module:
@@ -146,7 +158,7 @@ First, you can add a new option to the listening device section in the [`index.h
 </div>
 ```
 
-> :movie_camera: Demonstration available [Here](docs/change-user-info-form.gif).
+> :movie_camera: Demonstration available [here](docs/change-user-info-form.gif).
 
 Make sure to use a different `id`, `value` and `for` values matching the new listening device. Here, we chose `speakers` as the new available option.
 
@@ -174,19 +186,154 @@ const isValidDevice = (device: unknown): device is ListeningDevice =>
   ] as string[]).indexOf(device) >= 0
 ```
 
-> :movie_camera: Demonstration available [Here](docs/change-listening-device.gif).
+> :movie_camera: Demonstration available [here](docs/change-listening-device.gif).
 
 > :bulb: It's best to use a _select_ input instead of _radio buttons_ when there are more than 4-5 choices.
 
 #### Adding a new field
 
+Adding a new field to the first form requires a few steps.
+
 ##### HTML
 
-TODO
+The first thing to do is to add the HTML elements into `src/client/index.html` to expose this new field to the user. To do that, you can follow the example right below, where we add a new "ice cream" field.
+
+```diff
+<div class="grouped fields">
+  <label>Avez-vous des acouphènes ? <i data-content="Sifflement d'oreille." class="info circle icon"></i></label>
+  ...
+</div>
+
++ <div class="grouped fields">
++   <label>Aimez-vous les glaces ?</label>
++   <div class="field">
++     <div class="ui radio checkbox">
++       <input type="radio" id="user-info_icecream-yes" value="yes" name="user-info_icecream" tabindex="0" class="hidden">
++       <label for="user-info_icecream-yes">Oui</label>
++     </div>
++   </div>
++   <div class="field">
++     <div class="ui radio checkbox">
++       <input type="radio" id="user-info_icecream-no" value="no" name="user-info_icecream" tabindex="0" class="hidden">
++       <label for="user-info_icecream-no">Non</label>
++     </div>
++   </div>
++   <div class="field">
++     <div class="ui radio checkbox">
++       <input type="radio" id="user-info_icecream-unknown" value="unknown" name="user-info_icecream" checked="" tabindex="0" class="hidden">
++       <label for="user-info_icecream-unknown">Je ne sais pas</label>
++     </div>
++   </div>
++ </div>
+
+<div class="grouped fields">
+  <label>Avez-vous une hypersensibilité auditive ? <i data-content="Les sons vous semblent-ils plus forts ou plus gênants que la normale ?" class="info circle icon"></i></label>
+  ...
+</div>
+```
+
+> :movie_camera: Demonstration available [here](docs/add-user-info-field-html.gif).
 
 ##### TypeScript
 
-TODO
+Now that the view/template is available, we need to gather the user's answer: in order words, get the value provided by the user via the input element he filled in. This is where we need to make a few changes in the TypeScript files:
+
+- [`src/models/userInfo.ts`](https://github.com/ruizb/echo/blob/master/src/client/models/userInfo.ts)
+   - Add a new property to the `UserInfo` interface:
+      ```diff
+      export interface UserInfo {
+        age: number
+        device: ListeningDevice
+        hearingIssues: TriState
+        tinnitus: TriState
+      +   iceCream: TriState
+        hearingHypersensibility: TriState
+        soundsReactions: TriState
+        soundsList: string[]
+      }
+     ```
+
+   - Add a new verification step to the `isValidUserInfo` function:
+     ```diff
+     export const isValidUserInfo = (userInfo: unknown): userInfo is UserInfo =>
+       isNull(userInfo) ||
+       (isObject(userInfo) &&
+         hasOwnProperty(userInfo, 'age') &&
+         isNumber(userInfo.age) &&
+         hasOwnProperty(userInfo, 'device') &&
+         isValidDevice(userInfo.device) &&
+         hasOwnProperty(userInfo, 'hearingIssues') &&
+         isValidTriState(userInfo.hearingIssues) &&
+         hasOwnProperty(userInfo, 'tinnitus') &&
+         isValidTriState(userInfo.tinnitus) &&
+     +     hasOwnProperty(userInfo, 'tinnitus') &&
+     +     isValidTriState(userInfo.tinnitus) &&
+         hasOwnProperty(userInfo, 'hearingHypersensibility') &&
+         isValidTriState(userInfo.hearingHypersensibility) &&
+         hasOwnProperty(userInfo, 'soundsReactions') &&
+         isValidTriState(userInfo.soundsReactions) &&
+         (userInfo.soundsReactions
+           ? hasOwnProperty(userInfo, 'soundsList') && isArray(userInfo.soundsList)
+           : true))
+      ```
+
+     > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-1.gif).
+
+- [`src/client/views/userInfoForm.ts`](https://github.com/ruizb/echo/blob/master/src/client/views/userInfoForm.ts)
+   - Add a new property to the `elements` object:
+     ```diff
+     const elements = {
+       ...,
+       tinnitus: () =>
+         document.querySelector(
+           'input[name="user-info_tinnitus"]:checked'
+         ) as HTMLInputElement,
+     +   iceCream: () =>
+     +     document.querySelector(
+     +       'input[name="user-info_icecream"]:checked'
+     +     ) as HTMLInputElement,
+       hypersensibility: () =>
+         document.querySelector(
+           'input[name="user-info_hypersensibility"]:checked'
+         ) as HTMLInputElement,
+       ...
+     }
+     ```
+
+   - Add a new property to the `userInfo` object in the `handleUserInfoForm` function:
+     ```diff
+     const userInfo: UserInfo = {
+       age: parseInt(elements.age.value, 10),
+       device: elements.device.value as ListeningDevice,
+       hearingIssues: elements.hearingIssues().value as TriState,
+       tinnitus: elements.tinnitus().value as TriState,
+     +   iceCream: elements.iceCream().value as TriState,
+       hearingHypersensibility: elements.hypersensibility().value as TriState,
+       soundsReactions,
+       soundsList: soundsReactions
+         ? elements.soundsReactionsList.value.split(',').map(_ => _.trim())
+         : []
+     }
+     ```
+
+     > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-2.gif).
+
+- [`src/functions/models/userInfo.ts`](https://github.com/ruizb/echo/blob/master/src/functions/models/userInfo.ts)
+   - Add a new property to the `UserInfo` interface:
+     ```diff
+     export interface UserInfo {
+       age: number
+       device: string
+       hearingIssues: string
+       tinnitus: string
+     +   iceCream: string
+       hearingHypersensibility: string
+       soundsReactions: string
+       soundsList?: string[]
+     }
+     ```
+
+     > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-3.gif).
 
 ### Change the noise tolerance form
 
