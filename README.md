@@ -98,7 +98,7 @@ If you wish to change the sounds used during the experiment, let it be update an
      +   myNewSound
      ]
      ```
-     [Here](docs/add-new-sound.gif)'s a demonstration for adding a new sound.
+     > :movie_camera: Demonstration available [Here](docs/add-new-sound.gif).
 
    - If you deleted a sound, you have to remove both the _import_ line of this sound, and the imported "variable" from the `audioFilePaths` list. For example, if I choose to delete the "birds" sound, then I have to:
       1. Remove this line from the `audioFilePath.ts` module:
@@ -117,6 +117,8 @@ If you wish to change the sounds used during the experiment, let it be update an
 ### Change the user information form
 
 #### Adding a new listening device
+
+#### HTML
 
 First, you can add a new option to the listening device section in the [`index.html`](https://github.com/ruizb/echo/blob/269eef9c0fbdd21be2a53e82263bcd472dc5f8f4/src/client/index.html#L45-L59) file:
 
@@ -144,7 +146,11 @@ First, you can add a new option to the listening device section in the [`index.h
 </div>
 ```
 
+> :movie_camera: Demonstration available [Here](docs/change-user-info-form.gif).
+
 Make sure to use a different `id`, `value` and `for` values matching the new listening device. Here, we chose `speakers` as the new available option.
+
+##### TypeScript
 
 Next, you need to update the [`ListeningDevice`](https://github.com/ruizb/echo/blob/269eef9c0fbdd21be2a53e82263bcd472dc5f8f4/src/client/models/userInfo.ts#L3-L6) enum, as long as the [`isValidDevice`](https://github.com/ruizb/echo/blob/269eef9c0fbdd21be2a53e82263bcd472dc5f8f4/src/client/models/userInfo.ts#L18-L22) function in the `userInfo.ts` module:
 
@@ -167,15 +173,17 @@ export const isValidDevice = (device: unknown): device is ListeningDevice =>
   ) >= 0
 ```
 
-> :movie_camera: These two steps are available as demonstration examples [here](docs/change-user-info-form.gif) and [here](docs/change-listening-device.gif).
+> :movie_camera: Demonstration available [Here](docs/change-listening-device.gif).
 
 > :bulb: It's best to use a _select_ input instead of _radio buttons_ when there are more than 4-5 choices.
 
-#### Adding more options to "Yes/No" fields
+#### Adding a new field
+
+##### HTML
 
 TODO
 
-#### Adding a new field
+##### TypeScript
 
 TODO
 
