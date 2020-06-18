@@ -415,7 +415,7 @@ Now that the view/template is available, we need to gather the user's answer: in
 
 ### Change the noise tolerance form
 
-If you wish to add a new statement to the "noise tolerance" form, you can add it to the `statement` list from the [`src/client/views/noiseToleranceForm.ts](https://github.com/ruizb/echo/blob/master/src/client/views/noiseToleranceForm.ts) file:
+If you wish to add a new statement to the "noise tolerance" form, you can add it to the `statement` list from the [`src/client/views/noiseToleranceForm.ts`](https://github.com/ruizb/echo/blob/master/src/client/views/noiseToleranceForm.ts) file:
 
 ```diff
 const statements = [
