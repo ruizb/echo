@@ -415,7 +415,19 @@ Now that the view/template is available, we need to gather the user's answer: in
 
 ### Change the noise tolerance form
 
-TODO
+If you wish to add a new statement to the "noise tolerance" form, you can add it to the `statement` list from the [`src/client/views/noiseToleranceForm.ts](https://github.com/ruizb/echo/blob/master/src/client/views/noiseToleranceForm.ts) file:
+
+```diff
+const statements = [
++   `Les glaces me rendent heureux.`,
+  `Certains sons me dérangent tellement que j’ai du mal à contrôler mes émotions.`,
+  `Les sons déplaisants me donnent l’impression d’être submergé(e).`,
+  `Je deviens anxieux à la simple pensée d’un son désagréable.`,
+  ...
+]
+```
+
+> :movie_camera: Demonstration available [here](docs/add-noise-tolerance-statement.gif).
 
 ---
 
