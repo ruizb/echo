@@ -155,7 +155,7 @@ Make sure to use a different `id`, `value` and `for` values matching the new lis
 Next, you need to update the [`ListeningDevice`](https://github.com/ruizb/echo/blob/269eef9c0fbdd21be2a53e82263bcd472dc5f8f4/src/client/models/userInfo.ts#L3-L6) enum, as long as the [`isValidDevice`](https://github.com/ruizb/echo/blob/269eef9c0fbdd21be2a53e82263bcd472dc5f8f4/src/client/models/userInfo.ts#L18-L22) function in the `userInfo.ts` module:
 
 ```diff
-export const enum ListeningDevice {
+const enum ListeningDevice {
   HeadSet = 'headset',
   EarPhones = 'earphones',
 +   Speakers = 'speakers'
@@ -165,12 +165,13 @@ export const enum ListeningDevice {
 The value of this new entry must match the value you chose for the `value="speakers"` field earlier in the `index.html` file.
 
 ```diff
-export const isValidDevice = (device: unknown): device is ListeningDevice =>
+const isValidDevice = (device: unknown): device is ListeningDevice =>
   isString(device) &&
--   ([ListeningDevice.HeadSet, ListeningDevice.EarPhones] as string[]).indexOf(
-+   ([ListeningDevice.HeadSet, ListeningDevice.EarPhones, ListeningDevice.Speakers] as string[]).indexOf(
-    device
-  ) >= 0
+  ([
+    ListeningDevice.HeadSet,
+    ListeningDevice.EarPhones,
++     ListeningDevice.Speakers
+  ] as string[]).indexOf(device) >= 0
 ```
 
 > :movie_camera: Demonstration available [Here](docs/change-listening-device.gif).
