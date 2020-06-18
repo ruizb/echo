@@ -319,6 +319,7 @@ Now that the view/template is available, we need to gather the user's answer: in
      > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-2.gif).
 
 - [`src/functions/models/userInfo.ts`](https://github.com/ruizb/echo/blob/master/src/functions/models/userInfo.ts)
+
    Add a new property to the `UserInfo` interface from the `src/functions/models` directory:
    ```diff
    export interface UserInfo {
@@ -336,7 +337,9 @@ Now that the view/template is available, we need to gather the user's answer: in
    > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-3.gif).
 
 - [`src/functions/helpers/transformResultsToCsv.ts`](https://github.com/ruizb/echo/blob/master/src/functions/helpers/transformResultsToCsv.ts)
+
    Extract the new property from the `UserInfo` parameter, and add a new row in the generated CSV:
+
    ```diff
    const generateUserInfoCsv = (
      {
@@ -367,7 +370,9 @@ Now that the view/template is available, we need to gather the user's answer: in
    > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-4.gif).
 
 - [`src/functions/helpers/transformResultsToCsv.test.ts`](https://github.com/ruizb/echo/blob/master/src/functions/helpers/transformResultsToCsv.test.ts)
+
    Update the `userInfo` object with the new property, as well as the CSV string expectations from the unit tests:
+
    ```diff
    const userInfo: UserInfo = {
      age: 28,
