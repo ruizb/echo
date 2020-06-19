@@ -9,6 +9,7 @@ import { handleUserInfoForm } from './views/userInfoForm'
 import * as userInfoForm from './views/userInfoForm'
 import * as noiseToleranceForm from './views/noiseToleranceForm'
 import * as soundTests from './views/soundTests'
+import * as soundTraining from './views/soundTraining'
 import * as end from './views/end'
 
 const resetExperiment = (): void => {
@@ -32,6 +33,8 @@ const getSectionAndLoad = (
       ]
     case Part.SoundConfig:
       return [soundConfig.section, soundConfig.load, soundConfig.unload]
+    case Part.SoundTraining:
+      return [soundTraining.section, soundTraining.load, soundTraining.unload]
     case Part.SoundTests:
       return [
         soundTests.section,
@@ -97,16 +100,43 @@ document
     })
   })
 
-document.getElementById('start-tests')?.addEventListener('click', () => {
+document.getElementById('start-training')?.addEventListener('click', () => {
   const refSoundSlider = document.getElementById(
     'ref-sound-slider'
   ) as HTMLInputElement | null
 
   updateStore({
-    partInProgress: Part.SoundTests,
+    partInProgress: Part.SoundTraining,
     soundVolume: isDefined(refSoundSlider)
       ? parseInt(refSoundSlider.value, 10) / 100
       : 0.1
+  })
+
+  sectionTransition({
+    from: soundConfig,
+    to: soundTraining,
+    onComplete: () => {
+      soundConfig.unload()
+      soundTraining.load()
+    }
+  })
+})
+
+document.getElementById('reconfigure-sound')?.addEventListener('click', () => {
+  sectionTransition({
+    from: soundTraining,
+    to: soundConfig,
+    direction: 'backward',
+    onComplete: () => {
+      soundTraining.unload()
+      soundConfig.load()
+    }
+  })
+})
+
+document.getElementById('start-tests')?.addEventListener('click', () => {
+  updateStore({
+    partInProgress: Part.SoundTests
   })
 
   if (getStore().remainingSoundTests.length === 0) {
@@ -119,11 +149,11 @@ document.getElementById('start-tests')?.addEventListener('click', () => {
   }
 
   sectionTransition({
-    from: soundConfig,
+    from: soundTraining,
     to: soundTests,
     onComplete: () => {
+      soundTraining.unload()
       soundTests.load(resetExperiment)()
-      soundConfig.unload()
     }
   })
 })

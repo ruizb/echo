@@ -23,16 +23,7 @@ const elements = {
   ) as HTMLButtonElement,
   endExperimentButton: document.getElementById(
     'end-experiment'
-  ) as HTMLButtonElement,
-  playTestSoundButtonContainer: document.getElementById(
-    'play-test-sound-button-container'
-  ),
-  playTestSoundLabelsContainer: document.getElementById(
-    'play-test-sound-labels-container'
-  ),
-  playTestSoundSliderContainer: document.getElementById(
-    'play-test-sound-slider-container'
-  )
+  ) as HTMLButtonElement
 }
 
 let audioCache: ReturnType<typeof createAudio> | undefined = undefined

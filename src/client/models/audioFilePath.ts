@@ -17,9 +17,11 @@ import harp from '../sounds/Harp_1.wav'
 import knifeHitGlass from '../sounds/Knife Hit Glass_1.wav'
 import lake from '../sounds/Lake_2.wav'
 import laugh from '../sounds/Laugh_1.wav'
+import marimba from '../sounds/Marimba_1.wav'
 import penClick from '../sounds/Pen-Click.wav'
 import sniffing from '../sounds/Sniffing.wav'
 import snoringSleepApnea from '../sounds/Snoring_sleepApnea.wav'
+import squeakingDoor from '../sounds/Squeaking Door_3.wav'
 import swallowing from '../sounds/Swallowing.wav'
 import throatClear from '../sounds/Throat_Clear.wav'
 import vomit from '../sounds/Vomit.wav'
@@ -29,6 +31,11 @@ import whiteNoise from '../sounds/White Noise_1.wav'
 import { head } from '../utils'
 
 export const refSoundFilePath = whiteNoise
+
+export const trainingSound = {
+  pleasant: marimba,
+  unpleasant: squeakingDoor
+}
 
 const audioFilePaths = [
   birds,

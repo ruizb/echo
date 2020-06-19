@@ -44,6 +44,7 @@ export const load = () => {
 
 export const unload = () => {
   if (isDefined(audioCache)) {
+    audioCache.audioElement.pause()
     audioCache.removePlayButtonClickListener()
   }
   elements.refSoundSlider?.removeEventListener('change', onRefSoundSliderChange)
