@@ -82,6 +82,12 @@ You need an access to the project on [Netlify](https://www.netlify.com/) in orde
 
 ## Use cases
 
+### Reset/Restart the experiment
+
+A reset of the whole experiment - for a given user - is available on `/reset.html`. For example, on your machine, you can go to http://localhost:1234/reset.html to completely restart the app.
+
+## Use cases
+
 ### Change the text
 
 The majority of the text is available in the [`index.html`](https://github.com/ruizb/echo/blob/master/src/client/index.html) file. You can change the existing text or add new paragraphs as you wish.
