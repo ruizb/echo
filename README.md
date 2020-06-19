@@ -432,3 +432,9 @@ const statements = [
 ---
 
 > :information_source: Regarding the tech stack used for this project: I tried to keep it simple, with as fewer dependencies to libraries/frameworks as possible. I intentionally didn't use a component-based library such as React in order to make changes to the source code as easy as possible for researchers.
+> This project uses:
+> - [TypeScript](https://www.typescriptlang.org/): for the safety net provided with its type system
+> - [Parcel](https://parceljs.org/): for bundling all the files (HTML, CSS, TypeScript to JavaScript, sound files...) into a production-ready app
+> - [Semantic UI](https://semantic-ui.com/): for the CSS (i.e. design) and some user interactions
+> - [Netlify lambda](https://github.com/netlify/netlify-lambda): for installing/building/serving Netlify functions, on your machine
+> - [Jest](https://jestjs.io/): for writing and running unit tests
