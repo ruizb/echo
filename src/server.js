@@ -23,4 +23,8 @@ app.use(
 
 app.use(bundler.middleware())
 
+app.get('/', (req, res) => res.redirect('/index.html'))
+
+app.get('/reset', (req, res) => res.redirect('/reset.html'))
+
 app.listen(Number(process.env.PORT || 1234))
