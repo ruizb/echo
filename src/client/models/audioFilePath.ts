@@ -27,6 +27,7 @@ import throatClear from '../sounds/Throat_Clear.wav'
 import vomit from '../sounds/Vomit.wav'
 import wheezing from '../sounds/Wheezing.wav'
 import whiteNoise from '../sounds/White Noise_1.wav'
+import myNewSound from '../sounds/My New Sound.wav'
 
 import { head } from '../utils'
 
@@ -63,7 +64,8 @@ const audioFilePaths = [
   swallowing,
   throatClear,
   vomit,
-  wheezing
+  wheezing,
+  myNewSound
 ]
 
 export const getFilePathFromName = (
