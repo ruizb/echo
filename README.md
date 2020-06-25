@@ -6,19 +6,21 @@ Its goal is to collect some data regarding hearing conditions such as misophonia
 
 ## Getting started
 
-This project requires the [nvm](https://github.com/nvm-sh/nvm) program in order to work. If you are a Windows user, you'll have to use an alternative such as [nvm-windows](https://github.com/coreybutler/nvm-windows) instead.
+This project requires the [nvm](https://github.com/nvm-sh/nvm) program in order to work. If you are a Linux or Mac OS user, please install this program.
 
-Once installed, use the following command at the root of the project to use the appropriate Node version:
+If you are a Windows user, the best alternative to `nvm` is to install the latest LTS version of Node available on [nodejs.org](https://nodejs.org/en/). On the homepage, click on the green button labelled "Recommended for Most Users". The LTS version when writing these lines is `12.18.1`.
 
-```sh
-nvm use
-```
-
-If the required Node version is not installed, the output of `nvm use` will be an "error" message telling you to install it via a command, such as `nvm install 12` for example.
+> :warning: **For Linux / Mac OS users only**: once `nvm` installed, use the following command at the root of the project to use the appropriate Node version:
+>
+> ```sh
+> nvm use
+> ```
+>
+> If the required Node version is not installed, the output of `nvm use` will be an "error" message telling you to install it via a command, such as `nvm install 12` for example.
 
 ### Install the dependencies
 
-Once the `nvm use` command is successful, you can install the required dependencies by this project with the following command:
+Yyou can install the required dependencies for this project with the following command:
 
 ```sh
 npm ci
