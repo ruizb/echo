@@ -18,9 +18,11 @@ If you are a Windows user, the best alternative to `nvm` is to install the lates
 >
 > If the required Node version is not installed, the output of `nvm use` will be an "error" message telling you to install it via a command, such as `nvm install 12` for example.
 
+It is recommended to use [VS Code](https://code.visualstudio.com/) as editor to make changes to this project.
+
 ### Install the dependencies
 
-Yyou can install the required dependencies for this project with the following command:
+You can install the required dependencies for this project with the following command:
 
 ```sh
 npm ci
