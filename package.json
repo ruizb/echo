@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "netlify-lambda install src/functions",
-    "start": "npm run clean && NODE_ENV=development node src/server.js",
-    "build": "npm run clean && NODE_ENV=production parcel build src/client/*.html --public-url ./ && npm run lambda:build",
+    "start": "npm run clean && cross-env NODE_ENV=development node src/server.js",
+    "build": "npm run clean && cross-env NODE_ENV=production parcel build src/client/*.html --public-url ./ && npm run lambda:build",
     "lambda:start": "netlify-lambda serve src/functions",
     "lambda:build": "netlify-lambda build src/functions",
-    "clean": "rm -rf ./dist",
+    "clean": "rimraf ./dist",
     "test": "jest"
   },
   "author": "Benoit Ruiz",
@@ -43,8 +43,10 @@
   },
   "dependencies": {
     "@sendgrid/mail": "^7.1.1",
+    "cross-env": "^7.0.2",
     "express": "^4.17.1",
     "http-proxy-middleware": "^1.0.4",
-    "parse-filepath": "^1.0.2"
+    "parse-filepath": "^1.0.2",
+    "rimraf": "^3.0.2"
   }
 }
