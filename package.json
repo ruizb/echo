@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "netlify-lambda install src/functions",
-    "start": "npm run clean && cross-env NODE_ENV=development node src/server.js",
-    "build": "npm run clean && cross-env NODE_ENV=production parcel build src/client/*.html --public-url ./ && npm run lambda:build",
+    "start": "cross-env-shell NODE_ENV=development && npm run clean && node src/server.js",
+    "build": "cross-env-shell NODE_ENV=production && npm run clean && parcel build src/client/*.html --public-url ./ && npm run lambda:build",
     "lambda:start": "netlify-lambda serve src/functions",
     "lambda:build": "netlify-lambda build src/functions",
     "clean": "rimraf ./dist",
@@ -32,21 +32,21 @@
     "@types/jquery": "^3.3.38",
     "@types/parse-filepath": "^1.0.0",
     "@types/semantic-ui": "^2.2.7",
+    "cross-env": "^7.0.2",
     "husky": "^4.2.5",
     "jest": "^26.0.1",
     "lint-staged": "^10.2.9",
     "netlify-lambda": "^1.6.3",
     "parcel-bundler": "^1.12.4",
     "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
     "ts-jest": "^26.1.0",
     "typescript": "^3.9.5"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.1.1",
-    "cross-env": "^7.0.2",
     "express": "^4.17.1",
     "http-proxy-middleware": "^1.0.4",
-    "parse-filepath": "^1.0.2",
-    "rimraf": "^3.0.2"
+    "parse-filepath": "^1.0.2"
   }
 }
