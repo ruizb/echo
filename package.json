@@ -16,13 +16,12 @@
   "license": "ISC",
   "lint-staged": {
     "*.{ts,js}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npx lint-staged"
     }
   },
   "devDependencies": {
