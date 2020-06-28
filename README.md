@@ -1,5 +1,7 @@
 # Echo
 
+Hello, World!
+
 This is a web app used by researchers from the [CNRS](https://en.wikipedia.org/wiki/French_National_Centre_for_Scientific_Research) (French National Center for Scientific Research) of Marseille, France.
 
 Its goal is to collect some data regarding hearing conditions such as misophonia and hyperacusis.
