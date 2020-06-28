@@ -80,7 +80,7 @@ npm test
 
 These tests ensure that some pieces of logic from the app work as expected, such as the "random sounds selection" algorithm, or the CSV generation for the attachment file of the email containing the results.
 
-### Deploy the app
+### Deploy the application
 
 You need an access to the project on [Netlify](https://www.netlify.com/) in order to deploy the changes from the `master` branch to the users.
 
