@@ -66,7 +66,7 @@ const audioFilePaths = [
   throatClear,
   vomit,
   wheezing,
-  underwater
+  underwater,
   fountain
 ]
 
