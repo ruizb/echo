@@ -30,7 +30,7 @@ const elements = {
     ) as HTMLInputElement,
   hypersensibilityImpact: () =>
     document.querySelector(
-      'input[name="user-info_hypersensibilityImpact"]:checked'
+      'input[name="user-info_hypersensibility-impact"]:checked'
     ) as HTMLInputElement,
   soundsReactions: () =>
     document.querySelector(
