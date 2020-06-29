@@ -88,6 +88,8 @@ const generateNoiseToleranceInputsHTML = (
 </div>`
 
 export const load = () => {
+  window.scroll(0, 0)
+
   const noiseToleranceFormGridElement = elements.noiseToleranceFormElement?.querySelector(
     '.grid'
   )

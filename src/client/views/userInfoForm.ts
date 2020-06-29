@@ -28,6 +28,10 @@ const elements = {
     document.querySelector(
       'input[name="user-info_hypersensibility"]:checked'
     ) as HTMLInputElement,
+  hypersensibilityImpact: () =>
+    document.querySelector(
+      'input[name="user-info_hypersensibility-impact"]:checked'
+    ) as HTMLInputElement,
   soundsReactions: () =>
     document.querySelector(
       'input[name="user-info_sounds-reactions"]:checked'
@@ -48,6 +52,8 @@ export const handleUserInfoForm = () => {
     hearingIssues: elements.hearingIssues().value as TriState,
     tinnitus: elements.tinnitus().value as TriState,
     hearingHypersensibility: elements.hypersensibility().value as TriState,
+    hypersensibilityImpact: elements.hypersensibilityImpact()
+      .value as HypersensibilityImpact,
     soundsReactions,
     soundsList: soundsReactions
       ? elements.soundsReactionsList.value.split(',').map(_ => _.trim())
