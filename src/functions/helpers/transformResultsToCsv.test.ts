@@ -1,4 +1,7 @@
-import { ListeningDevice } from '../../client/models/userInfo'
+import {
+  ListeningDevice,
+  HypersensibilityImpact
+} from '../../client/models/userInfo'
 import { NoiseTolerance } from '../models/noiseTolerance'
 import { UserInfo } from '../models/userInfo'
 import transformResultsToCsv from './transformResultsToCsv'
@@ -10,6 +13,7 @@ describe('transformResultsToCsv', () => {
     hearingIssues: 'no',
     tinnitus: 'no',
     hearingHypersensibility: 'no',
+    hypersensibilityImpact: HypersensibilityImpact.NotAtAll,
     soundsReactions: 'no',
     soundsList: []
   }
@@ -45,6 +49,7 @@ device,headset,,,,,,
 hearing-issues,no,,,,,,
 tinnitus,no,,,,,,
 hearing-hypersens,no,,,,,,
+hypersensibilityImpact,not-at-all,,,,,,
 sounds-reactions,no,,,,,,
 sounds-list,,,,,,,
 sound-volume,0.31,,,,,,

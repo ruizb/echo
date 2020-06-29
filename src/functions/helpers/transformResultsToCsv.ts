@@ -11,6 +11,7 @@ const generateUserInfoCsv = (
     hearingIssues,
     tinnitus,
     hearingHypersensibility,
+    hypersensibilityImpact,
     soundsReactions,
     soundsList
   }: UserInfo,
@@ -22,6 +23,7 @@ const generateUserInfoCsv = (
   ['hearing-issues', hearingIssues],
   ['tinnitus', tinnitus],
   ['hearing-hypersens', hearingHypersensibility],
+  ['hypersensibilityImpact', hypersensibilityImpact],
   ['sounds-reactions', soundsReactions],
   ['sounds-list', (soundsList ?? []).join('/')],
   ['sound-volume', soundVolume.toString()]
