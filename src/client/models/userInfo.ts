@@ -67,6 +67,8 @@ export const isValidUserInfo = (userInfo: unknown): userInfo is UserInfo =>
     isValidTriState(userInfo.tinnitus) &&
     hasOwnProperty(userInfo, 'hearingHypersensibility') &&
     isValidTriState(userInfo.hearingHypersensibility) &&
+    hasOwnProperty(userInfo, 'hypersensibilityImpact') &&
+    isValidHypersensibilityImpact(userInfo.hypersensibilityImpact) &&
     hasOwnProperty(userInfo, 'soundsReactions') &&
     isValidTriState(userInfo.soundsReactions) &&
     (userInfo.soundsReactions
