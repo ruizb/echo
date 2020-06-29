@@ -14,9 +14,9 @@ export const enum ListeningDevice {
 }
 export const enum HypersensibilityImpact {
   NotAtAll = 'not-at-all',
-  Alittle = 'a-little',
+  ALittle = 'a-little',
   Moderately = 'moderately',
-  Alot = 'a-lot'
+  ALot = 'a-lot'
 }
 
 export type TriState = 'yes' | 'no' | 'unknown'
@@ -46,9 +46,9 @@ const isValidHypersensibilityImpact = (
   isString(hypersensibilityImpact) &&
   ([
     HypersensibilityImpact.NotAtAll,
-    HypersensibilityImpact.Alittle,
+    HypersensibilityImpact.ALittle,
     HypersensibilityImpact.Moderately,
-    HypersensibilityImpact.Alot
+    HypersensibilityImpact.ALot
   ] as string[]).indexOf(hypersensibilityImpact) >= 0
 
 const isValidTriState = (state: unknown): state is TriState =>
