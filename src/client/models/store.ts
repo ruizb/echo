@@ -24,7 +24,7 @@ export const initialStore: Store = {
   partInProgress: Part.Introduction,
   userInfo: null,
   noiseTolerance: null,
-  soundVolume: 0.1,
+  soundVolume: 0.03,
   soundTests: [],
   remainingSoundTests: [],
   dataSent: false
