@@ -53,6 +53,22 @@ const [section, load] = getSectionAndLoad(getStore().partInProgress)
 section?.classList.remove('hide')
 load()
 
+/**
+ * If viewport height is smaller than container height, remove `height: 100%` rule
+ * as it can crop some parts of the view on some browsers, such as Safari.
+ */
+const bodyHeight = document.body.getBoundingClientRect().height
+const mainContainer: HTMLElement | null = document.body.querySelector(
+  '.ui.container'
+)
+if (isDefined(mainContainer)) {
+  const mainContainerHeight = mainContainer.getBoundingClientRect().height ?? 0
+  console.log(bodyHeight, mainContainerHeight)
+  if (mainContainerHeight > bodyHeight) {
+    mainContainer.parentElement?.style.setProperty('height', 'auto')
+  }
+}
+
 document.getElementById('start-experiment')?.addEventListener('click', () => {
   updateStore({ partInProgress: Part.UserInfoForm })
 
