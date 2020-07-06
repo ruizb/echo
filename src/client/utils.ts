@@ -47,6 +47,25 @@ export const hasOwnProperty = <X extends {}, Y extends PropertyKey>(
 
 export const noop = () => {}
 
+/**
+ * If viewport height is smaller than container height, remove `height: 100%` rule
+ * as it can crop some parts of the view on some browsers, such as Safari.
+ */
+export const adaptMainContainerPosition = () => {
+  const bodyHeight = document.body.getBoundingClientRect().height
+  const mainContainer: HTMLElement | null = document.body.querySelector(
+    '.ui.container'
+  )
+  if (isDefined(mainContainer)) {
+    const mainContainerHeight =
+      mainContainer.getBoundingClientRect().height ?? 0
+    console.log(bodyHeight, mainContainerHeight)
+    if (mainContainerHeight > bodyHeight) {
+      mainContainer.parentElement?.style.setProperty('height', 'auto')
+    }
+  }
+}
+
 export const createAudio = (
   playButton: HTMLButtonElement | undefined,
   filePath: string,

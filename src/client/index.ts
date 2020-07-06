@@ -1,7 +1,12 @@
 import { Part } from './models/part'
 import { createSoundTests } from './models/soundTest'
 import { getStore, initialStore, updateStore } from './models/store'
-import { isDefined, noop, sectionTransition } from './utils'
+import {
+  adaptMainContainerPosition,
+  isDefined,
+  noop,
+  sectionTransition
+} from './utils'
 import * as introduction from './views/introduction'
 import { handleNoiseToleranceForm } from './views/noiseToleranceForm'
 import * as soundConfig from './views/soundConfig'
@@ -53,21 +58,7 @@ const [section, load] = getSectionAndLoad(getStore().partInProgress)
 section?.classList.remove('hide')
 load()
 
-/**
- * If viewport height is smaller than container height, remove `height: 100%` rule
- * as it can crop some parts of the view on some browsers, such as Safari.
- */
-const bodyHeight = document.body.getBoundingClientRect().height
-const mainContainer: HTMLElement | null = document.body.querySelector(
-  '.ui.container'
-)
-if (isDefined(mainContainer)) {
-  const mainContainerHeight = mainContainer.getBoundingClientRect().height ?? 0
-  console.log(bodyHeight, mainContainerHeight)
-  if (mainContainerHeight > bodyHeight) {
-    mainContainer.parentElement?.style.setProperty('height', 'auto')
-  }
-}
+adaptMainContainerPosition()
 
 document.getElementById('start-experiment')?.addEventListener('click', () => {
   updateStore({ partInProgress: Part.UserInfoForm })
@@ -94,6 +85,7 @@ document.getElementById('user-info-form')?.addEventListener('submit', evt => {
       handleUserInfoForm()
       userInfoForm.unload()
       noiseToleranceForm.load()
+      adaptMainContainerPosition()
     }
   })
 })
@@ -112,6 +104,7 @@ document
         handleNoiseToleranceForm()
         noiseToleranceForm.unload()
         soundConfig.load()
+        adaptMainContainerPosition()
       }
     })
   })
@@ -134,6 +127,7 @@ document.getElementById('start-training')?.addEventListener('click', () => {
     onComplete: () => {
       soundConfig.unload()
       soundTraining.load()
+      adaptMainContainerPosition()
     }
   })
 })
@@ -146,6 +140,7 @@ document.getElementById('reconfigure-sound')?.addEventListener('click', () => {
     onComplete: () => {
       soundTraining.unload()
       soundConfig.load()
+      adaptMainContainerPosition()
     }
   })
 })
@@ -170,6 +165,7 @@ document.getElementById('start-tests')?.addEventListener('click', () => {
     onComplete: () => {
       soundTraining.unload()
       soundTests.load(resetExperiment)()
+      adaptMainContainerPosition()
     }
   })
 })
@@ -185,6 +181,7 @@ document.getElementById('end-experiment')?.addEventListener('click', () => {
     onComplete: () => {
       soundTests.unload()
       end.load()
+      adaptMainContainerPosition()
     }
   })
 })
