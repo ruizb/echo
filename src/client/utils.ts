@@ -59,9 +59,10 @@ export const adaptMainContainerPosition = () => {
   if (isDefined(mainContainer)) {
     const mainContainerHeight =
       mainContainer.getBoundingClientRect().height ?? 0
-    console.log(bodyHeight, mainContainerHeight)
     if (mainContainerHeight > bodyHeight) {
       mainContainer.parentElement?.style.setProperty('height', 'auto')
+    } else {
+      mainContainer.parentElement?.style.removeProperty('height')
     }
   }
 }
