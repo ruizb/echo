@@ -45,3 +45,11 @@ body > .grid {
 .no-right-padding {
   padding-right: 0 !important;
 }
+
+.red {
+  color: #db2828;
+}
+
+.green {
+  color: #21ba45;
+}
