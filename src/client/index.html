@@ -13,193 +13,178 @@
 <div class="ui middle aligned aligned padded grid">
   <div class="ui column raised very text container">
     <div id="introduction-section" class="hide">
-      <h2 class="ui header">Expérience en ligne sur l'audition</h2>
-      <p>Bonjour,</p>
-      <p>Vous vous apprêtez à commencer une expérience en ligne sur l'audition organisée par Arnaud Norena, directeur de recherche au CNRS, laboratoire de Neurosciences Sensorielles et Cognitives, Marseille. Pour toutes informations complémentaires, vous pouvez contacter Arnaud par <a class="ui label" href="mailto:arnaud.norena@univ-amu.fr"><i class="mail icon"></i> email</a>.</p>
-      <p><strong>Avant toute chose, nous souhaitons vous remercier de votre participation à cette recherche !</strong></p>
-      <p>Aucune information identifiante ne vous sera demandée. Assurez-vous de réaliser l'expérience dans de bonnes conditions, c'est-à-dire d'avoir le temps nécessaire pour aller jusqu'au bout (20 minutes environ), être motivé et en bonne forme, et vous trouver dans un endroit calme.</p>
-      <p>Le test consiste à évaluer des sons selon une échelle visuelle allant de très plaisant à très déplaisant :</p>
-      <ul>
-        <li>Si le son présenté est celui d'un aboiement de chien et que vous trouvez ce son très désagréable, alors vous devez cliquer à l'extrémité droite de l'échelle.</li>
-        <li>Si le son présenté est celui du vent dans la forêt et que vous trouvez ce son très agréable, alors vous devez cliquer à l'extrême gauche de l'échelle.</li>
-        <li>Si le son présenté est neutre, vous devez cliquer au milieu de l'échelle.</li>
-      </ul>
-      <p>En général, les sons sont plus ou moins agréables ou désagréables, donc vous devez utiliser toute la longueur de l'échelle pour donner votre réponse. Tous les sons seront présentés à un niveau sonore confortable.</p>
+      <h2 class="ui header">{{homepage_title}}</h2>
+      {{homepage_description}}
       <div class="ui basic segment center aligned">
         <button id="start-experiment" class="ui right labeled large icon primary button">
           <i class="right arrow icon"></i>
-          Démarrer l'expérience
+          {{homepage_startExperiment}}
         </button>
       </div>
     </div>
 
     <div id="user-info-form-section" class="hide">
-      <p>Cette page consiste à vous demander des informations sur vous et votre audition.</p>
+      <p>{{userInfo_description}}</p>
 
       <form id="user-info-form" class="ui form">
         <div class="field">
-          <label for="user-info_age">Quel âge avez-vous ?</label>
+          <label for="user-info_age">{{userInfo_ageLabel}}</label>
           <input type="number" id="user-info_age" name="user-info_age" min="18" max="100" pattern="[0-9]*" inputmode="numeric" required>
         </div>
 
         <div class="grouped fields">
-          <label>Qu'utilisez-vous pour écouter les sons de cette expérience ?</label>
+          <label>{{userInfoListening_deviceLabel}}</label>
           <div class="field">
             <div class="ui radio checkbox">
               <input type="radio" id="user-info_device-headset" value="headset" name="user-info_device" checked="" tabindex="0" class="hidden">
-              <label for="user-info_device-headset">Casque</label>
+              <label for="user-info_device-headset">{{userInfoListening_deviceHeadset}}</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
               <input type="radio" id="user-info_device-earphones" value="earphones" name="user-info_device" tabindex="0" class="hidden">
-              <label for="user-info_device-earphones">Écouteurs</label>
+              <label for="user-info_device-earphones">{{userInfoListening_deviceEarphones}}</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
               <input type="radio" id="user-info_device-speakers" value="speakers" name="user-info_device" tabindex="0" class="hidden">
-              <label for="user-info_device-speakers">Hauts-parleurs</label>
+              <label for="user-info_device-speakers">{{userInfoListening_deviceSpeakers}}</label>
             </div>
           </div>
         </div>
 
         <div class="grouped fields">
-          <label>Selon vous, avez-vous des problèmes d'audition ? <i data-content="Faites-vous répéter souvent, avez-vous des problèmes pour comprendre la parole dans le bruit, etc." class="info circle icon"></i></label>
+          <label>{{userInfoListening_hearingIssuesLabel}}</label>
           <div class="field">
             <div class="ui radio checkbox">
               <input type="radio" id="user-info_hearing-issues-yes" value="yes" name="user-info_hearing-issues" tabindex="0" class="hidden">
-              <label for="user-info_hearing-issues-yes">Oui</label>
+              <label for="user-info_hearing-issues-yes">{{common_yes}}</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
               <input type="radio" id="user-info_hearing-issues-no" value="no" name="user-info_hearing-issues" tabindex="0" class="hidden">
-              <label for="user-info_hearing-issues-no">Non</label>
+              <label for="user-info_hearing-issues-no">{{common_no}}</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
               <input type="radio" id="user-info_hearing-issues-unknown" value="unknown" name="user-info_hearing-issues" checked="" tabindex="0" class="hidden">
-              <label for="user-info_hearing-issues-unknown">Je ne sais pas</label>
+              <label for="user-info_hearing-issues-unknown">{{common_dontKnow}}</label>
             </div>
           </div>
         </div>
 
         <div class="grouped fields">
-          <label>Avez-vous des acouphènes ? <i data-content="Sifflement d'oreille." class="info circle icon"></i></label>
+          <label>{{userInfoListening_tinnitusLabel}}</label>
           <div class="field">
             <div class="ui radio checkbox">
               <input type="radio" id="user-info_tinnitus-yes" value="yes" name="user-info_tinnitus" tabindex="0" class="hidden">
-              <label for="user-info_tinnitus-yes">Oui</label>
+              <label for="user-info_tinnitus-yes">{{common_yes}}</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
               <input type="radio" id="user-info_tinnitus-no" value="no" name="user-info_tinnitus" tabindex="0" class="hidden">
-              <label for="user-info_tinnitus-no">Non</label>
+              <label for="user-info_tinnitus-no">{{common_no}}</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
               <input type="radio" id="user-info_tinnitus-unknown" value="unknown" name="user-info_tinnitus" checked="" tabindex="0" class="hidden">
-              <label for="user-info_tinnitus-unknown">Je ne sais pas</label>
+              <label for="user-info_tinnitus-unknown">{{common_dontKnow}}</label>
             </div>
           </div>
         </div>
 
         <div class="grouped fields">
-          <label>Avez-vous une hypersensibilité auditive ? <i data-content="Certains sons sont-ils forts ou douloureux à des intensités modestes qui ne provoquent aucune réaction chez les autres ?" class="info circle icon"></i></label>
+          <label>{{userInfo_hypersensibilityLabel}}</label>
           <div class="field">
             <div class="ui radio checkbox">
               <input type="radio" id="user-info_hypersensibility-yes" value="yes" name="user-info_hypersensibility" tabindex="0" class="hidden">
-              <label for="user-info_hypersensibility-yes">Oui</label>
+              <label for="user-info_hypersensibility-yes">{{common_yes}}</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
               <input type="radio" id="user-info_hypersensibility-no" value="no" name="user-info_hypersensibility" tabindex="0" class="hidden">
-              <label for="user-info_hypersensibility-no">Non</label>
+              <label for="user-info_hypersensibility-no">{{common_no}}</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
               <input type="radio" id="user-info_hypersensibility-unknown" value="unknown" name="user-info_hypersensibility" checked="" tabindex="0" class="hidden">
-              <label for="user-info_hypersensibility-unknown">Je ne sais pas</label>
+              <label for="user-info_hypersensibility-unknown">{{common_dontKnow}}</label>
             </div>
           </div>
         </div>
 
         <div class="grouped fields">
-          <label>A quel point êtes-vous handicapé par cette hypersensibilité ?</label>
+          <label>{{userInfo_hypersensibilityImpactLabel}}</label>
           <div class="field">
             <div class="ui radio checkbox">
               <input type="radio" id="user-info_hypersensibility-impact-not-at-all" value="not-at-all" name="user-info_hypersensibility-impact" checked="" tabindex="0" class="hidden">
-              <label for="user-info_hypersensibility-impact-not-at-all">Pas du tout</label>
+              <label for="user-info_hypersensibility-impact-not-at-all">{{userInfo_hypersensibilityImpactNotAtAll}}</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
               <input type="radio" id="user-info_hypersensibility-impact-a-little" value="a-little" name="user-info_hypersensibility-impact" tabindex="0" class="hidden">
-              <label for="user-info_hypersensibility-impact-a-little">Un peu</label>
+              <label for="user-info_hypersensibility-impact-a-little">{{userInfo_hypersensibilityImpactALittle}}</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
               <input type="radio" id="user-info_hypersensibility-impact-moderately" value="moderately" name="user-info_hypersensibility-impact" tabindex="0" class="hidden">
-              <label for="user-info_hypersensibility-impact-moderately">Modérément</label>
+              <label for="user-info_hypersensibility-impact-moderately">{{userInfo_hypersensibilityImpactModerately}}</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
               <input type="radio" id="user-info_hypersensibility-impact-a-lot" value="a-lot" name="user-info_hypersensibility-impact" tabindex="0" class="hidden">
-              <label for="user-info_hypersensibility-impact-a-lot">Beaucoup</label>
+              <label for="user-info_hypersensibility-impact-a-lot">{{userInfo_hypersensibilityImpactALot}}</label>
             </div>
           </div>
         </div>
         <div class="grouped fields">
-          <label>Y a-t-il des sons en particulier qui déclenchent chez vous des réactions très intenses telles que la colère, le dégoût... ?</label>
+          <label>{{userInfo_soundsReactionsLabel}}</label>
           <div class="field">
             <div class="ui radio checkbox">
               <input type="radio" id="user-info_sounds-reactions-yes" value="yes" name="user-info_sounds-reactions" tabindex="0" class="hidden">
-              <label for="user-info_sounds-reactions-yes">Oui</label>
+              <label for="user-info_sounds-reactions-yes">{{common_yes}}</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
               <input type="radio" id="user-info_sounds-reactions-no" value="no" name="user-info_sounds-reactions" tabindex="0" class="hidden">
-              <label for="user-info_sounds-reactions-no">Non</label>
+              <label for="user-info_sounds-reactions-no">{{common_no}}</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
               <input type="radio" id="user-info_sounds-reactions-unknown" value="unknown" name="user-info_sounds-reactions" checked="" tabindex="0" class="hidden">
-              <label for="user-info_sounds-reactions-unknown">Je ne sais pas</label>
+              <label for="user-info_sounds-reactions-unknown">{{common_dontKnow}}</label>
             </div>
           </div>
 
           <div id="user-info_sounds-reactions-list-field" class="field hide">
-            <label for="user-info_sounds-reactions-list">Quels sont les sons qui déclenchent ces réactions ? (séparés par des virgules)</label>
-            <textarea id="user-info_sounds-reactions-list" name="user-info_sounds-reactions-list" placeholder="Bruits de klaxon, grincements de dents" rows="2" ></textarea>
+            <label for="user-info_sounds-reactions-list">{{userInfo_soundsReactionsListLabel}}</label>
+            <textarea id="user-info_sounds-reactions-list" name="user-info_sounds-reactions-list" placeholder="{{userInfo_soundsReactionsListPlaceholder}}" rows="2" ></textarea>
           </div>
         </div>
 
         <div class="ui basic segment center aligned">
           <button class="ui right labeled large icon primary button">
             <i class="right arrow icon"></i>
-            Passer au second formulaire
+            {{userInfo_nextForm}}
           </button>
         </div>
       </form>
     </div>
 
     <div id="noise-tolerance-form-section" class="hide">
-      <p>Pour certains sons, certaines personnes sont moins sensibles, alors que d’autres sont plus sensibles.</p>
-
-      <p>Y a-t-il des sons que vous trouvez particulièrement pénibles ?</p>
-
-      <p>Veuillez indiquer dans quelle mesure vous êtes en accord ou en désaccord avec les déclarations
-        suivantes.</p>
+      {{noiseTolerance_description}}
 
       <div class="ui divider"></div>
 
@@ -208,35 +193,35 @@
           <!-- This part is filled by the views/noiseToleranceForm module -->
           <div class="ui row">
             <div class="grouped fields left aligned column">
-              <label>Je considère mon aversion à certains sons comme...</label>
+              <label>{{noiseTolerance_dislikeLabel}}</label>
               <div class="field">
                 <div class="ui radio checkbox">
                   <input type="radio" id="noise-tolerance_sounds-dislike-1" value="1" name="noise-tolerance_sounds-dislike" tabindex="0" class="hidden">
-                  <label for="noise-tolerance_sounds-dislike-1">Un problème extrême, qui affecte toute ma vie.</label>
+                  <label for="noise-tolerance_sounds-dislike-1">{{noiseTolerance_dislike1}}</label>
                 </div>
               </div>
               <div class="field">
                 <div class="ui radio checkbox">
                   <input type="radio" id="noise-tolerance_sounds-dislike-2" value="2" name="noise-tolerance_sounds-dislike" tabindex="0" class="hidden">
-                  <label for="noise-tolerance_sounds-dislike-2">Un problème sévère, qui affecte plusieurs aspects de ma qualité de vie.</label>
+                  <label for="noise-tolerance_sounds-dislike-2">{{noiseTolerance_dislike2}}</label>
                 </div>
               </div>
               <div class="field">
                 <div class="ui radio checkbox">
                   <input type="radio" id="noise-tolerance_sounds-dislike-3" value="3" name="noise-tolerance_sounds-dislike" tabindex="0" class="hidden">
-                  <label for="noise-tolerance_sounds-dislike-3">Un problème modéré, qui affecte quelques aspects de ma qualité de vie.</label>
+                  <label for="noise-tolerance_sounds-dislike-3">{{noiseTolerance_dislike3}}</label>
                 </div>
               </div>
               <div class="field">
                 <div class="ui radio checkbox">
                   <input type="radio" id="noise-tolerance_sounds-dislike-4" value="4" name="noise-tolerance_sounds-dislike" tabindex="0" class="hidden">
-                  <label for="noise-tolerance_sounds-dislike-4">Un problème léger, qui affecte légèrement ma qualité de vie.</label>
+                  <label for="noise-tolerance_sounds-dislike-4">{{noiseTolerance_dislike4}}</label>
                 </div>
               </div>
               <div class="field">
                 <div class="ui radio checkbox">
                   <input type="radio" id="noise-tolerance_sounds-dislike-5" value="5" name="noise-tolerance_sounds-dislike" checked="checked" tabindex="0" class="hidden">
-                  <label for="noise-tolerance_sounds-dislike-5">N’est pas un problème, n’affecte pas ma qualité de vie.</label>
+                  <label for="noise-tolerance_sounds-dislike-5">{{noiseTolerance_dislike5}}</label>
                 </div>
               </div>
             </div>
@@ -246,22 +231,21 @@
         <div class="ui basic segment center aligned">
           <button class="ui right labeled large icon primary button">
             <i class="right arrow icon"></i>
-            Configurer le son pour l'expérience
+            {{noiseTolerance_configureSound}}
           </button>
         </div>
       </form>
     </div>
 
     <div id="sound-config-section" class="hide">
-      <p>Nous allons maintenant ajuster le niveau du son pour qu'il soit présenté à un niveau confortable, ni trop faible, ni trop fort. Vous pouvez régler le volume en déplaçant le curseur ci-après.</p>
-      <p>Vous devez mettre le son de votre appareil au volume maximum.</p>
+      {{soundConfig_description}}
 
       <div class="ui padded grid center aligned">
         <div class="ui row">
           <div class="sixteen wide column">
             <button id="play-ref-sound" class="ui labeled icon large button">
               <i class="play icon"></i>
-              <span>Jouer le son</span>
+              <span>{{common_playSound}}</span>
             </button>
           </div>
         </div>
@@ -281,34 +265,32 @@
       <div class="ui basic segment center aligned">
         <button id="start-training" class="ui right labeled large icon primary button">
           <i class="right arrow icon"></i>
-          Commencer l'entraînement
+          {{soundConfig_startTraining}}
         </button>
       </div>
     </div>
 
     <div id="sound-training-section" class="hide">
-      <p>Les sons qui suivent sont des sons d'entraînement. Cela vous permet de tester si le volume que vous avez choisi à l'étape précédente vous convient, ou si vous avez besoin de le reconfigurer.</p>
-
-      <p>Une fois ces quelques essais effectués, vous allez pouvoir démarrer l'expérience.</p>
+      {{soundTraining_description}}
 
       <div class="ui padded grid center aligned">
         <div class="ui row">
           <div class="sixteen wide column">
             <button id="play-training-sound" class="ui labeled icon large button">
               <i class="play icon"></i>
-              <span>Jouer le son</span>
+              <span>{{common_playSound}}</span>
             </button>
           </div>
         </div>
         <div class="ui row" style="padding-bottom: 0;">
           <div class="six wide mobile six wide tablet four wide computer left aligned column">
-            <span class="sound-test-slider-label green">Très agréable</span>
+            <span class="sound-test-slider-label green">{{common_veryPleasant}}</span>
           </div>
           <div class="four wide mobile four wide tablet eight wide computer center aligned column">
-            <span class="sound-test-slider-label">Neutre</span>
+            <span class="sound-test-slider-label">{{common_neutral}}</span>
           </div>
           <div class="six wide mobile six wide tablet four wide computer right aligned column">
-            <span class="sound-test-slider-label red">Très désagréable</span>
+            <span class="sound-test-slider-label red">{{common_veryUnpleasant}}</span>
           </div>
         </div>
         <div class="ui row" style="padding-top: 0;">
@@ -321,29 +303,24 @@
       <div class="ui basic segment center aligned">
         <button id="next-training" class="ui right labeled large icon disabled primary button">
           <i class="right arrow icon"></i>
-          Passer au son d'essai suivant
+          {{soundTraining_nextSound}}
         </button>
         <button id="start-tests" class="ui right labeled large icon disabled primary button hide">
           <i class="right arrow icon"></i>
-          Commencer les tests
+          {{soundTraining_startTests}}
         </button>
       </div>
 
       <div class="ui basic segment center aligned" style="padding-top: 0;">
         <button id="reconfigure-sound" class=" compact ui left labeled icon button">
           <i class="left arrow icon"></i>
-          Reconfigurer le volume des sons
+          {{soundTraining_reconfigureSound}}
         </button>
       </div>
     </div>
 
     <div id="sound-tests-section" class="hide">
-      <p>Le test peut maintenant démarrer. Vous devez juger les sons présentés selon une échelle agréable - désagréable. Si le son est très agréable, vous devez cliquer à l’extrême gauche de l'échelle. Si le son est très désagréable, vous devez cliquer à l'extrême droite de l'échelle. Si le son est neutre, vous devez cliquer au milieu de l'échelle. <strong>La plupart des sons sont plus ou moins agréables ou désagréables, vous devez donc utiliser toute la longueur de l'échelle pour répondre.</strong></p>
-
-      <p>Les sons tests sont présentés trois fois dans un ordre aléatoire.</p>
-      <p>Attention : une fois votre réponse enregistrée, il ne sera plus possible de la modifier !</p>
-
-      <p>Bon courage et merci de votre participation !</p>
+      {{soundTests_description}}
 
       <div class="ui padded grid center aligned">
         <div class="ui row">
@@ -352,7 +329,7 @@
               <div class="bar">
                 <div class="progress"></div>
               </div>
-              <div class="label">Expérience en cours...</div>
+              <div class="label">{{soundTests_experimentInProgress}}</div>
             </div>
           </div>
         </div>
@@ -360,19 +337,19 @@
           <div class="sixteen wide column">
             <button id="play-test-sound" class="ui labeled icon large button">
               <i class="play icon"></i>
-              <span>Jouer le son</span>
+              <span>{{common_playSound}}</span>
             </button>
           </div>
         </div>
         <div class="ui row" style="padding-bottom: 0;">
           <div class="six wide mobile six wide tablet four wide computer left aligned column">
-            <span id="sound-test-slider-pleasant" class="sound-test-slider-label green">Très agréable</span>
+            <span id="sound-test-slider-pleasant" class="sound-test-slider-label green">{{common_veryPleasant}}</span>
           </div>
           <div class="four wide mobile four wide tablet eight wide computer center aligned column">
-            <span id="sound-test-slider-neutral" class="sound-test-slider-label">Neutre</span>
+            <span id="sound-test-slider-neutral" class="sound-test-slider-label">{{common_neutral}}</span>
           </div>
           <div class="six wide mobile six wide tablet four wide computer right aligned column">
-            <span id="sound-test-slider-unpleasant" class="sound-test-slider-label red">Très désagréable</span>
+            <span id="sound-test-slider-unpleasant" class="sound-test-slider-label red">{{common_veryUnpleasant}}</span>
           </div>
         </div>
         <div class="ui row" style="padding-top: 0;">
@@ -385,11 +362,11 @@
       <div class="ui basic segment center aligned">
         <button id="next-test" class="ui right labeled large icon disabled primary button">
           <i class="right arrow icon"></i>
-          Passer au son suivant
+          {{soundTests_nextSound}}
         </button>
         <button id="end-experiment" class="ui right labeled large icon disabled primary button hide">
           <i class="right arrow icon"></i>
-          Terminer l'expérience
+          {{soundTests_finishExperiment}}
         </button>
       </div>
     </div>
@@ -402,18 +379,18 @@
               <div class="bar" style="transition-duration: 0s">
                 <div class="progress"></div>
               </div>
-              <div class="label">Expérience terminée !</div>
+              <div class="label">{{soundTests_experimentOver}}</div>
             </div>
           </div>
         </div>
       </div>
 
       <div id="data-auto-sent-message" class="ui blue message small">
-        <p><i class="info circle blue icon"></i>Les données ont été automatiquement recueillies, merci !</p>
+        <p><i class="info circle blue icon"></i>{{end_description}}</p>
       </div>
 
       <div id="data-auto-sent-message-error" class="ui yellow message small hide">
-        <p><i class="exclamation triangle yellow icon"></i>Les données de l'expérience n'ont pas pu être recueillies. Veuillez revenir sur cette page ultérieurement (e.g. le lendemain), ou envoyer le texte ci-après directement à la personne en charge de l'expérience :</p>
+        <p><i class="exclamation triangle yellow icon"></i>{{end_warningMessage}}</p>
         <pre id="data-auto-sent-message-error-data" class="wrap-text-overflow"></pre>
       </div>
     </div>

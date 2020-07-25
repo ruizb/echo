@@ -1,59 +1,56 @@
 import { Part } from '../models/part'
 import { updateStore } from '../models/store'
 import { isDefined } from '../utils'
+import { TFunction } from 'i18next'
 
 export const id = `${Part.NoiseToleranceForm}-section`
 
-export const section = document.getElementById(id)
+export const section = () => document.getElementById(id)
 
 const elements = {
-  noiseToleranceFormElement: document.querySelector(
-    'form#noise-tolerance-form'
-  ) as HTMLFormElement,
-  noiseToleranceSoundsDislike: document.querySelector(
-    'input[name="noise-tolerance_sounds-dislike"]:checked'
-  ) as HTMLInputElement,
+  noiseToleranceFormElement: () =>
+    document.querySelector('form#noise-tolerance-form') as HTMLFormElement,
+  noiseToleranceSoundsDislike: () =>
+    document.querySelector(
+      'input[name="noise-tolerance_sounds-dislike"]:checked'
+    ) as HTMLInputElement,
   noiseToleranceSliderN: (n: number) =>
     document.querySelector(
       `input[name="${generateIdForInput(n)}"]`
     ) as HTMLInputElement
 }
 
-const statements = [
-  `Certains sons me dérangent tellement que j’ai du mal à contrôler mes émotions.`,
-  `Les sons déplaisants me donnent l’impression d’être submergé(e).`,
-  `Je deviens anxieux à la simple pensée d’un son désagréable.`,
-  `Je crois que mes réactions aux sons sont exagérées, mais je ne peux pas m’en défaire.`,
-  `Lorsque j’entends des sons déplaisants, je commence à sentir des émotions dans mon corps (par
-exemple : je transpire, je ressens de la douleur, de la pression, mes muscles se tendent).`,
-  `Je commence à ressentir de la colère dès que je vois un objet/animal/personne qui pourrait
-produire un son désagréable.`,
-  `Je fais beaucoup d'efforts pour contrôler mes émotions lorsque j'entends un son désagréable.`,
-  `Si je le peux, j'évite de rencontrer certaines personnes à cause des bruits qu'elles produisent.`,
-  `Je trouve certains sons produits par le corps humain insupportables.`,
-  `Je sens que mon état mental s'aggrave si je ne peux pas quitter un endroit où il y a un son
-désagréable.`,
-  `Je réfléchis souvent à des techniques pour masquer ou noyer les sons désagréables.`,
-  `Certains sons désagréables me mettent immédiatement en colère.`,
-  `Je crains que les sons désagréables puissent avoir un impact sur mon avenir.`,
-  `Lorsque je rencontre d'autres personnes, je suis parfois irrité par la présence de sons
-désagréables.`
+const statements = (translate: TFunction) => [
+  translate('noiseTolerance_statement1'),
+  translate('noiseTolerance_statement2'),
+  translate('noiseTolerance_statement3'),
+  translate('noiseTolerance_statement4'),
+  translate('noiseTolerance_statement5'),
+  translate('noiseTolerance_statement6'),
+  translate('noiseTolerance_statement7'),
+  translate('noiseTolerance_statement8'),
+  translate('noiseTolerance_statement9'),
+  translate('noiseTolerance_statement10'),
+  translate('noiseTolerance_statement11'),
+  translate('noiseTolerance_statement12'),
+  translate('noiseTolerance_statement13'),
+  translate('noiseTolerance_statement14')
 ]
 
 const generateIdForInput = (i: number) => `noise-tolerance-${i}`
 
-export const handleNoiseToleranceForm = () => {
+export const handleNoiseToleranceForm = (translate: TFunction) => {
   updateStore({
     noiseTolerance: {
-      soundsDislike: elements.noiseToleranceSoundsDislike.value,
-      statementsScores: statements.map(
+      soundsDislike: elements.noiseToleranceSoundsDislike().value,
+      statementsScores: statements(translate).map(
         (_, i) => elements.noiseToleranceSliderN(i + 1).value
       )
     }
   })
 }
 
-const generateNoiseToleranceInputsHTML = (
+const generateNoiseToleranceInputsHTML = (translate: TFunction) => (
   statement: string,
   id: string
 ): string =>
@@ -66,19 +63,21 @@ const generateNoiseToleranceInputsHTML = (
 </div>
 <div class="ui row noise-tolerance-row">
   <div class="three wide left aligned column no-left-padding">
-    <div class="small-text">Je ne suis pas du tout d’accord</div>
+    <div class="small-text">${translate(
+      'noiseTolerance_completelyDisagree'
+    )}</div>
   </div>
   <div class="three wide center aligned column">
-    <div class="small-text">Je ne suis pas d’accord</div>
+    <div class="small-text">${translate('noiseTolerance_disagree')}</div>
   </div>
   <div class="four wide center aligned column">
-    <div class="small-text">Ni d’accord ni pas d’accord</div>
+    <div class="small-text">${translate('noiseTolerance_neutral')}</div>
   </div>
   <div class="three wide center aligned column">
-    <div class="small-text">Je suis d’accord</div>
+    <div class="small-text">${translate('noiseTolerance_agree')}</div>
   </div>
   <div class="three wide right aligned column no-right-padding">
-    <div class="small-text">Je suis tout à fait d’accord</div>
+    <div class="small-text">${translate('noiseTolerance_completelyAgree')}</div>
   </div>
 </div>
 <div class="ui row" style="padding-top: 0;">
@@ -87,17 +86,20 @@ const generateNoiseToleranceInputsHTML = (
   </div>
 </div>`
 
-export const load = () => {
+export const load = (translate: TFunction) => {
   window.scroll(0, 0)
 
-  const noiseToleranceFormGridElement = elements.noiseToleranceFormElement?.querySelector(
-    '.grid'
-  )
+  const noiseToleranceFormGridElement = elements
+    .noiseToleranceFormElement()
+    ?.querySelector('.grid')
   if (isDefined(noiseToleranceFormGridElement)) {
     noiseToleranceFormGridElement.innerHTML =
-      statements
+      statements(translate)
         .map((statement, i) =>
-          generateNoiseToleranceInputsHTML(statement, generateIdForInput(i + 1))
+          generateNoiseToleranceInputsHTML(translate)(
+            statement,
+            generateIdForInput(i + 1)
+          )
         )
         .join('\n') +
       '\n' +

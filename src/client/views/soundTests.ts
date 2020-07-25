@@ -1,3 +1,4 @@
+import { TFunction } from 'i18next'
 import audioFilePaths, { getFilePathFromName } from '../models/audioFilePath'
 import { Part } from '../models/part'
 import { SoundTest } from '../models/soundTest'
@@ -6,33 +7,36 @@ import { createAudio, head, isDefined, isUndefined, tail } from '../utils'
 
 export const id = `${Part.SoundTests}-section`
 
-export const section = document.getElementById(id)
+export const section = () => document.getElementById(id)
 
 const elements = {
-  sliderPleasantLabel: document.getElementById('sound-test-slider-pleasant'),
-  sliderNeutralLabel: document.getElementById('sound-test-slider-neutral'),
-  sliderUnpleasantLabel: document.getElementById(
-    'sound-test-slider-unpleasant'
-  ),
-  nextTestButton: document.getElementById('next-test'),
-  testSoundSlider: document.getElementById(
-    'test-sound-slider'
-  ) as HTMLInputElement,
-  playTestSoundButton: document.getElementById(
-    'play-test-sound'
-  ) as HTMLButtonElement,
-  endExperimentButton: document.getElementById(
-    'end-experiment'
-  ) as HTMLButtonElement
+  sliderPleasantLabel: () =>
+    document.getElementById('sound-test-slider-pleasant'),
+  sliderNeutralLabel: () =>
+    document.getElementById('sound-test-slider-neutral'),
+  sliderUnpleasantLabel: () =>
+    document.getElementById('sound-test-slider-unpleasant'),
+  nextTestButton: () => document.getElementById('next-test'),
+  testSoundSlider: () =>
+    document.getElementById('test-sound-slider') as HTMLInputElement,
+  playTestSoundButton: () =>
+    document.getElementById('play-test-sound') as HTMLButtonElement,
+  endExperimentButton: () =>
+    document.getElementById('end-experiment') as HTMLButtonElement
 }
 
-let audioCache: ReturnType<typeof createAudio> | undefined = undefined
+let audioCache:
+  | ReturnType<ReturnType<typeof createAudio>>
+  | undefined = undefined
 
 const onSliderPleasantClick = () => setTestSoundSlider(0)
 const onSliderNeutralClick = () => setTestSoundSlider(50)
 const onSliderUnpleasantClick = () => setTestSoundSlider(100)
 
-export const load = (resetExperiment: () => void) => () => {
+export const load = (
+  resetExperiment: () => void,
+  translate: TFunction
+) => () => {
   const remainingSoundTests = getStore().remainingSoundTests
 
   const soundTestsWithNoFilePath = remainingSoundTests
@@ -59,14 +63,15 @@ export const load = (resetExperiment: () => void) => () => {
     completedSoundTests.length + remainingSoundTests.length
   )
 
-  elements.sliderPleasantLabel?.addEventListener('click', onSliderPleasantClick)
-  elements.sliderNeutralLabel?.addEventListener('click', onSliderNeutralClick)
-  elements.sliderUnpleasantLabel?.addEventListener(
-    'click',
-    onSliderUnpleasantClick
-  )
+  elements
+    .sliderPleasantLabel()
+    ?.addEventListener('click', onSliderPleasantClick)
+  elements.sliderNeutralLabel()?.addEventListener('click', onSliderNeutralClick)
+  elements
+    .sliderUnpleasantLabel()
+    ?.addEventListener('click', onSliderUnpleasantClick)
 
-  nextSound(remainingSoundTestsWithFilePath, true)
+  nextSound(remainingSoundTestsWithFilePath, translate, true)
 }
 
 export const unload = () => {
@@ -74,39 +79,37 @@ export const unload = () => {
     audioCache.audioElement.pause()
     audioCache.removePlayButtonClickListener()
   }
-  elements.sliderPleasantLabel?.removeEventListener(
-    'click',
-    onSliderPleasantClick
-  )
-  elements.sliderNeutralLabel?.removeEventListener(
-    'click',
-    onSliderNeutralClick
-  )
-  elements.sliderUnpleasantLabel?.removeEventListener(
-    'click',
-    onSliderUnpleasantClick
-  )
+  elements
+    .sliderPleasantLabel()
+    ?.removeEventListener('click', onSliderPleasantClick)
+  elements
+    .sliderNeutralLabel()
+    ?.removeEventListener('click', onSliderNeutralClick)
+  elements
+    .sliderUnpleasantLabel()
+    ?.removeEventListener('click', onSliderUnpleasantClick)
 
-  // not satisfied, but I couldn't find another way to remove all listeners...
-  if (isDefined(elements.nextTestButton)) {
-    const newNextTestButton = elements.nextTestButton.cloneNode(
+  // FIXME not satisfied, but I couldn't find another way to remove all listeners...
+  const nextTestButton = elements.nextTestButton()
+  if (isDefined(nextTestButton)) {
+    const newNextTestButton = nextTestButton.cloneNode(
       true
     ) as HTMLButtonElement
-    elements.nextTestButton.parentNode?.replaceChild(
-      newNextTestButton,
-      elements.nextTestButton
-    )
-    elements.nextTestButton = newNextTestButton
+    nextTestButton.parentNode?.replaceChild(newNextTestButton, nextTestButton)
+    elements.nextTestButton = () => newNextTestButton
   }
 }
 
-const updateProgressBar = (value: number, total: number) => {
+const updateProgressBar = (translate: TFunction) => (
+  value: number,
+  total: number
+) => {
   $('#experiment-progress-bar').progress({
     value,
     total,
     text: {
-      active: 'Expérience en cours...',
-      success: 'Expérience terminée !'
+      active: translate('soundTests_experimentInProgress'),
+      success: translate('soundTests_experimentOver')
     }
   })
 }
@@ -118,6 +121,7 @@ const setTestSoundSlider = (score: number) =>
 
 const nextSound = (
   soundTests: SoundTest[],
+  translate: TFunction,
   firstSoundTest: boolean = false
 ) => {
   if (isDefined(audioCache)) {
@@ -130,21 +134,21 @@ const nextSound = (
 
   const nextButton =
     remainingSoundTests.length === 0
-      ? elements.endExperimentButton
-      : elements.nextTestButton
+      ? elements.endExperimentButton()
+      : elements.nextTestButton()
 
   nextButton?.classList.add('disabled')
 
   if (isDefined(soundTest)) {
-    if (nextButton === elements.endExperimentButton) {
-      elements.nextTestButton?.classList.add('hide')
-      elements.endExperimentButton?.classList.remove('hide')
+    if (nextButton === elements.endExperimentButton()) {
+      elements.nextTestButton()?.classList.add('hide')
+      elements.endExperimentButton()?.classList.remove('hide')
     }
 
     setTestSoundSlider(soundTest.score)
 
-    audioCache = createAudio(
-      elements.playTestSoundButton,
+    audioCache = createAudio(translate)(
+      elements.playTestSoundButton(),
       soundTest.filePath,
       getStore().soundVolume,
       () => {
@@ -168,7 +172,7 @@ const nextSound = (
           ...getStore().soundTests,
           {
             name: soundTest.name,
-            score: parseInt(elements.testSoundSlider.value, 10)
+            score: parseInt(elements.testSoundSlider().value, 10)
           } as SoundTest
         ],
         remainingSoundTests: remainingSoundTests.map(({ name, score }) => ({
@@ -177,7 +181,7 @@ const nextSound = (
         }))
       })
 
-      nextSound(remainingSoundTests)
+      nextSound(remainingSoundTests, translate)
     }
     nextButton?.addEventListener('click', onNextSoundTest)
   }

@@ -4,7 +4,7 @@ import { isDefined, noop } from '../utils'
 
 export const id = 'part-5'
 
-export const section = document.getElementById(id)
+export const section = () => document.getElementById(id)
 
 const elements = {
   progressBar: document.getElementById('end-experiment-progress-bar'),
