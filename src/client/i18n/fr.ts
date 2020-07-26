@@ -33,7 +33,10 @@ const translations = {
   userInfo_soundsReactionsListLabel: `Quels sont les sons qui déclenchent ces réactions ? (séparés par des virgules)`,
   userInfo_soundsReactionsListPlaceholder: `Bruits de klaxon, grincements de dents`,
   userInfo_nextForm: `Passer au second formulaire`,
-  noiseTolerance_description: `<p>Pour certains sons, certaines personnes sont moins sensibles, alors que d’autres sont plus sensibles.</p>
+  noiseTolerance_title: `QUESTIONNAIRE POUR ÉVALUER LA DIMINUTION DE LA TOLÉRANCE AU BRUIT`,
+  noiseTolerance_description: `<p><em>Auteurs : Siepsiak, M., Śliwerski, A., Dragan, W. Ł.</em></p>
+
+  <p>Pour certains sons, certaines personnes sont moins sensibles, alors que d’autres sont plus sensibles.</p>
 
       <p>Y a-t-il des sons que vous trouvez particulièrement pénibles ?</p>
 

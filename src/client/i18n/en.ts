@@ -1,97 +1,98 @@
 const translations = {
-  homepage_title: `Online experiment about the hearing`,
+  homepage_title: `Online Hearing Experiment`,
   homepage_description: `<p>Hello,</p>
-      <p>Vous vous apprêtez à commencer une expérience en ligne sur l'audition organisée par Arnaud Norena, directeur de recherche au CNRS, laboratoire de Neurosciences Sensorielles et Cognitives, Marseille. Pour toutes informations complémentaires, vous pouvez contacter Arnaud par <a class="ui label" href="mailto:arnaud.norena@univ-amu.fr"><i class="mail icon"></i> email</a>.</p>
-      <p><strong>Avant toute chose, nous souhaitons vous remercier de votre participation à cette recherche !</strong></p>
-      <p>Aucune information identifiante ne vous sera demandée. Assurez-vous de réaliser l'expérience dans de bonnes conditions, c'est-à-dire d'avoir le temps nécessaire pour aller jusqu'au bout (20 minutes environ), être motivé et en bonne forme, et vous trouver dans un endroit calme.</p>
-      <p>Le test consiste à évaluer des sons selon une échelle visuelle allant de très plaisant à très déplaisant :</p>
+      <p>You are about to start an online experiment on hearing organized by Arnaud Norena, director of research at the CNRS (Sensory and Cognitive Neuroscience Laboratory, Marseille, France). For any further information, you can contact Arnaud by <a class="ui label" href="mailto:arnaud.norena@univ-amu.fr"><i class="mail icon"></i> email</a>.</p>
+      <p><strong>First of all, we would like to thank you for your participation!</strong></p>
+      <p>You will not be asked for any identifying information. Make sure that you can perform the experiment in good conditions: Have time to go until the end (about 20 minutes), be motivated and in good shape, and be in a quiet place.</p>
+      <p>The test consists of evaluating sounds according to a visual scale ranging from very pleasant to very unpleasant :</p>
       <ul>
-        <li>Si le son présenté est celui d'un aboiement de chien et que vous trouvez ce son très désagréable, alors vous devez cliquer à l'extrémité droite de l'échelle.</li>
-        <li>Si le son présenté est celui du vent dans la forêt et que vous trouvez ce son très agréable, alors vous devez cliquer à l'extrême gauche de l'échelle.</li>
-        <li>Si le son présenté est neutre, vous devez cliquer au milieu de l'échelle.</li>
+        <li>If the sound presented is a dog barking and you find this sound very unpleasant, then you should click on the right end of the scale.</li>
+        <li>If the sound presented is wind in the forest and you find this sound very pleasant, then you should click on the left end of the scale.</li>
+        <li>If the sound presented is neutral, you must click in the middle of the scale.</li>
       </ul>
-      <p>En général, les sons sont plus ou moins agréables ou désagréables, donc vous devez utiliser toute la longueur de l'échelle pour donner votre réponse. Tous les sons seront présentés à un niveau sonore confortable.</p>`,
+      <p>In general, the sounds are more or less pleasant or unpleasant, so you must use the full length of the scale to give your answer. All sounds will be played at a comfortable level.</p>`,
   homepage_startExperiment: `Start the experiment`,
-  userInfo_description: `Cette page consiste à vous demander des informations sur vous et votre audition.`,
+  userInfo_description: `This page consists of asking for information about you and your hearing.`,
   userInfo_ageLabel: `How old are you?`,
-  userInfoListening_deviceLabel: `Qu'utilisez-vous pour écouter les sons de cette expérience ?`,
-  userInfoListening_deviceHeadset: `Heaset`,
-  userInfoListening_deviceEarphones: `Ear phones`,
-  userInfoListening_deviceSpeakers: `Speakers`,
-  userInfoListening_hearingIssuesLabel: `Selon vous, avez-vous des problèmes d'audition ? <i data-content="Faites-vous répéter souvent, avez-vous des problèmes pour comprendre la parole dans le bruit, etc." class="info circle icon"></i>`,
+  userInfoListening_deviceLabel: `What do you use to listen to the sounds of this experiment?`,
+  userInfoListening_deviceHeadset: `Headphones`,
+  userInfoListening_deviceEarphones: `Earphones`,
+  userInfoListening_deviceSpeakers: `Loudspeakers`,
+  userInfoListening_hearingIssuesLabel: `According to you, do you have hearing issues? <i data-content="You ask others to repeat, you have problems understanding speech in noise, etc." class="info circle icon"></i>`,
   common_yes: `Yes`,
   common_no: `No`,
   common_dontKnow: `I don't know`,
-  userInfoListening_tinnitusLabel: `Avez-vous des acouphènes ? <i data-content="Sifflement d'oreille." class="info circle icon"></i>`,
-  userInfo_hypersensibilityLabel: `Avez-vous une hypersensibilité auditive ? <i data-content="Certains sons sont-ils forts ou douloureux à des intensités modestes qui ne provoquent aucune réaction chez les autres ?" class="info circle icon"></i>`,
-  userInfo_hypersensibilityImpactLabel: `A quel point êtes-vous handicapé par cette hypersensibilité ?`,
+  userInfoListening_tinnitusLabel: `Do you have tinnitus? <i data-content="Ear whistling." class="info circle icon"></i>`,
+  userInfo_hypersensibilityLabel: `Do you have auditory hypersensitivity? <i data-content="Are some sounds loud or painful at modest intensities for you when they do not cause any reaction in others?" class="info circle icon"></i>`,
+  userInfo_hypersensibilityImpactLabel: `How disabled are you by this hypersensitivity?`,
   userInfo_hypersensibilityImpactNotAtAll: `Not at all`,
   userInfo_hypersensibilityImpactALittle: `A little`,
   userInfo_hypersensibilityImpactModerately: `Moderately`,
   userInfo_hypersensibilityImpactALot: `A lot`,
-  userInfo_soundsReactionsLabel: `Y a-t-il des sons en particulier qui déclenchent chez vous des réactions très intenses telles que la colère, le dégoût... ?`,
-  userInfo_soundsReactionsListLabel: `Quels sont les sons qui déclenchent ces réactions ? (séparés par des virgules)`,
-  userInfo_soundsReactionsListPlaceholder: `Bruits de klaxon, grincements de dents`,
-  userInfo_nextForm: `Passer au second formulaire`,
-  noiseTolerance_description: `<p>Pour certains sons, certaines personnes sont moins sensibles, alors que d’autres sont plus sensibles.</p>
+  userInfo_soundsReactionsLabel: `Are there any particular sounds that trigger very intense reactions in you such as anger, disgust... ?`,
+  userInfo_soundsReactionsListLabel: `What are the sounds that trigger these reactions? (separated by commas)`,
+  userInfo_soundsReactionsListPlaceholder: `Horn honking, teeth grinding`,
+  userInfo_nextForm: `Go to second form`,
+  noiseTolerance_title: `A QUESTIONNAIRE FOR ASSESSING DECREASED SOUND TOLERANCE`,
+  noiseTolerance_description: `<p><em>Authors: Siepsiak, M., Śliwerski, A., Dragan, W. Ł.</em></p>
 
-      <p>Y a-t-il des sons que vous trouvez particulièrement pénibles ?</p>
+      <p>Some people are less sensitive to certain sounds, while other people are more sensitive to certain sounds. </p>
+      <p>Are there any sounds which you find particularly burdensome? </p>
 
-      <p>Veuillez indiquer dans quelle mesure vous êtes en accord ou en désaccord avec les déclarations
-        suivantes.</p>`,
-  noiseTolerance_completelyDisagree: `I strongly disagree`,
-  noiseTolerance_disagree: `I disagree`,
-  noiseTolerance_neutral: `I don't agree nor disagree`,
+      <p>Please indicate how much you agree or disagree with the following statements using the following scale :</p>`,
+  noiseTolerance_completelyDisagree: `I definitely do not agree`,
+  noiseTolerance_disagree: `I do not agree`,
+  noiseTolerance_neutral: `Hard to say`,
   noiseTolerance_agree: `I agree`,
-  noiseTolerance_completelyAgree: `I strongly agree`,
-  noiseTolerance_statement1: `Certains sons me dérangent tellement que j’ai du mal à contrôler mes émotions.`,
-  noiseTolerance_statement2: `Les sons déplaisants me donnent l’impression d’être submergé(e).`,
-  noiseTolerance_statement3: `Je deviens anxieux à la simple pensée d’un son désagréable.`,
-  noiseTolerance_statement4: `Je crois que mes réactions aux sons sont exagérées, mais je ne peux pas m’en défaire.`,
-  noiseTolerance_statement5: `Lorsque j’entends des sons déplaisants, je commence à sentir des émotions dans mon corps (par exemple : je transpire, je ressens de la douleur, de la pression, mes muscles se tendent).`,
-  noiseTolerance_statement6: `Je commence à ressentir de la colère dès que je vois un objet/animal/personne qui pourrait produire un son désagréable.`,
-  noiseTolerance_statement7: `Je fais beaucoup d'efforts pour contrôler mes émotions lorsque j'entends un son désagréable.`,
-  noiseTolerance_statement8: `Si je le peux, j'évite de rencontrer certaines personnes à cause des bruits qu'elles produisent.`,
-  noiseTolerance_statement9: `Je trouve certains sons produits par le corps humain insupportables.`,
-  noiseTolerance_statement10: `Je sens que mon état mental s'aggrave si je ne peux pas quitter un endroit où il y a un son désagréable.`,
-  noiseTolerance_statement11: `Je réfléchis souvent à des techniques pour masquer ou noyer les sons désagréables.`,
-  noiseTolerance_statement12: `Certains sons désagréables me mettent immédiatement en colère.`,
-  noiseTolerance_statement13: `Je crains que les sons désagréables puissent avoir un impact sur mon avenir.`,
-  noiseTolerance_statement14: `Lorsque je rencontre d'autres personnes, je suis parfois irrité par la présence de sons désagréables.`,
-  noiseTolerance_dislikeLabel: `Je considère mon aversion à certains sons comme...`,
-  noiseTolerance_dislike1: `Un problème extrême, qui affecte toute ma vie.`,
-  noiseTolerance_dislike2: `Un problème sévère, qui affecte plusieurs aspects de ma qualité de vie.`,
-  noiseTolerance_dislike3: `Un problème modéré, qui affecte quelques aspects de ma qualité de vie.`,
-  noiseTolerance_dislike4: `Un problème léger, qui affecte légèrement ma qualité de vie.`,
-  noiseTolerance_dislike5: `N’est pas un problème, n’affecte pas ma qualité de vie.`,
-  noiseTolerance_configureSound: `Configurer le son pour l'expérience`,
-  soundConfig_description: `<p>Nous allons maintenant ajuster le niveau du son pour qu'il soit présenté à un niveau confortable, ni trop faible, ni trop fort. Vous pouvez régler le volume en déplaçant le curseur ci-après.</p>
-      <p>Vous devez mettre le son de votre appareil au volume maximum.</p>`,
-  common_playSound: `Play the sound`,
+  noiseTolerance_completelyAgree: `I definitely agree`,
+  noiseTolerance_statement1: `Some sounds bother me so much that I have difficulty controlling my emotions.`,
+  noiseTolerance_statement2: `Unpleasant sounds make me feel overwhelmed.`,
+  noiseTolerance_statement3: `I become anxious at the mere thought of an unpleasant sound.`,
+  noiseTolerance_statement4: `I believe that my reactions to sounds are exaggerated, but I can’t get rid of them.`,
+  noiseTolerance_statement5: `When I hear unpleasant sounds, I start sensing emotions in my body (e.g. I sweat, feel pain, feel pressure, my muscles tens).`,
+  noiseTolerance_statement6: `I start feeling anger the moment I see a thing/animal/person that might make an unpleasant sound at any time.`,
+  noiseTolerance_statement7: `I put a lot of effort into controlling emotions when I hear an unpleasant sound. `,
+  noiseTolerance_statement8: `If I can, I avoid meeting with certain people because of the sounds they make.`,
+  noiseTolerance_statement9: `I find some sounds made by the human body unbearable.`,
+  noiseTolerance_statement10: `I feel that my mental state worsens if I cannot leave a place where there’s an unpleasant sound.`,
+  noiseTolerance_statement11: `I often think about how to drown out unpleasant sounds.`,
+  noiseTolerance_statement12: `Some unpleasant sounds make me instantly angry.`,
+  noiseTolerance_statement13: `I am scared that unpleasant sounds may impact my future.`,
+  noiseTolerance_statement14: `When meeting with other people, I am sometimes irritated because of unpleasant sounds that are present.`,
+  noiseTolerance_dislikeLabel: `I consider my aversion to specific sounds as...`,
+  noiseTolerance_dislike1: `An extreme problem, that affects my whole life.`,
+  noiseTolerance_dislike2: `A severe problem that affects many aspects of my quality of life.`,
+  noiseTolerance_dislike3: `A moderate problem, affecting some aspects of my quality of life.`,
+  noiseTolerance_dislike4: `A slight problem, slightly affecting my quality of life.`,
+  noiseTolerance_dislike5: `Is not a problem, does not affect my quality of life.`,
+  noiseTolerance_configureSound: `Set up sound level `,
+  soundConfig_description: `<p>We will now adjust the sound level so that it is presented at a comfortable level, neither too low nor too high. You can adjust the volume by moving the slider below.</p>
+      <p>You must turn the sound of your device to the maximum volume.</p>`,
+  common_playSound: `Play sound`,
   common_replaySound: `Play the sound again`,
   common_soundPlaying: `Sound playing...`,
-  soundConfig_startTraining: `Start the training`,
-  soundTraining_description: `<p>Les sons qui suivent sont des sons d'entraînement. Cela vous permet de tester si le volume que vous avez choisi à l'étape précédente vous convient, ou si vous avez besoin de le reconfigurer.</p>
+  soundConfig_startTraining: `Start training`,
+  soundTraining_description: `<p>The following sounds are practice sounds. This allows you to test if the volume you chose in the previous step is suitable for you, or if you need to reconfigure it.</p>
 
-      <p>Une fois ces quelques essais effectués, vous allez pouvoir démarrer l'expérience.</p>`,
+      <p>After these few tests have been carried out, you will be able to start the experiment.</p>`,
   common_veryPleasant: `Very pleasant`,
   common_neutral: `Neutral`,
   common_veryUnpleasant: `Very unpleasant`,
-  soundTraining_nextSound: `Go to the next training sound`,
-  soundTraining_startTests: `Start the tests`,
-  soundTraining_reconfigureSound: `Reconfigure the sound volume`,
-  soundTests_description: `<p>Le test peut maintenant démarrer. Vous devez juger les sons présentés selon une échelle agréable - désagréable. Si le son est très agréable, vous devez cliquer à l’extrême gauche de l'échelle. Si le son est très désagréable, vous devez cliquer à l'extrême droite de l'échelle. Si le son est neutre, vous devez cliquer au milieu de l'échelle. <strong>La plupart des sons sont plus ou moins agréables ou désagréables, vous devez donc utiliser toute la longueur de l'échelle pour répondre.</strong></p>
+  soundTraining_nextSound: `Next test sound`,
+  soundTraining_startTests: `Start testing`,
+  soundTraining_reconfigureSound: `Reconfiguring sound level`,
+  soundTests_description: `<p>The test can now start. You should rate the sounds presented on a pleasant - unpleasant scale. If the sound is very pleasant, you should click on the far left of the scale. If the sound is very unpleasant, you must click on the far right of the scale. If the sound is neutral, you should click in the middle of the scale.In general, the sounds are more or less pleasant or unpleasant, so you must use the full length of the scale to give your answer.</strong></p>
 
-      <p>Les sons tests sont présentés trois fois dans un ordre aléatoire.</p>
-      <p>Attention : une fois votre réponse enregistrée, il ne sera plus possible de la modifier !</p>
+      <p>The sounds are presented randomly three times.</p>
+      <p>Please note: once your answer has been saved, it will not be possible to modify it!</p>
 
-      <p>Bon courage et merci de votre participation !</p>`,
+      <p>Good luck and thank you for your participation!</p>`,
   soundTests_experimentInProgress: `Experiment in progress...`,
-  soundTests_experimentOver: `Experiment finished!`,
-  soundTests_nextSound: `Go to the next sound`,
-  soundTests_finishExperiment: `End the experiment`,
-  end_description: `Les données ont été automatiquement recueillies, merci !`,
-  end_warningMessage: `Les données de l'expérience n'ont pas pu être recueillies. Veuillez revenir sur cette page ultérieurement (e.g. le lendemain), ou envoyer le texte ci-après directement à la personne en charge de l'expérience :`
+  soundTests_experimentOver: `Experiment complete!`,
+  soundTests_nextSound: `Next sound`,
+  soundTests_finishExperiment: `Ending the experiment`,
+  end_description: `The data was automatically collected, thank you!`,
+  end_warningMessage: `Data from the experiment could not be collected. Please come back to this page later (e.g. the next day), or send the following text directly to the person in charge of the experiment:`
 }
 
 export default translations
