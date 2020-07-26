@@ -3,8 +3,8 @@ const translations = {
   homepage_description: `<p>Hello,</p>
       <p>You are about to start an online experiment on hearing organized by Arnaud Norena, director of research at the CNRS (Sensory and Cognitive Neuroscience Laboratory, Marseille, France). For any further information, you can contact Arnaud by <a class="ui label" href="mailto:arnaud.norena@univ-amu.fr"><i class="mail icon"></i> email</a>.</p>
       <p><strong>First of all, we would like to thank you for your participation!</strong></p>
-      <p>You will not be asked for any identifying information. Make sure that you can perform the experiment in good conditions: Have time to go until the end (about 20 minutes), be motivated and in good shape, and be in a quiet place.</p>
-      <p>The test consists of evaluating sounds according to a visual scale ranging from very pleasant to very unpleasant :</p>
+      <p>You will not be asked for any identifying information. Make sure that you can perform the experiment in good conditions: have time to go until the end (about 20 minutes), be motivated and in good shape, and be in a quiet place.</p>
+      <p>The test consists of evaluating sounds according to a visual scale ranging from very pleasant to very unpleasant:</p>
       <ul>
         <li>If the sound presented is a dog barking and you find this sound very unpleasant, then you should click on the right end of the scale.</li>
         <li>If the sound presented is wind in the forest and you find this sound very pleasant, then you should click on the left end of the scale.</li>
@@ -29,7 +29,7 @@ const translations = {
   userInfo_hypersensibilityImpactALittle: `A little`,
   userInfo_hypersensibilityImpactModerately: `Moderately`,
   userInfo_hypersensibilityImpactALot: `A lot`,
-  userInfo_soundsReactionsLabel: `Are there any particular sounds that trigger very intense reactions in you such as anger, disgust... ?`,
+  userInfo_soundsReactionsLabel: `Are there any particular sounds that trigger very intense reactions in you such as anger, disgust...?`,
   userInfo_soundsReactionsListLabel: `What are the sounds that trigger these reactions? (separated by commas)`,
   userInfo_soundsReactionsListPlaceholder: `Horn honking, teeth grinding`,
   userInfo_nextForm: `Go to second form`,
@@ -39,7 +39,7 @@ const translations = {
       <p>Some people are less sensitive to certain sounds, while other people are more sensitive to certain sounds. </p>
       <p>Are there any sounds which you find particularly burdensome? </p>
 
-      <p>Please indicate how much you agree or disagree with the following statements using the following scale :</p>`,
+      <p>Please indicate how much you agree or disagree with the following statements using the following scale:</p>`,
   noiseTolerance_completelyDisagree: `I definitely do not agree`,
   noiseTolerance_disagree: `I do not agree`,
   noiseTolerance_neutral: `Hard to say`,
