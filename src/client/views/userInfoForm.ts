@@ -1,21 +1,25 @@
 import { Part } from '../models/part'
 import { updateStore } from '../models/store'
-import { ListeningDevice, TriState, UserInfo } from '../models/userInfo'
+import {
+  HypersensibilityImpact,
+  ListeningDevice,
+  TriState,
+  UserInfo
+} from '../models/userInfo'
 
 export const id = `${Part.UserInfoForm}-section`
 
-export const section = document.getElementById(id)
+export const section = () => document.getElementById(id)
 
 const elements = {
-  soundsReactionsListField: document.getElementById(
-    'user-info_sounds-reactions-list-field'
-  ),
-  age: document.querySelector(
-    'input[name="user-info_age"]'
-  ) as HTMLInputElement,
-  device: document.querySelector(
-    'input[name="user-info_device"]'
-  ) as HTMLInputElement,
+  soundsReactionsListField: () =>
+    document.getElementById('user-info_sounds-reactions-list-field'),
+  age: () =>
+    document.querySelector('input[name="user-info_age"]') as HTMLInputElement,
+  device: () =>
+    document.querySelector(
+      'input[name="user-info_device"]'
+    ) as HTMLInputElement,
   hearingIssues: () =>
     document.querySelector(
       'input[name="user-info_hearing-issues"]:checked'
@@ -36,19 +40,21 @@ const elements = {
     document.querySelector(
       'input[name="user-info_sounds-reactions"]:checked'
     ) as HTMLInputElement,
-  soundsReactionsList: document.querySelector(
-    'textarea[name="user-info_sounds-reactions-list"]'
-  ) as HTMLTextAreaElement,
-  soundsReactionsInputs: Array.from(
-    document.querySelectorAll('input[name="user-info_sounds-reactions"]')
-  ) as HTMLInputElement[]
+  soundsReactionsList: () =>
+    document.querySelector(
+      'textarea[name="user-info_sounds-reactions-list"]'
+    ) as HTMLTextAreaElement,
+  soundsReactionsInputs: () =>
+    Array.from(
+      document.querySelectorAll('input[name="user-info_sounds-reactions"]')
+    ) as HTMLInputElement[]
 }
 
 export const handleUserInfoForm = () => {
   const soundsReactions = elements.soundsReactions().value as TriState
   const userInfo: UserInfo = {
-    age: parseInt(elements.age.value, 10),
-    device: elements.device.value as ListeningDevice,
+    age: parseInt(elements.age().value, 10),
+    device: elements.device().value as ListeningDevice,
     hearingIssues: elements.hearingIssues().value as TriState,
     tinnitus: elements.tinnitus().value as TriState,
     hearingHypersensibility: elements.hypersensibility().value as TriState,
@@ -56,7 +62,10 @@ export const handleUserInfoForm = () => {
       .value as HypersensibilityImpact,
     soundsReactions,
     soundsList: soundsReactions
-      ? elements.soundsReactionsList.value.split(',').map(_ => _.trim())
+      ? elements
+          .soundsReactionsList()
+          .value.split(',')
+          .map(_ => _.trim())
       : []
   }
 
@@ -65,21 +74,23 @@ export const handleUserInfoForm = () => {
 
 const onSoundsReactionsChange = () =>
   elements.soundsReactions().value === 'yes'
-    ? elements.soundsReactionsListField?.classList.remove('hide')
-    : elements.soundsReactionsListField?.classList.add('hide')
+    ? elements.soundsReactionsListField()?.classList.remove('hide')
+    : elements.soundsReactionsListField()?.classList.add('hide')
 
 export const load = () => {
   window.scroll(0, 0)
 
   $('i.icon.info').popup()
 
-  elements.soundsReactionsInputs.forEach(input =>
-    input.addEventListener('change', onSoundsReactionsChange)
-  )
+  elements
+    .soundsReactionsInputs()
+    .forEach(input => input.addEventListener('change', onSoundsReactionsChange))
 }
 
 export const unload = () => {
-  elements.soundsReactionsInputs.forEach(input =>
-    input.removeEventListener('change', onSoundsReactionsChange)
-  )
+  elements
+    .soundsReactionsInputs()
+    .forEach(input =>
+      input.removeEventListener('change', onSoundsReactionsChange)
+    )
 }

@@ -1,6 +1,8 @@
+import { TFunction } from 'i18next'
+
 interface Section {
   id: string
-  section: HTMLElement | null
+  section: () => HTMLElement | null
 }
 
 export const excludeElementFromList = <A>(element: A, list: A[]): A[] =>
@@ -67,7 +69,7 @@ export const adaptMainContainerPosition = () => {
   }
 }
 
-export const createAudio = (
+export const createAudio = (translate: TFunction) => (
   playButton: HTMLButtonElement | undefined,
   filePath: string,
   volume: number,
@@ -83,7 +85,7 @@ export const createAudio = (
   audio.volume = volume
 
   if (isDefined(playLabel)) {
-    playLabel.innerText = 'Jouer le son'
+    playLabel.innerText = translate('common_playSound')
   }
 
   audio.addEventListener('pause', () =>
@@ -93,7 +95,7 @@ export const createAudio = (
   audio.addEventListener('ended', () => {
     playButton?.classList.remove('disabled')
     if (isDefined(playLabel)) {
-      playLabel.innerText = 'Rejouer le son'
+      playLabel.innerText = translate('common_replaySound')
     }
     onEnded()
   })
@@ -101,7 +103,7 @@ export const createAudio = (
   const play = () => {
     playButton?.classList.add('disabled')
     if (isDefined(playLabel)) {
-      playLabel.innerText = 'Lecture du son en cours...'
+      playLabel.innerText = translate('common_soundPlaying')
     }
     audio.play()
   }
@@ -140,8 +142,8 @@ export const sectionTransition = (options: {
     animation: direction === 'forward' ? 'fade right' : 'fade left',
     duration: 250,
     onComplete: () => {
-      from.section?.classList.add('hide')
-      to.section?.classList.remove('hide')
+      from.section()?.classList.add('hide')
+      to.section()?.classList.remove('hide')
       $(`#${to.id}`).transition({
         animation: direction === 'forward' ? 'fade left in' : 'fade right in',
         duration: 250
