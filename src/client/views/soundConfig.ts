@@ -1,8 +1,8 @@
 import { TFunction } from 'i18next'
 import { refSoundFilePath } from '../models/audioFilePath'
 import { Part } from '../models/part'
-import { getStore } from '../models/store'
-import { createAudio, isDefined } from '../utils'
+import { getStore, updateStore } from '../models/store'
+import { isDefined, playSound } from '../utils'
 
 export const id = `${Part.SoundConfig}-section`
 
@@ -15,40 +15,51 @@ const elements = {
     document.getElementById('ref-sound-slider') as HTMLInputElement | null
 }
 
-let audioCache:
-  | ReturnType<ReturnType<typeof createAudio>>
-  | undefined = undefined
+let stopSound: () => void | undefined
+let playSoundButtonClickListener: () => void | undefined
 
 const onRefSoundSliderChange = () => {
   const refSoundSlider = elements.refSoundSlider()
-  if (isDefined(refSoundSlider) && isDefined(audioCache)) {
-    audioCache.audioElement.volume = parseInt(refSoundSlider.value, 10) / 100
+  if (isDefined(refSoundSlider)) {
+    updateStore({ soundVolume: parseInt(refSoundSlider.value, 10) / 100 })
   }
 }
 
 export const load = (translate: TFunction) => {
-  if (isDefined(audioCache)) {
-    audioCache.removePlayButtonClickListener()
+  stopSound?.call(null)
+
+  const playButton = elements.playRefSoundButton()
+
+  playSoundButtonClickListener = () => {
+    const playLabel = playButton?.querySelector('span')
+
+    playButton?.classList.add('disabled')
+    if (isDefined(playLabel)) {
+      playLabel.innerText = translate('common_soundPlaying')
+    }
+
+    stopSound = playSound(refSoundFilePath, getStore().soundVolume, () => {
+      playButton?.classList.remove('disabled')
+      if (isDefined(playLabel)) {
+        playLabel.innerText = translate('common_replaySound')
+      }
+    })
   }
-  audioCache = createAudio(translate)(
-    elements.playRefSoundButton(),
-    refSoundFilePath,
-    getStore().soundVolume
-  )
+
+  playButton.addEventListener('click', playSoundButtonClickListener)
 
   const refSoundSlider = elements.refSoundSlider()
   if (isDefined(refSoundSlider)) {
     refSoundSlider.value = String(getStore().soundVolume * 100)
+    refSoundSlider.addEventListener('change', onRefSoundSliderChange)
   }
-
-  elements.refSoundSlider()?.addEventListener('change', onRefSoundSliderChange)
 }
 
 export const unload = () => {
-  if (isDefined(audioCache)) {
-    audioCache.audioElement.pause()
-    audioCache.removePlayButtonClickListener()
-  }
+  stopSound?.call(null)
+  elements
+    .playRefSoundButton()
+    ?.removeEventListener('click', playSoundButtonClickListener)
   elements
     .refSoundSlider()
     ?.removeEventListener('change', onRefSoundSliderChange)

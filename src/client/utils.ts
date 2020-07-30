@@ -69,64 +69,50 @@ export const adaptMainContainerPosition = () => {
   }
 }
 
-export const createAudio = (translate: TFunction) => (
-  playButton: HTMLButtonElement | undefined,
-  filePath: string,
+// @ts-ignore
+window.AudioContext = window.AudioContext ?? window.webkitAudioContext
+
+const context = new AudioContext()
+
+const audioBuffersCache: { [soundFilePath: string]: AudioBuffer } = {}
+
+export const playSound = (
+  soundFilePath: string,
   volume: number,
-  onEnded: () => void = noop
-): {
-  audioElement: HTMLAudioElement
-  play: () => void
-  removePlayButtonClickListener: () => void
-} => {
-  const playLabel = playButton?.querySelector('span')
+  onEnded: () => void
+): (() => void) => {
+  const gainNode = context.createGain()
+  gainNode.gain.setValueAtTime(volume, context.currentTime)
 
-  const audio = new Audio(filePath)
-  audio.volume = volume
+  const source = context.createBufferSource()
+  source.connect(gainNode)
+  gainNode.connect(context.destination)
 
-  if (isDefined(playLabel)) {
-    playLabel.innerText = translate('common_playSound')
+  source.addEventListener('ended', onEnded)
+
+  const play = (buffer: AudioBuffer) => {
+    source.buffer = buffer
+    source.start(0)
   }
 
-  audio.addEventListener('pause', () =>
-    playButton?.classList.remove('disabled')
-  )
-
-  audio.addEventListener('ended', () => {
-    playButton?.classList.remove('disabled')
-    if (isDefined(playLabel)) {
-      playLabel.innerText = translate('common_replaySound')
-    }
-    onEnded()
-  })
-
-  const play = () => {
-    playButton?.classList.add('disabled')
-    if (isDefined(playLabel)) {
-      playLabel.innerText = translate('common_soundPlaying')
-    }
-    audio.play()
+  if (isDefined(audioBuffersCache[soundFilePath])) {
+    play(audioBuffersCache[soundFilePath])
+  } else {
+    window
+      .fetch(soundFilePath)
+      .then(response => response.arrayBuffer())
+      .then(buffer =>
+        context.decodeAudioData(buffer, buffer => {
+          audioBuffersCache[soundFilePath] = buffer
+          play(buffer)
+        })
+      )
   }
 
-  const listener = () => {
-    if (
-      [
-        HTMLMediaElement.HAVE_ENOUGH_DATA,
-        HTMLMediaElement.HAVE_CURRENT_DATA
-      ].indexOf(audio.readyState) >= 0
-    ) {
-      play()
-    } else {
-      audio.addEventListener('canplaythrough', play)
-    }
-  }
-  playButton?.addEventListener('click', listener)
-
-  return {
-    audioElement: audio,
-    play,
-    removePlayButtonClickListener: () =>
-      playButton?.removeEventListener('click', listener)
+  return () => {
+    try {
+      source.stop()
+    } catch {}
   }
 }
 
