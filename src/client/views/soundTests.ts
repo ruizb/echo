@@ -3,7 +3,8 @@ import audioFilePaths, { getFilePathFromName } from '../models/audioFilePath'
 import { Part } from '../models/part'
 import { SoundTest } from '../models/soundTest'
 import { getStore, updateStore } from '../models/store'
-import { head, isDefined, isUndefined, playSound, tail } from '../utils'
+import playSound from '../playSound'
+import { head, isDefined, isUndefined, tail } from '../utils'
 
 export const id = `${Part.SoundTests}-section`
 

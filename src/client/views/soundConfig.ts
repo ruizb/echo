@@ -2,7 +2,8 @@ import { TFunction } from 'i18next'
 import { refSoundFilePath } from '../models/audioFilePath'
 import { Part } from '../models/part'
 import { getStore, updateStore } from '../models/store'
-import { isDefined, playSound } from '../utils'
+import playSound from '../playSound'
+import { isDefined } from '../utils'
 
 export const id = `${Part.SoundConfig}-section`
 
