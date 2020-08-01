@@ -69,67 +69,6 @@ export const adaptMainContainerPosition = () => {
   }
 }
 
-export const createAudio = (translate: TFunction) => (
-  playButton: HTMLButtonElement | undefined,
-  filePath: string,
-  volume: number,
-  onEnded: () => void = noop
-): {
-  audioElement: HTMLAudioElement
-  play: () => void
-  removePlayButtonClickListener: () => void
-} => {
-  const playLabel = playButton?.querySelector('span')
-
-  const audio = new Audio(filePath)
-  audio.volume = volume
-
-  if (isDefined(playLabel)) {
-    playLabel.innerText = translate('common_playSound')
-  }
-
-  audio.addEventListener('pause', () =>
-    playButton?.classList.remove('disabled')
-  )
-
-  audio.addEventListener('ended', () => {
-    playButton?.classList.remove('disabled')
-    if (isDefined(playLabel)) {
-      playLabel.innerText = translate('common_replaySound')
-    }
-    onEnded()
-  })
-
-  const play = () => {
-    playButton?.classList.add('disabled')
-    if (isDefined(playLabel)) {
-      playLabel.innerText = translate('common_soundPlaying')
-    }
-    audio.play()
-  }
-
-  const listener = () => {
-    if (
-      [
-        HTMLMediaElement.HAVE_ENOUGH_DATA,
-        HTMLMediaElement.HAVE_CURRENT_DATA
-      ].indexOf(audio.readyState) >= 0
-    ) {
-      play()
-    } else {
-      audio.addEventListener('canplaythrough', play)
-    }
-  }
-  playButton?.addEventListener('click', listener)
-
-  return {
-    audioElement: audio,
-    play,
-    removePlayButtonClickListener: () =>
-      playButton?.removeEventListener('click', listener)
-  }
-}
-
 export const sectionTransition = (options: {
   from: Section
   to: Section

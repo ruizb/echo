@@ -2,7 +2,8 @@ import { TFunction } from 'i18next'
 import { trainingSound } from '../models/audioFilePath'
 import { Part } from '../models/part'
 import { getStore } from '../models/store'
-import { createAudio, head, isDefined, tail } from '../utils'
+import playSound from '../playSound'
+import { head, isDefined, tail } from '../utils'
 
 export const id = `${Part.SoundTraining}-section`
 
@@ -18,20 +19,19 @@ const elements = {
     document.getElementById('start-tests') as HTMLButtonElement
 }
 
-let audioCache:
-  | ReturnType<ReturnType<typeof createAudio>>
-  | undefined = undefined
+let stopSound: () => void | undefined
+let playSoundButtonClickListener: () => void | undefined
 
 export const load = (translate: TFunction) => {
   const trainingSounds = [trainingSound.pleasant, trainingSound.unpleasant]
-  nextTrainingSound(trainingSounds, translate)
+  nextTrainingSound(trainingSounds, translate, true)
 }
 
 export const unload = () => {
-  if (isDefined(audioCache)) {
-    audioCache.audioElement.pause()
-    audioCache.removePlayButtonClickListener()
-  }
+  stopSound?.call(null)
+  elements
+    .startSoundTestsButton()
+    ?.removeEventListener('click', playSoundButtonClickListener)
 
   // FIXME not satisfied, but I couldn't find another way to remove all listeners...
   const nextTrainingButton = elements.nextTrainingButton()
@@ -49,12 +49,13 @@ export const unload = () => {
 
 const nextTrainingSound = (
   trainingSoundPaths: string[],
-  translate: TFunction
+  translate: TFunction,
+  firstSoundTest: boolean = false
 ) => {
-  if (isDefined(audioCache)) {
-    audioCache.audioElement.pause()
-    audioCache.removePlayButtonClickListener()
-  }
+  stopSound?.call(null)
+  elements
+    .playTrainingSoundButton()
+    ?.removeEventListener('click', playSoundButtonClickListener)
 
   const trainingSoundPath = head(trainingSoundPaths)
   const remainingTrainingSoundPaths = tail(trainingSoundPaths)
@@ -79,16 +80,37 @@ const nextTrainingSound = (
       elements.startSoundTestsButton()?.classList.add('hide')
     }
 
-    audioCache = createAudio(translate)(
-      elements.playTrainingSoundButton(),
-      trainingSoundPath,
-      getStore().soundVolume,
-      () => {
+    const playButton = elements.playTrainingSoundButton()
+
+    playSoundButtonClickListener = () => {
+      const playLabel = playButton?.querySelector('span')
+
+      if (isDefined(playLabel)) {
+        playLabel.innerText = translate('common_playSound')
+      }
+
+      playButton?.classList.add('disabled')
+      if (isDefined(playLabel)) {
+        playLabel.innerText = translate('common_soundPlaying')
+      }
+
+      stopSound = playSound(trainingSoundPath, getStore().soundVolume, () => {
+        playButton?.classList.remove('disabled')
+        if (isDefined(playLabel)) {
+          playLabel.innerText = translate('common_replaySound')
+        }
+
         if (nextButton?.classList.contains('disabled')) {
           nextButton?.classList.remove('disabled')
         }
-      }
-    )
+      })
+    }
+
+    playButton.addEventListener('click', playSoundButtonClickListener)
+
+    if (!firstSoundTest) {
+      playSoundButtonClickListener()
+    }
 
     const onNextTrainingSound = () => {
       nextButton?.removeEventListener('click', onNextTrainingSound)

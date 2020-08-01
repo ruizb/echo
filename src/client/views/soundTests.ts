@@ -3,7 +3,8 @@ import audioFilePaths, { getFilePathFromName } from '../models/audioFilePath'
 import { Part } from '../models/part'
 import { SoundTest } from '../models/soundTest'
 import { getStore, updateStore } from '../models/store'
-import { createAudio, head, isDefined, isUndefined, tail } from '../utils'
+import playSound from '../playSound'
+import { head, isDefined, isUndefined, tail } from '../utils'
 
 export const id = `${Part.SoundTests}-section`
 
@@ -25,9 +26,8 @@ const elements = {
     document.getElementById('end-experiment') as HTMLButtonElement
 }
 
-let audioCache:
-  | ReturnType<ReturnType<typeof createAudio>>
-  | undefined = undefined
+let stopSound: () => void | undefined
+let playSoundButtonClickListener: () => void | undefined
 
 const onSliderPleasantClick = () => setTestSoundSlider(0)
 const onSliderNeutralClick = () => setTestSoundSlider(50)
@@ -58,7 +58,7 @@ export const load = (
 
   const completedSoundTests = getStore().soundTests
 
-  updateProgressBar(
+  updateProgressBar(translate)(
     completedSoundTests.length,
     completedSoundTests.length + remainingSoundTests.length
   )
@@ -75,10 +75,11 @@ export const load = (
 }
 
 export const unload = () => {
-  if (isDefined(audioCache)) {
-    audioCache.audioElement.pause()
-    audioCache.removePlayButtonClickListener()
-  }
+  stopSound?.call(null)
+  elements
+    .playTestSoundButton()
+    ?.removeEventListener('click', playSoundButtonClickListener)
+
   elements
     .sliderPleasantLabel()
     ?.removeEventListener('click', onSliderPleasantClick)
@@ -124,10 +125,10 @@ const nextSound = (
   translate: TFunction,
   firstSoundTest: boolean = false
 ) => {
-  if (isDefined(audioCache)) {
-    audioCache.audioElement.pause()
-    audioCache.removePlayButtonClickListener()
-  }
+  stopSound?.call(null)
+  elements
+    .playTestSoundButton()
+    ?.removeEventListener('click', playSoundButtonClickListener)
 
   const soundTest = head(soundTests)
   const remainingSoundTests = tail(soundTests)
@@ -147,19 +148,32 @@ const nextSound = (
 
     setTestSoundSlider(soundTest.score)
 
-    audioCache = createAudio(translate)(
-      elements.playTestSoundButton(),
-      soundTest.filePath,
-      getStore().soundVolume,
-      () => {
+    const playButton = elements.playTestSoundButton()
+
+    playSoundButtonClickListener = () => {
+      const playLabel = playButton?.querySelector('span')
+
+      playButton?.classList.add('disabled')
+      if (isDefined(playLabel)) {
+        playLabel.innerText = translate('common_soundPlaying')
+      }
+
+      stopSound = playSound(soundTest.filePath, getStore().soundVolume, () => {
+        playButton?.classList.remove('disabled')
+        if (isDefined(playLabel)) {
+          playLabel.innerText = translate('common_replaySound')
+        }
+
         if (nextButton?.classList.contains('disabled')) {
           nextButton?.classList.remove('disabled')
         }
-      }
-    )
+      })
+    }
+
+    playButton.addEventListener('click', playSoundButtonClickListener)
 
     if (!firstSoundTest) {
-      audioCache.play()
+      playSoundButtonClickListener()
     }
 
     const onNextSoundTest = () => {
