@@ -52,7 +52,6 @@ const elements = {
 
 export const handleUserInfoForm = () => {
   const soundsReactions = elements.soundsReactions().value as TriState
-  console.log('>>>elements.device().value', elements.device().value)
   const userInfo: UserInfo = {
     age: parseInt(elements.age().value, 10),
     device: elements.device().value as ListeningDevice,
