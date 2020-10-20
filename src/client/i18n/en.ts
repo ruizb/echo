@@ -83,7 +83,7 @@ const translations = {
   soundTraining_reconfigureSound: `Reconfiguring sound level`,
   soundTests_description: `<p>The test can now start. You should rate the sounds presented on a pleasant - unpleasant scale. If the sound is very pleasant, you should click on the far left of the scale. If the sound is very unpleasant, you must click on the far right of the scale. If the sound is neutral, you should click in the middle of the scale.In general, the sounds are more or less pleasant or unpleasant, so you must use the full length of the scale to give your answer.</strong></p>
 
-      <p>The sounds are presented randomly three times.</p>
+      <p>The sounds are presented three times at random.</p>
       <p>Please note: once your answer has been saved, it will not be possible to modify it!</p>
 
       <p>Good luck and thank you for your participation!</p>`,
