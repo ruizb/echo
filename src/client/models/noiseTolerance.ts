@@ -2,7 +2,6 @@ import { hasOwnProperty, isArray, isNull, isObject, isString } from '../utils'
 
 export interface NoiseTolerance {
   statementsScores: string[]
-  soundsDislike: string
 }
 
 export const isValidNoiseTolerance = (
@@ -11,6 +10,4 @@ export const isValidNoiseTolerance = (
   isNull(noiseTolerance) ||
   (isObject(noiseTolerance) &&
     hasOwnProperty(noiseTolerance, 'statementsScores') &&
-    isArray(noiseTolerance.statementsScores) &&
-    hasOwnProperty(noiseTolerance, 'soundsDislike') &&
-    isString(noiseTolerance.soundsDislike))
+    isArray(noiseTolerance.statementsScores))

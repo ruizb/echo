@@ -56,7 +56,7 @@ i18next
         case Part.UserInfoForm:
           return [
             userInfoForm.section(),
-            userInfoForm.load,
+            userInfoForm.load(i18next.language),
             userInfoForm.unload
           ]
         case Part.NoiseToleranceForm:
@@ -119,7 +119,7 @@ i18next
           to: userInfoForm,
           onComplete: () => {
             introduction.unload()
-            userInfoForm.load()
+            userInfoForm.load(i18next.language)()
           }
         })
       })
