@@ -7,11 +7,11 @@ import { DestructuredCsv, generateCsv, mergeDestructuredCsvs } from './csv'
 const generateUserInfoCsv = (
   {
     age,
+    nationality,
     device,
     hearingIssues,
     tinnitus,
-    hearingHypersensibility,
-    hypersensibilityImpact,
+    hearingHypersensitivity,
     soundsReactions,
     soundsList
   }: UserInfo,
@@ -19,23 +19,21 @@ const generateUserInfoCsv = (
 ): DestructuredCsv => [
   ['user-info-label', 'user-info-value'],
   ['age', age.toString()],
+  ['nationality', nationality],
   ['device', device],
   ['hearing-issues', hearingIssues],
   ['tinnitus', tinnitus],
-  ['hearing-hypersens', hearingHypersensibility],
-  ['hypersensibility-impact', hypersensibilityImpact],
+  ['hearing-hypersens', hearingHypersensitivity],
   ['sounds-reactions', soundsReactions],
   ['sounds-list', (soundsList ?? []).join('/')],
   ['sound-volume', soundVolume.toString()]
 ]
 
 const generateNoiseToleranceCsv = ({
-  statementsScores,
-  soundsDislike
+  statementsScores
 }: NoiseTolerance): DestructuredCsv => [
   ['noise-tolerance-label', 'noise-tolerance-value'],
-  ...statementsScores.map((score, i) => [`statement-${i + 1}`, score]),
-  ['sounds-dislike', soundsDislike]
+  ...statementsScores.map((score, i) => [`statement-${i + 1}`, score])
 ]
 
 const generateSoundTestsCsv = (

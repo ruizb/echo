@@ -1,10 +1,10 @@
 export interface UserInfo {
   age: number
+  nationality: string
   device: string
   hearingIssues: string
   tinnitus: string
-  hearingHypersensibility: string
-  hypersensibilityImpact: string
+  hearingHypersensitivity: string
   soundsReactions: string
   soundsList?: string[]
 }

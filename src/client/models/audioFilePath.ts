@@ -14,6 +14,7 @@ import forkScratchPlate from '../sounds/Fork Scratch Plate_2.wav'
 import garglingWater from '../sounds/Gargling-Water.wav'
 import hardBreathing from '../sounds/Hard-Breathing.wav'
 import harp from '../sounds/Harp_1.wav'
+import humanSlurp from '../sounds/HumanSlurp.wav'
 import knifeHitGlass from '../sounds/Knife Hit Glass_1.wav'
 import lake from '../sounds/Lake_2.wav'
 import laugh from '../sounds/Laugh_1.wav'
@@ -56,6 +57,7 @@ const audioFilePaths = [
   garglingWater,
   hardBreathing,
   harp,
+  humanSlurp,
   knifeHitGlass,
   lake,
   laugh,

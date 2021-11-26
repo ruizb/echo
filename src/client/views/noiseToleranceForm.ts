@@ -10,10 +10,6 @@ export const section = () => document.getElementById(id)
 const elements = {
   noiseToleranceFormElement: () =>
     document.querySelector('form#noise-tolerance-form') as HTMLFormElement,
-  noiseToleranceSoundsDislike: () =>
-    document.querySelector(
-      'input[name="noise-tolerance_sounds-dislike"]:checked'
-    ) as HTMLInputElement,
   noiseToleranceSliderN: (n: number) =>
     document.querySelector(
       `input[name="${generateIdForInput(n)}"]`
@@ -42,7 +38,6 @@ const generateIdForInput = (i: number) => `noise-tolerance-${i}`
 export const handleNoiseToleranceForm = (translate: TFunction) => {
   updateStore({
     noiseTolerance: {
-      soundsDislike: elements.noiseToleranceSoundsDislike().value,
       statementsScores: statements(translate).map(
         (_, i) => elements.noiseToleranceSliderN(i + 1).value
       )

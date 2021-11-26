@@ -42,20 +42,22 @@ Then open a new tab on your favorite browser at the following location: http://l
 
 This app doesn't need a server in order to work. However, it needs a _serverless function_ to collect the results at the end of the experiment, and store them somewhere (e.g. attachment file to an email).
 
-It's using [Netlify functions](https://docs.netlify.com/functions/overview/) in production, but in order to run the function on your machine, you can use the following command (on a different terminal session/window preferrably):
+It's using [Netlify functions](https://docs.netlify.com/functions/overview/) in production, but in order to run the function on your machine, you can use the following command (on a different terminal session/window preferably):
 
 ```sh
-npm run lambda:build && npm run lambda:serve
+npm run lambda:build && npm run lambda:start
 ```
 
 > :warning: The function won't work on your machine _as is_ because it requires a few environment variables used to connect to the [Sendgrid](https://sendgrid.com/) service, which allows the function to send the results via email.
 > You can create a `sendgrid.env` file at the root of the project containing the following environment variables:
+>
 > ```sh
 > export SENDGRID_API_KEY='api key from Sendgrid'
 > export SENDGRID_FROM_EMAIL='whitelisted sender email'
 > export SENDGRID_FROM_NAME='Echo'
 > export SENDGRID_TO_EMAIL='target email address that will receive the results'
 > ```
+>
 > If you are a maintainer of the project, please contact [ruizb](https://github.com/ruizb) to get the production values for these environment variables.
 
 :warning: A note regarding files from the `src/functions` directory: you **can't** import files from outside `src/functions`. For example, importing a file from `src/client` inside `src/functions/collect-results.ts` won't work:
@@ -104,13 +106,17 @@ If you wish to change the sounds used during the experiment, let it be update an
 
 1. Make your changes regarding the sounds in the [`src/client/sounds`](https://github.com/ruizb/echo/tree/master/src/client/sounds) directory.
 2. Open the [`audioFilePath`](https://github.com/ruizb/echo/blob/a7ce225d95238b622e2422cfb25035d9b298fad6/src/client/models/audioFilePath.ts) file, then:
+
    - If you changed an existing sound, as long as the name is **exactly** the same (text case matters), you don't have to do anything special here.
    - If you added a new sound, you must first import this sound by [adding a new _import_](https://github.com/ruizb/echo/blob/a7ce225d95238b622e2422cfb25035d9b298fad6/src/client/models/audioFilePath.ts#L28) at the top of the file, e.g.:
+
      ```diff
      import whiteNoise from '../sounds/White Noise_1.wav'
      + import myNewSound from '../sounds/My New Sound.wav'
      ```
+
      Then, you need to add the imported sound to the [`audioFilePaths` list](https://github.com/ruizb/echo/blob/a7ce225d95238b622e2422cfb25035d9b298fad6/src/client/models/audioFilePath.ts#L33-L60), e.g. at the end of it:
+
      ```diff
      const audioFilePaths = [
        birds,
@@ -120,21 +126,22 @@ If you wish to change the sounds used during the experiment, let it be update an
      +   myNewSound
      ]
      ```
+
      > :movie_camera: Demonstration available [here](docs/add-new-sound.gif).
 
    - If you deleted a sound, you have to remove both the _import_ line of this sound, and the imported "variable" from the `audioFilePaths` list. For example, if I choose to delete the "birds" sound, then I have to:
-      1. Remove this line from the `audioFilePath.ts` module:
-          ```diff
-         - import birds from '../sounds/Birds_1.wav'
-         import blowingNose from '../sounds/Blowing_nose1.wav'
-          ```
+     1. Remove this line from the `audioFilePath.ts` module:
+        ```diff
+        - import birds from '../sounds/Birds_1.wav'
+        import blowingNose from '../sounds/Blowing_nose1.wav'
+        ```
      2. Remove this line from the `audioFilePaths` list of this module:
-         ```diff
-         const audioFilePaths = [
-         -     birds,
-             blowingNose,
-             ...
-         ```
+        ```diff
+        const audioFilePaths = [
+        -     birds,
+            blowingNose,
+            ...
+        ```
 
 ### Change the user information form
 
@@ -249,179 +256,185 @@ The first thing to do is to add the HTML elements into `src/client/index.html` t
 Now that the view/template is available, we need to gather the user's answer: in other words, get the value provided by the user via the input element he filled in. This is where we need to make a few changes in the TypeScript files:
 
 - [`src/models/userInfo.ts`](https://github.com/ruizb/echo/blob/master/src/client/models/userInfo.ts)
-   - Add a new property to the `UserInfo` interface:
-      ```diff
-      export interface UserInfo {
-        age: number
-        device: ListeningDevice
-        hearingIssues: TriState
-        tinnitus: TriState
-      +   iceCream: TriState
-        hearingHypersensibility: TriState
-        soundsReactions: TriState
-        soundsList: string[]
-      }
-     ```
 
-   - Add a new verification step to the `isValidUserInfo` function:
-     ```diff
-     export const isValidUserInfo = (userInfo: unknown): userInfo is UserInfo =>
-       isNull(userInfo) ||
-       (isObject(userInfo) &&
-         hasOwnProperty(userInfo, 'age') &&
-         isNumber(userInfo.age) &&
-         hasOwnProperty(userInfo, 'device') &&
-         isValidDevice(userInfo.device) &&
-         hasOwnProperty(userInfo, 'hearingIssues') &&
-         isValidTriState(userInfo.hearingIssues) &&
-         hasOwnProperty(userInfo, 'tinnitus') &&
-         isValidTriState(userInfo.tinnitus) &&
-     +     hasOwnProperty(userInfo, 'tinnitus') &&
-     +     isValidTriState(userInfo.tinnitus) &&
-         hasOwnProperty(userInfo, 'hearingHypersensibility') &&
-         isValidTriState(userInfo.hearingHypersensibility) &&
-         hasOwnProperty(userInfo, 'soundsReactions') &&
-         isValidTriState(userInfo.soundsReactions) &&
-         (userInfo.soundsReactions
-           ? hasOwnProperty(userInfo, 'soundsList') && isArray(userInfo.soundsList)
-           : true))
-      ```
+  - Add a new property to the `UserInfo` interface:
 
-     > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-1.gif).
+    ```diff
+    export interface UserInfo {
+      age: number
+      device: ListeningDevice
+      hearingIssues: TriState
+      tinnitus: TriState
+    +   iceCream: TriState
+      hearingHypersensitivity: TriState
+      soundsReactions: TriState
+      soundsList: string[]
+    }
+    ```
+
+  - Add a new verification step to the `isValidUserInfo` function:
+
+    ```diff
+    export const isValidUserInfo = (userInfo: unknown): userInfo is UserInfo =>
+      isNull(userInfo) ||
+      (isObject(userInfo) &&
+        hasOwnProperty(userInfo, 'age') &&
+        isNumber(userInfo.age) &&
+        hasOwnProperty(userInfo, 'device') &&
+        isValidDevice(userInfo.device) &&
+        hasOwnProperty(userInfo, 'hearingIssues') &&
+        isValidTriState(userInfo.hearingIssues) &&
+        hasOwnProperty(userInfo, 'tinnitus') &&
+        isValidTriState(userInfo.tinnitus) &&
+    +     hasOwnProperty(userInfo, 'tinnitus') &&
+    +     isValidTriState(userInfo.tinnitus) &&
+        hasOwnProperty(userInfo, 'hearingHypersensitivity') &&
+        isValidTriState(userInfo.hearingHypersensitivity) &&
+        hasOwnProperty(userInfo, 'soundsReactions') &&
+        isValidTriState(userInfo.soundsReactions) &&
+        (userInfo.soundsReactions
+          ? hasOwnProperty(userInfo, 'soundsList') && isArray(userInfo.soundsList)
+          : true))
+    ```
+
+    > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-1.gif).
 
 - [`src/client/views/userInfoForm.ts`](https://github.com/ruizb/echo/blob/master/src/client/views/userInfoForm.ts)
-   - Add a new property to the `elements` object:
-     ```diff
-     const elements = {
-       ...,
-       tinnitus: () =>
-         document.querySelector(
-           'input[name="user-info_tinnitus"]:checked'
-         ) as HTMLInputElement,
-     +   iceCream: () =>
-     +     document.querySelector(
-     +       'input[name="user-info_icecream"]:checked'
-     +     ) as HTMLInputElement,
-       hypersensibility: () =>
-         document.querySelector(
-           'input[name="user-info_hypersensibility"]:checked'
-         ) as HTMLInputElement,
-       ...
-     }
-     ```
 
-   - Add a new property to the `userInfo` object in the `handleUserInfoForm` function:
-     ```diff
-     const userInfo: UserInfo = {
-       age: parseInt(elements.age.value, 10),
-       device: elements.device.value as ListeningDevice,
-       hearingIssues: elements.hearingIssues().value as TriState,
-       tinnitus: elements.tinnitus().value as TriState,
-     +   iceCream: elements.iceCream().value as TriState,
-       hearingHypersensibility: elements.hypersensibility().value as TriState,
-       soundsReactions,
-       soundsList: soundsReactions
-         ? elements.soundsReactionsList.value.split(',').map(_ => _.trim())
-         : []
-     }
-     ```
+  - Add a new property to the `elements` object:
 
-     > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-2.gif).
+    ```diff
+    const elements = {
+      ...,
+      tinnitus: () =>
+        document.querySelector(
+          'input[name="user-info_tinnitus"]:checked'
+        ) as HTMLInputElement,
+    +   iceCream: () =>
+    +     document.querySelector(
+    +       'input[name="user-info_icecream"]:checked'
+    +     ) as HTMLInputElement,
+      hypersensitivity: () =>
+        document.querySelector(
+          'input[name="user-info_hypersensitivity"]:checked'
+        ) as HTMLInputElement,
+      ...
+    }
+    ```
+
+  - Add a new property to the `userInfo` object in the `handleUserInfoForm` function:
+
+    ```diff
+    const userInfo: UserInfo = {
+      age: parseInt(elements.age.value, 10),
+      device: elements.device.value as ListeningDevice,
+      hearingIssues: elements.hearingIssues().value as TriState,
+      tinnitus: elements.tinnitus().value as TriState,
+    +   iceCream: elements.iceCream().value as TriState,
+      hearingHypersensitivity: elements.hypersensitivity().value as TriState,
+      soundsReactions,
+      soundsList: soundsReactions
+        ? elements.soundsReactionsList.value.split(',').map(_ => _.trim())
+        : []
+    }
+    ```
+
+    > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-2.gif).
 
 - [`src/functions/models/userInfo.ts`](https://github.com/ruizb/echo/blob/master/src/functions/models/userInfo.ts)
 
-   Add a new property to the `UserInfo` interface from the `src/functions/models` directory:
-   ```diff
-   export interface UserInfo {
-     age: number
-     device: string
-     hearingIssues: string
-     tinnitus: string
-   +   iceCream: string
-     hearingHypersensibility: string
-     soundsReactions: string
-     soundsList?: string[]
-   }
-   ```
+  Add a new property to the `UserInfo` interface from the `src/functions/models` directory:
 
-   > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-3.gif).
+  ```diff
+  export interface UserInfo {
+    age: number
+    device: string
+    hearingIssues: string
+    tinnitus: string
+  +   iceCream: string
+    hearingHypersensitivity: string
+    soundsReactions: string
+    soundsList?: string[]
+  }
+  ```
+
+  > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-3.gif).
 
 - [`src/functions/helpers/transformResultsToCsv.ts`](https://github.com/ruizb/echo/blob/master/src/functions/helpers/transformResultsToCsv.ts)
 
-   Extract the new property from the `UserInfo` parameter, and add a new row in the generated CSV:
+  Extract the new property from the `UserInfo` parameter, and add a new row in the generated CSV:
 
-   ```diff
-   const generateUserInfoCsv = (
-     {
-       age,
-       device,
-       hearingIssues,
-       tinnitus,
-   +     iceCream,
-       hearingHypersensibility,
-       soundsReactions,
-       soundsList
-     }: UserInfo,
-     soundVolume: number
-   ): DestructuredCsv => [
-     ['user-info-label', 'user-info-value'],
-     ['age', age.toString()],
-     ['device', device],
-     ['hearing-issues', hearingIssues],
-     ['tinnitus', tinnitus],
-   +   ['icecream', iceCream],
-     ['hearing-hypersens', hearingHypersensibility],
-     ['sounds-reactions', soundsReactions],
-     ['sounds-list', (soundsList ?? []).join('/')],
-     ['sound-volume', soundVolume.toString()]
-   ]
-   ```
+  ```diff
+  const generateUserInfoCsv = (
+    {
+      age,
+      device,
+      hearingIssues,
+      tinnitus,
+  +     iceCream,
+      hearingHypersensitivity,
+      soundsReactions,
+      soundsList
+    }: UserInfo,
+    soundVolume: number
+  ): DestructuredCsv => [
+    ['user-info-label', 'user-info-value'],
+    ['age', age.toString()],
+    ['device', device],
+    ['hearing-issues', hearingIssues],
+    ['tinnitus', tinnitus],
+  +   ['icecream', iceCream],
+    ['hearing-hypersens', hearingHypersensitivity],
+    ['sounds-reactions', soundsReactions],
+    ['sounds-list', (soundsList ?? []).join('/')],
+    ['sound-volume', soundVolume.toString()]
+  ]
+  ```
 
-   > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-4.gif).
+  > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-4.gif).
 
 - [`src/functions/helpers/transformResultsToCsv.test.ts`](https://github.com/ruizb/echo/blob/master/src/functions/helpers/transformResultsToCsv.test.ts)
 
-   Update the `userInfo` object with the new property, as well as the CSV string expectations from the unit tests:
+  Update the `userInfo` object with the new property, as well as the CSV string expectations from the unit tests:
 
-   ```diff
-   const userInfo: UserInfo = {
-     age: 28,
-     device: ListeningDevice.HeadSet,
-     hearingIssues: 'no',
-     tinnitus: 'no',
-   +   iceCream: 'no',
-     hearingHypersensibility: 'no',
-     soundsReactions: 'no',
-     soundsList: []
-   }
-   ```
+  ```diff
+  const userInfo: UserInfo = {
+    age: 28,
+    device: ListeningDevice.HeadSet,
+    hearingIssues: 'no',
+    tinnitus: 'no',
+  +   iceCream: 'no',
+    hearingHypersensitivity: 'no',
+    soundsReactions: 'no',
+    soundsList: []
+  }
+  ```
 
-   ```diff
-         .toEqual(`user-info-label,user-info-value,noise-tolerance-label,noise-tolerance-value,filename,score1,score2,score3
-   age,28,,,,,,
-   device,headset,,,,,,
-   hearing-issues,no,,,,,,
-   tinnitus,no,,,,,,
-   + icecream,no,,,,,,
-   hearing-hypersens,no,,,,,,
-   sounds-reactions,no,,,,,,
-   sounds-list,,,,,,,
-   sound-volume,0.31,,,,,,
-   ,,statement-1,1,,,,
-   ,,statement-2,2,,,,
-   ,,statement-3,1,,,,
-   ,,sounds-dislike,5,,,,
-   ,,,,Birds_1.wav,33,35,31
-   ,,,,Blowing_nose1.wav,76,68,73
-   ,,,,Boire.wav,66,55,59`)
-     })
-   ```
+  ```diff
+        .toEqual(`user-info-label,user-info-value,noise-tolerance-label,noise-tolerance-value,filename,score1,score2,score3
+  age,28,,,,,,
+  device,headset,,,,,,
+  hearing-issues,no,,,,,,
+  tinnitus,no,,,,,,
+  + icecream,no,,,,,,
+  hearing-hypersens,no,,,,,,
+  sounds-reactions,no,,,,,,
+  sounds-list,,,,,,,
+  sound-volume,0.31,,,,,,
+  ,,statement-1,1,,,,
+  ,,statement-2,2,,,,
+  ,,statement-3,1,,,,
+  ,,,,Birds_1.wav,33,35,31
+  ,,,,Blowing_nose1.wav,76,68,73
+  ,,,,Boire.wav,66,55,59`)
+    })
+  ```
 
-   > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-5.gif).
+  > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-5.gif).
 
 - Finally, make sure that your changes didn't break anything by running `npm test`.
 
-   > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-6.gif).
+  > :movie_camera: Demonstration available [here](docs/add-user-info-field-ts-6.gif).
 
 ### Change the noise tolerance form
 
@@ -443,6 +456,7 @@ const statements = [
 
 > :information_source: Regarding the tech stack used for this project: I tried to keep it simple, with as fewer dependencies to libraries/frameworks as possible. I intentionally didn't use a component-based library such as React in order to make changes to the source code as easy as possible for researchers.
 > This project uses:
+>
 > - [TypeScript](https://www.typescriptlang.org/): for the safety net provided with its type system
 > - [Parcel](https://parceljs.org/): for bundling all the files (HTML, CSS, TypeScript to JavaScript, sound files...) into a production-ready app
 > - [Semantic UI](https://semantic-ui.com/): for the CSS (i.e. design) and some user interactions

@@ -32,6 +32,13 @@
           <input type="number" id="user-info_age" name="user-info_age" min="18" max="100" pattern="[0-9]*" inputmode="numeric" required>
         </div>
 
+        <div class="field">
+          <label for="user-info_nationality">{{userInfo_nationalityLabel}}</label>
+          <select id="user-info_nationality" name="user-info_nationality" required>
+            <!-- populated in userInfoForm.ts -->
+          </select>
+        </div>
+
         <div class="grouped fields">
           <label>{{userInfoListening_deviceLabel}}</label>
           <div class="field">
@@ -99,56 +106,35 @@
         </div>
 
         <div class="grouped fields">
-          <label>{{userInfo_hypersensibilityLabel}}</label>
+          <label>{{userInfo_hypersensitivityLabel}}</label>
+          <div class="ui ignored info message">
+            <p>{{userInfo_hypersensitivityDescription}}</p>
+          </div>
           <div class="field">
             <div class="ui radio checkbox">
-              <input type="radio" id="user-info_hypersensibility-yes" value="yes" name="user-info_hypersensibility" tabindex="0" class="hidden">
-              <label for="user-info_hypersensibility-yes">{{common_yes}}</label>
+              <input type="radio" id="user-info_hypersensitivity-yes" value="yes" name="user-info_hypersensitivity" tabindex="0" class="hidden">
+              <label for="user-info_hypersensitivity-yes">{{common_yes}}</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
-              <input type="radio" id="user-info_hypersensibility-no" value="no" name="user-info_hypersensibility" tabindex="0" class="hidden">
-              <label for="user-info_hypersensibility-no">{{common_no}}</label>
+              <input type="radio" id="user-info_hypersensitivity-no" value="no" name="user-info_hypersensitivity" tabindex="0" class="hidden">
+              <label for="user-info_hypersensitivity-no">{{common_no}}</label>
             </div>
           </div>
           <div class="field">
             <div class="ui radio checkbox">
-              <input type="radio" id="user-info_hypersensibility-unknown" value="unknown" name="user-info_hypersensibility" checked="" tabindex="0" class="hidden">
-              <label for="user-info_hypersensibility-unknown">{{common_dontKnow}}</label>
+              <input type="radio" id="user-info_hypersensitivity-unknown" value="unknown" name="user-info_hypersensitivity" checked="" tabindex="0" class="hidden">
+              <label for="user-info_hypersensitivity-unknown">{{common_dontKnow}}</label>
             </div>
           </div>
         </div>
 
         <div class="grouped fields">
-          <label>{{userInfo_hypersensibilityImpactLabel}}</label>
-          <div class="field">
-            <div class="ui radio checkbox">
-              <input type="radio" id="user-info_hypersensibility-impact-not-at-all" value="not-at-all" name="user-info_hypersensibility-impact" checked="" tabindex="0" class="hidden">
-              <label for="user-info_hypersensibility-impact-not-at-all">{{userInfo_hypersensibilityImpactNotAtAll}}</label>
-            </div>
-          </div>
-          <div class="field">
-            <div class="ui radio checkbox">
-              <input type="radio" id="user-info_hypersensibility-impact-a-little" value="a-little" name="user-info_hypersensibility-impact" tabindex="0" class="hidden">
-              <label for="user-info_hypersensibility-impact-a-little">{{userInfo_hypersensibilityImpactALittle}}</label>
-            </div>
-          </div>
-          <div class="field">
-            <div class="ui radio checkbox">
-              <input type="radio" id="user-info_hypersensibility-impact-moderately" value="moderately" name="user-info_hypersensibility-impact" tabindex="0" class="hidden">
-              <label for="user-info_hypersensibility-impact-moderately">{{userInfo_hypersensibilityImpactModerately}}</label>
-            </div>
-          </div>
-          <div class="field">
-            <div class="ui radio checkbox">
-              <input type="radio" id="user-info_hypersensibility-impact-a-lot" value="a-lot" name="user-info_hypersensibility-impact" tabindex="0" class="hidden">
-              <label for="user-info_hypersensibility-impact-a-lot">{{userInfo_hypersensibilityImpactALot}}</label>
-            </div>
-          </div>
-        </div>
-        <div class="grouped fields">
           <label>{{userInfo_soundsReactionsLabel}}</label>
+          <div class="ui ignored info message">
+            <p>{{userInfo_soundsReactionsDescription}}</p>
+          </div>
           <div class="field">
             <div class="ui radio checkbox">
               <input type="radio" id="user-info_sounds-reactions-yes" value="yes" name="user-info_sounds-reactions" tabindex="0" class="hidden">
@@ -192,41 +178,6 @@
       <form id="noise-tolerance-form" class="ui form">
         <div class="ui padded centered grid">
           <!-- This part is filled by the views/noiseToleranceForm module -->
-          <div class="ui row">
-            <div class="grouped fields left aligned column">
-              <label>{{noiseTolerance_dislikeLabel}}</label>
-              <div class="field">
-                <div class="ui radio checkbox">
-                  <input type="radio" id="noise-tolerance_sounds-dislike-1" value="1" name="noise-tolerance_sounds-dislike" tabindex="0" class="hidden">
-                  <label for="noise-tolerance_sounds-dislike-1">{{noiseTolerance_dislike1}}</label>
-                </div>
-              </div>
-              <div class="field">
-                <div class="ui radio checkbox">
-                  <input type="radio" id="noise-tolerance_sounds-dislike-2" value="2" name="noise-tolerance_sounds-dislike" tabindex="0" class="hidden">
-                  <label for="noise-tolerance_sounds-dislike-2">{{noiseTolerance_dislike2}}</label>
-                </div>
-              </div>
-              <div class="field">
-                <div class="ui radio checkbox">
-                  <input type="radio" id="noise-tolerance_sounds-dislike-3" value="3" name="noise-tolerance_sounds-dislike" tabindex="0" class="hidden">
-                  <label for="noise-tolerance_sounds-dislike-3">{{noiseTolerance_dislike3}}</label>
-                </div>
-              </div>
-              <div class="field">
-                <div class="ui radio checkbox">
-                  <input type="radio" id="noise-tolerance_sounds-dislike-4" value="4" name="noise-tolerance_sounds-dislike" tabindex="0" class="hidden">
-                  <label for="noise-tolerance_sounds-dislike-4">{{noiseTolerance_dislike4}}</label>
-                </div>
-              </div>
-              <div class="field">
-                <div class="ui radio checkbox">
-                  <input type="radio" id="noise-tolerance_sounds-dislike-5" value="5" name="noise-tolerance_sounds-dislike" checked="checked" tabindex="0" class="hidden">
-                  <label for="noise-tolerance_sounds-dislike-5">{{noiseTolerance_dislike5}}</label>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
         <div class="ui basic segment center aligned">

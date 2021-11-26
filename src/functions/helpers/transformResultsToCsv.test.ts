@@ -1,7 +1,4 @@
-import {
-  ListeningDevice,
-  HypersensibilityImpact
-} from '../../client/models/userInfo'
+import { ListeningDevice } from '../../client/models/userInfo'
 import { NoiseTolerance } from '../models/noiseTolerance'
 import { UserInfo } from '../models/userInfo'
 import transformResultsToCsv from './transformResultsToCsv'
@@ -9,17 +6,16 @@ import transformResultsToCsv from './transformResultsToCsv'
 describe('transformResultsToCsv', () => {
   const userInfo: UserInfo = {
     age: 28,
+    nationality: 'fr',
     device: ListeningDevice.HeadSet,
     hearingIssues: 'no',
     tinnitus: 'no',
-    hearingHypersensibility: 'no',
-    hypersensibilityImpact: HypersensibilityImpact.NotAtAll,
+    hearingHypersensitivity: 'no',
     soundsReactions: 'no',
     soundsList: []
   }
   const noiseTolerance: NoiseTolerance = {
-    statementsScores: ['1', '2', '1'],
-    soundsDislike: '5'
+    statementsScores: ['1', '2', '1']
   }
   const soundVolume = 0.31
   const soundTests = [
@@ -45,18 +41,17 @@ describe('transformResultsToCsv', () => {
     )
       .toEqual(`user-info-label,user-info-value,noise-tolerance-label,noise-tolerance-value,filename,score1,score2,score3
 age,28,,,,,,
+nationality,fr,,,,,,
 device,headset,,,,,,
 hearing-issues,no,,,,,,
 tinnitus,no,,,,,,
 hearing-hypersens,no,,,,,,
-hypersensibility-impact,not-at-all,,,,,,
 sounds-reactions,no,,,,,,
 sounds-list,,,,,,,
 sound-volume,0.31,,,,,,
 ,,statement-1,1,,,,
 ,,statement-2,2,,,,
 ,,statement-3,1,,,,
-,,sounds-dislike,5,,,,
 ,,,,Birds_1.wav,33,35,31
 ,,,,Blowing_nose1.wav,76,68,73
 ,,,,Boire.wav,66,55,59`)
@@ -78,18 +73,17 @@ sound-volume,0.31,,,,,,
     )
       .toEqual(`user-info-label,user-info-value,noise-tolerance-label,noise-tolerance-value,filename,score1,score2,score3
 age,28,,,,,,
+nationality,fr,,,,,,
 device,headset,,,,,,
 hearing-issues,no,,,,,,
 tinnitus,no,,,,,,
 hearing-hypersens,no,,,,,,
-hypersensibility-impact,not-at-all,,,,,,
 sounds-reactions,yes,,,,,,
 sounds-list,a/b c d/e,,,,,,
 sound-volume,0.31,,,,,,
 ,,statement-1,1,,,,
 ,,statement-2,2,,,,
 ,,statement-3,1,,,,
-,,sounds-dislike,5,,,,
 ,,,,Birds_1.wav,33,35,31
 ,,,,Blowing_nose1.wav,76,68,73
 ,,,,Boire.wav,66,55,59`)
@@ -112,18 +106,17 @@ sound-volume,0.31,,,,,,
     )
       .toEqual(`user-info-label,user-info-value,noise-tolerance-label,noise-tolerance-value,filename,score1,score2
 age,28,,,,,
+nationality,fr,,,,,
 device,headset,,,,,
 hearing-issues,no,,,,,
 tinnitus,no,,,,,
 hearing-hypersens,no,,,,,
-hypersensibility-impact,not-at-all,,,,,
 sounds-reactions,no,,,,,
 sounds-list,,,,,,
 sound-volume,0.31,,,,,
 ,,statement-1,1,,,
 ,,statement-2,2,,,
 ,,statement-3,1,,,
-,,sounds-dislike,5,,,
 ,,,,Blowing_nose1.wav,76,73
 ,,,,Boire.wav,66,55`)
   })
